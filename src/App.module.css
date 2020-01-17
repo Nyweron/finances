@@ -30,7 +30,7 @@ body {
 }
 
 /* Style the topnav links */
-.topnav a {
+.topnav span {
   float: left;
   display: block;
   color: #f2f2f2;
@@ -40,7 +40,7 @@ body {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav span:hover {
   background-color: #ddd;
   color: black;
 }

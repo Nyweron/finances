@@ -1,17 +1,28 @@
 import React, { Component } from "react";
 // import NavigationItem from "./component/navigationItem";
 
-import stylesMegaMenu from "./component/MegaMenu/megaMenu.module.css";
 import styles from "./App.module.css";
 import { FaCaretDown } from "react-icons/fa";
 
+const wydatki = 0;
+
 class App extends Component {
   state = {
-    isVisible: false
+    isVisibleFilterSettings: false,
+    isVisibleCollapseMenu: false
   };
 
   displayFilterSettings = () => {
-    this.setState({ isVisible: !this.state.isVisible });
+    this.setState({
+      isVisibleFilterSettings: !this.state.isVisibleFilterSettings
+    });
+  };
+
+  displayCollapseMenu = id => {
+    console.log("TEST", id);
+    this.setState({
+      isVisibleCollapseMenu: !this.state.isVisibleCollapseMenu
+    });
   };
 
   render() {
@@ -22,14 +33,14 @@ class App extends Component {
           <p>Resize the browser window to see the effect.</p>
         </div>
 
-        <div>
-          {/* <a href="/#">Link</a>
-          <a href="/#">Link</a>
-          <a href="/#">Link</a>
-          <a href="/#" style={{ float: "right" }}>
-            Link
-          </a> */}
-          <div className={stylesMegaMenu.navbar}>
+        <div className={styles.topnav}>
+          <span onClick={() => this.displayCollapseMenu(0)}>Link</span>
+          <span>Link</span>
+          <span>Link</span>
+          <span style={{ float: "right" }}>Link</span>
+
+          <span>
+            {/* <div className={stylesMegaMenu.navbar}>
             <a href="#home">Home</a>
             <a href="#news">News</a>
             <div className={stylesMegaMenu.dropdown}>
@@ -66,124 +77,137 @@ class App extends Component {
               </div>
             </div>
           </div>
+         */}
+          </span>
         </div>
+
+        {this.state.isVisibleCollapseMenu && (
+          <div className={styles.topnav} style={{ backgroundColor: "#808080" }}>
+            <span>Link11</span>
+            <span>Link22</span>
+          </div>
+        )}
 
         <div className={styles.row}>
           <div className={styles.card}>
             <button onClick={this.displayFilterSettings}>
               Filter settings
             </button>
-            {this.state.isVisible && (
+            {this.state.isVisibleFilterSettings && (
               <div>
                 {/* */}
                 <br />
-                <form class="needs-validation">
-                  <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                      <label for="validationCustom01">First name</label>
+                <form className="needs-validation">
+                  <div className="form-row">
+                    <div className="col-md-4 mb-3">
+                      <label htmlFor="validationCustom01">First name</label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="validationCustom01"
                         placeholder="First name"
-                        value="Mark"
                         required
                       />
-                      <div class="valid-feedback">Looks good!</div>
+                      <div className="valid-feedback">Looks good!</div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                      <label for="validationCustom02">Last name</label>
+                    <div className="col-md-4 mb-3">
+                      <label htmlFor="validationCustom02">Last name</label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="validationCustom02"
                         placeholder="Last name"
-                        value="Otto"
                         required
                       />
-                      <div class="valid-feedback">Looks good!</div>
+                      <div className="valid-feedback">Looks good!</div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                      <label for="validationCustomUsername">Username</label>
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroupPrepend">
+                    <div className="col-md-4 mb-3">
+                      <label htmlFor="validationCustomUsername">Username</label>
+                      <div className="input-group">
+                        <div className="input-group-prepend">
+                          <span
+                            className="input-group-text"
+                            id="inputGroupPrepend"
+                          >
                             @
                           </span>
                         </div>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id="validationCustomUsername"
                           placeholder="Username"
                           aria-describedby="inputGroupPrepend"
                           required
                         />
-                        <div class="invalid-feedback">
+                        <div className="invalid-feedback">
                           Please choose a username.
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                      <label for="validationCustom03">City</label>
+                  <div className="form-row">
+                    <div className="col-md-6 mb-3">
+                      <label htmlFor="validationCustom03">City</label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="validationCustom03"
                         placeholder="City"
                         required
                       />
-                      <div class="invalid-feedback">
+                      <div className="invalid-feedback">
                         Please provide a valid city.
                       </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="validationCustom04">State</label>
+                    <div className="col-md-3 mb-3">
+                      <label htmlFor="validationCustom04">State</label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="validationCustom04"
                         placeholder="State"
                         required
                       />
-                      <div class="invalid-feedback">
+                      <div className="invalid-feedback">
                         Please provide a valid state.
                       </div>
                     </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="validationCustom05">Zip</label>
+                    <div className="col-md-3 mb-3">
+                      <label htmlFor="validationCustom05">Zip</label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="validationCustom05"
                         placeholder="Zip"
                         required
                       />
-                      <div class="invalid-feedback">
+                      <div className="invalid-feedback">
                         Please provide a valid zip.
                       </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <div class="form-check">
+                  <div className="form-group">
+                    <div className="form-check">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="checkbox"
                         value=""
                         id="invalidCheck"
                         required
                       />
-                      <label class="form-check-label" for="invalidCheck">
+                      <label
+                        className="form-check-label"
+                        htmlFor="invalidCheck"
+                      >
                         Agree to terms and conditions
                       </label>
-                      <div class="invalid-feedback">
+                      <div className="invalid-feedback">
                         You must agree before submitting.
                       </div>
                     </div>
                   </div>
-                  <button class="btn btn-primary" type="submit">
+                  <button className="btn btn-primary" type="submit">
                     Submit form
                   </button>
                 </form>
