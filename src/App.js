@@ -4,15 +4,18 @@ import React, { Component } from "react";
 import styles from "./App.module.css";
 import { FaCaretDown } from "react-icons/fa";
 
-const wydatki = 0;
-const przychody = 1;
-const oszczednosci = 2;
+import ExpenseAddModal from "./component/expense/expenseAdd";
+
+const expenses = 0; /*wydatki - expenses*/
+const revenues = 1; /*przychody - revenues*/
+const savings = 2; /*oszczednosci - savings*/
 
 class App extends Component {
   state = {
     isVisibleFilterSettings: false,
     isVisibleCollapseMenu: false,
-    collapseMenuClicked: -1
+    collapseMenuClicked: -1,
+    isVisibleAddExpense: false
   };
 
   displayFilterSettings = () => {
@@ -26,43 +29,50 @@ class App extends Component {
       this.setState({
         collapseMenuClicked: -1
       });
-    } else if (wydatki === id) {
+    } else if (expenses === id) {
       this.setState({
         collapseMenuClicked: id
       });
-    } else if (przychody === id) {
+    } else if (revenues === id) {
       this.setState({
         collapseMenuClicked: id
       });
-    } else if (oszczednosci === id) {
+    } else if (savings === id) {
       this.setState({
         collapseMenuClicked: id
       });
     }
   };
 
+  handleClose = () => {
+    this.setState({ isVisibleAddExpense: false });
+  };
+  handleShow = () => {
+    this.setState({ isVisibleAddExpense: true });
+  };
+
   render() {
     let cleanField = <span></span>;
 
-    let wydatkiFiled = this.state.collapseMenuClicked === wydatki && (
+    let wydatkiFiled = this.state.collapseMenuClicked === expenses && (
       <div>
         <span>
           Wydatki
           <FaCaretDown />
         </span>
-        <span>Dodaj</span>
+        <span onClick={this.handleShow}>Dodaj</span>
         <span>Zapisz</span>
         <span>...</span>
       </div>
     );
-    let przychodyFiled = this.state.collapseMenuClicked === przychody && (
+    let przychodyFiled = this.state.collapseMenuClicked === revenues && (
       <div>
         <span>Link33</span>
         <span>Link44</span>
         <span>...</span>
       </div>
     );
-    let oszczednosciFiled = this.state.collapseMenuClicked === oszczednosci && (
+    let oszczednosciFiled = this.state.collapseMenuClicked === savings && (
       <div>
         <span>Link55</span>
         <span>Link66</span>
@@ -72,6 +82,13 @@ class App extends Component {
 
     return (
       <div>
+        {this.state.isVisibleAddExpense && (
+          <ExpenseAddModal
+            handleClose={this.handleClose}
+            handleShow={this.handleShow}
+            isVisibleAddExpense={this.state.isVisibleAddExpense}
+          />
+        )}
         <div className={styles.header}>
           <h1>My Website</h1>
           <p>Resize the browser window to see the effect.</p>
@@ -92,9 +109,9 @@ class App extends Component {
 
         {this.state.collapseMenuClicked === -1 && cleanField}
         <div className={styles.topnav} style={{ backgroundColor: "#808080" }}>
-          {this.state.collapseMenuClicked === wydatki && wydatkiFiled}
-          {this.state.collapseMenuClicked === przychody && przychodyFiled}
-          {this.state.collapseMenuClicked === oszczednosci && oszczednosciFiled}
+          {this.state.collapseMenuClicked === expenses && wydatkiFiled}
+          {this.state.collapseMenuClicked === revenues && przychodyFiled}
+          {this.state.collapseMenuClicked === savings && oszczednosciFiled}
         </div>
 
         <div className={styles.row}>
