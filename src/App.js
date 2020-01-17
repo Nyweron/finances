@@ -4,6 +4,14 @@ import React, { Component } from "react";
 import styles from "./App.module.css";
 
 class App extends Component {
+  state = {
+    isVisible: false
+  };
+
+  displayFilterSettings = () => {
+    this.setState({ isVisible: !this.state.isVisible });
+  };
+
   render() {
     return (
       <div>
@@ -23,104 +31,42 @@ class App extends Component {
 
         <div className={styles.row}>
           <div className={styles.card}>
-            <span>Filter</span>
-
-            {/* */}
-
-            <div id="filter-panel" className="collapse filter-panel">
-              <div className="panel panel-default">
-                <div className="panel-body">
-                  <form>
-                    <div className="form-group">
-                      <label
-                        className={styles.filterCol}
-                        style={{ marginRight: "0" }}
-                        for="pref-perpage"
-                      >
-                        Rows per page:
-                      </label>
-                      <select id="pref-perpage" className="form-control">
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option selected="selected" value="10">
-                          10
-                        </option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="200">200</option>
-                        <option value="300">300</option>
-                        <option value="400">400</option>
-                        <option value="500">500</option>
-                        <option value="1000">1000</option>
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label
-                        className={styles.filterCol}
-                        style={{ marginRight: "0" }}
-                        for="pref-search"
-                      >
-                        Search:
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control input-sm"
-                        id="pref-search"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label
-                        className={styles.filterCol}
-                        style={{ marginRight: 0 }}
-                        for="pref-orderby"
-                      >
-                        Order by:
-                      </label>
-                      <select id="pref-orderby" className="form-control">
-                        <option>Descendent</option>
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <div
-                        className="checkbox"
-                        style={{ marginLeft: "10px", marginRight: "10px" }}
-                      >
-                        <label>
-                          <input type="checkbox" /> Remember parameters
-                        </label>
-                      </div>
-                      <button
-                        type="submit"
-                        className={("btn btn-default", styles.filterCol)}
-                      >
-                        <span className="glyphicon glyphicon-record"></span>{" "}
-                        Save Settings
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <button
-              type="button"
-              className="btn btn-primary"
-              data-toggle="collapse"
-              data-target="#filter-panel"
-            >
-              <span className="glyphicon glyphicon-cog"></span> Advanced Search
+            <button onClick={this.displayFilterSettings}>
+              Filter settings
             </button>
-
-            {/* */}
+            <div className={styles.card}></div>
+            {this.state.isVisible ? (
+              <span>
+                cursus odio lorem, condimentum varius felis aliquet sit
+                amet.Proin cursus, arcu ut porttitor dictum, dolor nisl ornare
+                lacus,ut varius nibh lorem vel mi. Curabitur sapien quam,
+                scelerisque non ligula sit amet, vulputate vulputate nisl. Duis
+                auctor risus ac dolor tempus, vel molestie diam suscipit. Morbi
+                pulvinar est quis vehicula eleifend. Sed felis sem, facilisis
+                nec vulputate at, consequat non mi. Etiam laoreet vel dui eget
+                semper. Cras sit amet ipsum laoreet, molestie eros nec, finibus
+                velit. In magna nisl, feugiat vel sem vitae, ullamcorper
+                venenatis neque. Maecenas id sodales sem, sed ultricies dolor.
+                Praesent ullamcorper varius posuere. Donec bibendum orci vitae
+                magna mollis molestie. Suspendisse lectus magna, tincidunt ut
+                molestie pulvinar, ornare non sem. Nunc mattis maximus viverra.
+                Donec malesuada pretium dui vel tincidunt. Quisque non diam et
+                nisl malesuada feugiat id ut enim. Integer mattis massa vitae
+                laoreet malesuada. Nam ullamcorper porta risus, sit amet tempor
+                odio tincidunt ut. Sed sed augue et nulla hendrerit dignissim.
+                Suspendisse vel posuere neque. Ut id cursus sapien, ut blandit
+                ante. In nisl quam, egestas in eleifend vitae, vulputate non
+                elit. Etiam tempus a turpis vitae bibendum. In laoreet, dolor
+                non ultrices rhoncus, massa tortor consequat lacus, vitae
+                gravida risus arcu ut felis. Morbi quis velit varius, varius
+                turpis sed, consectetur dui. Ut sed eros eu lectus cursus
+                maximus. Aliquam erat volutpat. Mauris at lacus accumsan arcu
+                sollicitudin facilisis eget sed eros. In hac habitasse platea
+                dictumst.
+              </span>
+            ) : (
+              <span>niewyswietl</span>
+            )}
           </div>
           <div className={styles.centerColumn}>
             <div className={styles.card}>
