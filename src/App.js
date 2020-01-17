@@ -5,11 +5,14 @@ import styles from "./App.module.css";
 import { FaCaretDown } from "react-icons/fa";
 
 const wydatki = 0;
+const przychody = 1;
+const oszczednosci = 2;
 
 class App extends Component {
   state = {
     isVisibleFilterSettings: false,
-    isVisibleCollapseMenu: false
+    isVisibleCollapseMenu: false,
+    collapseMenuClicked: -1
   };
 
   displayFilterSettings = () => {
@@ -19,13 +22,54 @@ class App extends Component {
   };
 
   displayCollapseMenu = id => {
-    console.log("TEST", id);
-    this.setState({
-      isVisibleCollapseMenu: !this.state.isVisibleCollapseMenu
-    });
+    if (this.state.collapseMenuClicked === id) {
+      this.setState({
+        collapseMenuClicked: -1
+      });
+    } else if (wydatki === id) {
+      this.setState({
+        collapseMenuClicked: id
+      });
+    } else if (przychody === id) {
+      this.setState({
+        collapseMenuClicked: id
+      });
+    } else if (oszczednosci === id) {
+      this.setState({
+        collapseMenuClicked: id
+      });
+    }
   };
 
   render() {
+    let cleanField = <span></span>;
+
+    let wydatkiFiled = this.state.collapseMenuClicked === wydatki && (
+      <div>
+        <span>
+          Wydatki
+          <FaCaretDown />
+        </span>
+        <span>Dodaj</span>
+        <span>Zapisz</span>
+        <span>...</span>
+      </div>
+    );
+    let przychodyFiled = this.state.collapseMenuClicked === przychody && (
+      <div>
+        <span>Link33</span>
+        <span>Link44</span>
+        <span>...</span>
+      </div>
+    );
+    let oszczednosciFiled = this.state.collapseMenuClicked === oszczednosci && (
+      <div>
+        <span>Link55</span>
+        <span>Link66</span>
+        <span>...</span>
+      </div>
+    );
+
     return (
       <div>
         <div className={styles.header}>
@@ -34,59 +78,24 @@ class App extends Component {
         </div>
 
         <div className={styles.topnav}>
-          <span onClick={() => this.displayCollapseMenu(0)}>Link</span>
-          <span>Link</span>
-          <span>Link</span>
-          <span style={{ float: "right" }}>Link</span>
-
-          <span>
-            {/* <div className={stylesMegaMenu.navbar}>
-            <a href="#home">Home</a>
-            <a href="#news">News</a>
-            <div className={stylesMegaMenu.dropdown}>
-              <button className={stylesMegaMenu.dropbtn}>
-                Dropdown
-                <i>
-                  <FaCaretDown />
-                </i>
-              </button>
-              <div className={stylesMegaMenu.dropdownContent}>
-                <div className={stylesMegaMenu.header}>
-                  <h2>Mega Menu</h2>
-                </div>
-                <div className={stylesMegaMenu.row}>
-                  <div className={stylesMegaMenu.column}>
-                    <h3>Category 1</h3>
-                    <a href="/#">Link 1</a>
-                    <a href="/#">Link 2</a>
-                    <a href="/#">Link 3</a>
-                  </div>
-                  <div className={stylesMegaMenu.column}>
-                    <h3>Category 2</h3>
-                    <a href="/#">Link 1</a>
-                    <a href="/#">Link 2</a>
-                    <a href="/#">Link 3</a>
-                  </div>
-                  <div className={stylesMegaMenu.column}>
-                    <h3>Category 3</h3>
-                    <a href="/#">Link 1</a>
-                    <a href="/#">Link 2</a>
-                    <a href="/#">Link 3</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-         */}
+          <span onClick={() => this.displayCollapseMenu(0)}>
+            Wydatki <FaCaretDown />
           </span>
+          <span onClick={() => this.displayCollapseMenu(1)}>
+            Przychody <FaCaretDown />
+          </span>
+          <span onClick={() => this.displayCollapseMenu(2)}>
+            Oszczędności <FaCaretDown />
+          </span>
+          <span style={{ float: "right" }}>Link</span>
         </div>
 
-        {this.state.isVisibleCollapseMenu && (
-          <div className={styles.topnav} style={{ backgroundColor: "#808080" }}>
-            <span>Link11</span>
-            <span>Link22</span>
-          </div>
-        )}
+        {this.state.collapseMenuClicked === -1 && cleanField}
+        <div className={styles.topnav} style={{ backgroundColor: "#808080" }}>
+          {this.state.collapseMenuClicked === wydatki && wydatkiFiled}
+          {this.state.collapseMenuClicked === przychody && przychodyFiled}
+          {this.state.collapseMenuClicked === oszczednosci && oszczednosciFiled}
+        </div>
 
         <div className={styles.row}>
           <div className={styles.card}>
