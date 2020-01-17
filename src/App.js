@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 // import NavigationItem from "./component/navigationItem";
 
+import stylesMegaMenu from "./component/MegaMenu/megaMenu.module.css";
 import styles from "./App.module.css";
+import { FaCaretDown } from "react-icons/fa";
 
 class App extends Component {
   state = {
@@ -20,13 +22,50 @@ class App extends Component {
           <p>Resize the browser window to see the effect.</p>
         </div>
 
-        <div className={styles.topnav}>
-          <a href="/#">Link</a>
+        <div>
+          {/* <a href="/#">Link</a>
           <a href="/#">Link</a>
           <a href="/#">Link</a>
           <a href="/#" style={{ float: "right" }}>
             Link
-          </a>
+          </a> */}
+          <div className={stylesMegaMenu.navbar}>
+            <a href="#home">Home</a>
+            <a href="#news">News</a>
+            <div className={stylesMegaMenu.dropdown}>
+              <button className={stylesMegaMenu.dropbtn}>
+                Dropdown
+                <i>
+                  <FaCaretDown />
+                </i>
+              </button>
+              <div className={stylesMegaMenu.dropdownContent}>
+                <div className={stylesMegaMenu.header}>
+                  <h2>Mega Menu</h2>
+                </div>
+                <div className={stylesMegaMenu.row}>
+                  <div className={stylesMegaMenu.column}>
+                    <h3>Category 1</h3>
+                    <a href="/#">Link 1</a>
+                    <a href="/#">Link 2</a>
+                    <a href="/#">Link 3</a>
+                  </div>
+                  <div className={stylesMegaMenu.column}>
+                    <h3>Category 2</h3>
+                    <a href="/#">Link 1</a>
+                    <a href="/#">Link 2</a>
+                    <a href="/#">Link 3</a>
+                  </div>
+                  <div className={stylesMegaMenu.column}>
+                    <h3>Category 3</h3>
+                    <a href="/#">Link 1</a>
+                    <a href="/#">Link 2</a>
+                    <a href="/#">Link 3</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className={styles.row}>
