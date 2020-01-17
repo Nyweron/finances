@@ -34,38 +34,122 @@ class App extends Component {
             <button onClick={this.displayFilterSettings}>
               Filter settings
             </button>
-            <div className={styles.card}></div>
-            {this.state.isVisible ? (
-              <span>
-                cursus odio lorem, condimentum varius felis aliquet sit
-                amet.Proin cursus, arcu ut porttitor dictum, dolor nisl ornare
-                lacus,ut varius nibh lorem vel mi. Curabitur sapien quam,
-                scelerisque non ligula sit amet, vulputate vulputate nisl. Duis
-                auctor risus ac dolor tempus, vel molestie diam suscipit. Morbi
-                pulvinar est quis vehicula eleifend. Sed felis sem, facilisis
-                nec vulputate at, consequat non mi. Etiam laoreet vel dui eget
-                semper. Cras sit amet ipsum laoreet, molestie eros nec, finibus
-                velit. In magna nisl, feugiat vel sem vitae, ullamcorper
-                venenatis neque. Maecenas id sodales sem, sed ultricies dolor.
-                Praesent ullamcorper varius posuere. Donec bibendum orci vitae
-                magna mollis molestie. Suspendisse lectus magna, tincidunt ut
-                molestie pulvinar, ornare non sem. Nunc mattis maximus viverra.
-                Donec malesuada pretium dui vel tincidunt. Quisque non diam et
-                nisl malesuada feugiat id ut enim. Integer mattis massa vitae
-                laoreet malesuada. Nam ullamcorper porta risus, sit amet tempor
-                odio tincidunt ut. Sed sed augue et nulla hendrerit dignissim.
-                Suspendisse vel posuere neque. Ut id cursus sapien, ut blandit
-                ante. In nisl quam, egestas in eleifend vitae, vulputate non
-                elit. Etiam tempus a turpis vitae bibendum. In laoreet, dolor
-                non ultrices rhoncus, massa tortor consequat lacus, vitae
-                gravida risus arcu ut felis. Morbi quis velit varius, varius
-                turpis sed, consectetur dui. Ut sed eros eu lectus cursus
-                maximus. Aliquam erat volutpat. Mauris at lacus accumsan arcu
-                sollicitudin facilisis eget sed eros. In hac habitasse platea
-                dictumst.
-              </span>
-            ) : (
-              <span>niewyswietl</span>
+            {this.state.isVisible && (
+              <div>
+                {/* */}
+                <br />
+                <form class="needs-validation">
+                  <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                      <label for="validationCustom01">First name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="validationCustom01"
+                        placeholder="First name"
+                        value="Mark"
+                        required
+                      />
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="validationCustom02">Last name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="validationCustom02"
+                        placeholder="Last name"
+                        value="Otto"
+                        required
+                      />
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label for="validationCustomUsername">Username</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            @
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="validationCustomUsername"
+                          placeholder="Username"
+                          aria-describedby="inputGroupPrepend"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please choose a username.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                      <label for="validationCustom03">City</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="validationCustom03"
+                        placeholder="City"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Please provide a valid city.
+                      </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label for="validationCustom04">State</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="validationCustom04"
+                        placeholder="State"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Please provide a valid state.
+                      </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label for="validationCustom05">Zip</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="validationCustom05"
+                        placeholder="Zip"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Please provide a valid zip.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="invalidCheck"
+                        required
+                      />
+                      <label class="form-check-label" for="invalidCheck">
+                        Agree to terms and conditions
+                      </label>
+                      <div class="invalid-feedback">
+                        You must agree before submitting.
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" type="submit">
+                    Submit form
+                  </button>
+                </form>
+                {/* */}
+              </div>
             )}
           </div>
           <div className={styles.centerColumn}>
