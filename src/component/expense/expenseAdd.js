@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const expenseAdd = props => {
+const ExpenseAddModal = props => {
   console.log(props);
   return (
     <>
@@ -139,4 +139,4 @@ const expenseAdd = props => {
   );
 };
 
-export default expenseAdd;
+export default ExpenseAddModal;
