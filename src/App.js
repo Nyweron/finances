@@ -21,15 +21,17 @@ import styles from "./App.module.css";
 class App extends Component {
   state = {
     isVisibleCollapseMenu: false,
+    isVisibleModalAddExpense: false,
     collapseMenuClicked: -1,
+
     data: null
   };
 
   componentDidMount() {
-    const fetchData = fetch("http://localhost:8081/data").then(res =>
-      res.json()
-    );
-    this.setState({ data: fetchData });
+    // const fetchData = fetch("http://localhost:8081/data").then(res =>
+    //   res.json()
+    // );
+    // this.setState({ data: fetchData });
   }
 
   displayCollapseMenu = id => {
@@ -52,6 +54,17 @@ class App extends Component {
     }
   };
 
+  isAddExpense = props => {
+    console.log("props, close", props);
+    this.setState({
+      isVisibleModalAddExpense: !this.state.isVisibleModalAddExpense
+    });
+  };
+
+  isAddExpenseSave = props => {
+    console.log("props, save", props);
+  };
+
   render() {
     let cleanField = <span></span>;
 
@@ -60,7 +73,7 @@ class App extends Component {
         <Link to="/expense">
           <span>Wydatki</span>
         </Link>
-        <span onClick={this.handleShow}>Dodaj</span>
+        <span onClick={this.isAddExpense}>Dodaj</span>
         <span>Zapisz</span>
         <span>...</span>
       </div>
@@ -113,11 +126,13 @@ class App extends Component {
             </div>
 
             <div>
-              {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
               <Switch>
                 <Route path="/expense">
-                  <Expense />
+                  <Expense
+                    isAdd={this.state.isVisibleModalAddExpense}
+                    isAddExpense={this.isAddExpense}
+                    isAddExpenseSave={this.isAddExpenseSave}
+                  />
                 </Route>
                 <Route path="/revenue">
                   <Revenue />

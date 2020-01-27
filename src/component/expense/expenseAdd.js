@@ -2,8 +2,8 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const ExpenseAddModal = props => {
-  console.log(props);
+const expenseAddModal = props => {
+  console.log("ExpenseAddModal", props);
   return (
     <>
       <Modal show={props.isVisibleAddExpense} onHide={props.handleClose}>
@@ -130,7 +130,7 @@ const ExpenseAddModal = props => {
           <Button variant="secondary" onClick={props.handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={props.handleClose}>
+          <Button variant="primary" onClick={props.handleShow}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -139,4 +139,4 @@ const ExpenseAddModal = props => {
   );
 };
 
-export default ExpenseAddModal;
+export default expenseAddModal;
