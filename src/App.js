@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import { FaCaretDown } from "react-icons/fa";
 
-import NavigationItem from "./component/navigationItem";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import ExpenseAddModal from "./component/expense/expenseAdd";
-import ExpenseFilter from "./component/expense/expenseFilter";
-import ExpenseTable from "./component/expense/expenseTable";
+
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
 import { expenses, revenues, savings } from "./shared/constData";
-import Index1 from "./container/index1";
-import Index2 from "./container/index2";
+
 import Index3 from "./container/index3";
 
 import Expense from "./container/expense";
@@ -22,6 +18,7 @@ class App extends Component {
   state = {
     isVisibleCollapseMenu: false,
     isVisibleModalAddExpense: false,
+    isVisibleModalAddRevenue: false,
     collapseMenuClicked: -1,
 
     data: null
@@ -55,7 +52,7 @@ class App extends Component {
   };
 
   isAddExpense = props => {
-    console.log("props, close", props);
+    console.log("App.isAddExpense", props);
     this.setState({
       isVisibleModalAddExpense: !this.state.isVisibleModalAddExpense
     });
@@ -63,6 +60,13 @@ class App extends Component {
 
   isAddExpenseSave = props => {
     console.log("props, save", props);
+  };
+
+  isAddRevenue = props => {
+    console.log("App.isAddRevenue", props);
+    this.setState({
+      isVisibleModalAddRevenue: !this.state.isVisibleModalAddRevenue
+    });
   };
 
   render() {
@@ -76,6 +80,12 @@ class App extends Component {
         <span onClick={this.isAddExpense}>Dodaj</span>
         <span>Zapisz</span>
         <span>...</span>
+        {/* <Link to="/expense">
+          <span>Wydatki</span>
+        </Link>
+        <span onClick={this.isAddExpense}>Dodaj</span>
+        <span>Zapisz</span>
+        <span>...</span> */}
       </div>
     );
     let przychodyFiled = this.state.collapseMenuClicked === revenues && (
@@ -83,7 +93,7 @@ class App extends Component {
         <Link to="/revenue">
           <span>Przychody</span>
         </Link>
-        <span>Link44</span>
+        <span onClick={this.isAddRevenue}>Dodaj</span>
         <span>...</span>
       </div>
     );
@@ -134,8 +144,18 @@ class App extends Component {
                     isAddExpenseSave={this.isAddExpenseSave}
                   />
                 </Route>
+                {/* <Route path="/expense" exact={true}>
+                  <Expense isAdd={this.state.isVisibleModalAddExpense} />
+                  { <Expense isAdd={this.state.isExpenseAdd} />
+                </Route>
+                <Route path="/expense/add" exact={true}>
+                  <Expense isAdd={this.state.isVisibleModalAddExpense} />
+                </Route> */}
                 <Route path="/revenue">
-                  <Revenue />
+                  <Revenue
+                    isAdd={this.state.isVisibleModalAddRevenue}
+                    isAddRevenue={this.isAddRevenue}
+                  />
                 </Route>
                 <Route path="/">
                   <Index3 />

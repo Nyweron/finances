@@ -2,13 +2,13 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const expenseAddModal = props => {
-  console.log("ExpenseAddModal", props);
+const revenueAddModal = props => {
+  console.log("revenueAddModal", props);
   return (
     <>
-      <Modal show={props.isVisibleAddExpense} onHide={props.handleClose}>
+      <Modal show={props.isVisibleAddRevenue} onHide={props.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading Expense Add</Modal.Title>
+          <Modal.Title>Modal heading Revenue Add</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Woohoo, you're reading this text in a modal!
@@ -139,4 +139,4 @@ const expenseAddModal = props => {
   );
 };
 
-export default expenseAddModal;
+export default revenueAddModal;
