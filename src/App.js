@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import { FaCaretDown } from "react-icons/fa";
 
-import NavigationItem from "./component/navigationItem";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import ExpenseAddModal from "./component/expense/expenseAdd";
-import ExpenseFilter from "./component/expense/expenseFilter";
-import ExpenseTable from "./component/expense/expenseTable";
+
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
 import { expenses, revenues, savings } from "./shared/constData";
-import Index1 from "./container/index1";
-import Index2 from "./container/index2";
+
 import Index3 from "./container/index3";
 
 import Expense from "./container/expense";
@@ -22,6 +18,7 @@ class App extends Component {
   state = {
     isVisibleCollapseMenu: false,
     collapseMenuClicked: -1,
+    isExpenseAdd: false,
     data: null
   };
 
@@ -31,6 +28,10 @@ class App extends Component {
     );
     this.setState({ data: fetchData });
   }
+
+  isExpenseModalAdd = () => {
+    this.setState({ isExpenseAdd: !this.state.isExpenseAdd });
+  };
 
   displayCollapseMenu = id => {
     if (this.state.collapseMenuClicked === id) {
@@ -60,7 +61,10 @@ class App extends Component {
         <Link to="/expense">
           <span>Wydatki</span>
         </Link>
-        <span onClick={this.handleShow}>Dodaj</span>
+        <Link to="/expense/add">
+          <span>Dodaj</span>
+        </Link>
+        {/* <span onClick={this.isExpenseModalAdd}></span> */}
         <span>Zapisz</span>
         <span>...</span>
       </div>
@@ -113,11 +117,13 @@ class App extends Component {
             </div>
 
             <div>
-              {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
               <Switch>
-                <Route path="/expense">
-                  <Expense />
+                <Route path="/expense" exact="true">
+                  <Expense isAdd={false} />
+                  {/* <Expense isAdd={this.state.isExpenseAdd} /> */}
+                </Route>
+                <Route path="/expense/add" exact="true">
+                  <Expense isAdd={true} />
                 </Route>
                 <Route path="/revenue">
                   <Revenue />

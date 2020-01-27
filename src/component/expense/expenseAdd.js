@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
 const ExpenseAddModal = props => {
-  console.log(props);
+  console.log("expenseAdd", props);
   return (
     <>
       <Modal show={props.isVisibleAddExpense} onHide={props.handleClose}>
@@ -127,8 +128,10 @@ const ExpenseAddModal = props => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleClose}>
-            Close
+          <Button variant="primary">
+            <Link to="/expense" variant="secondary">
+              Close
+            </Link>
           </Button>
           <Button variant="primary" onClick={props.handleClose}>
             Save Changes

@@ -8,8 +8,11 @@ import ExpenseTable from "../component/expense/expenseTable";
 
 import styles from "../App.module.css";
 
-class expense extends Component {
-  state = { isVisibleAddExpense: false, isVisibleFilterSettings: false };
+class Expense extends Component {
+  state = {
+    isVisibleAddExpense: false,
+    isVisibleFilterSettings: false
+  };
 
   displayFilterSettings = () => {
     this.setState({
@@ -21,31 +24,22 @@ class expense extends Component {
     this.setState({ isVisibleAddExpense: false });
   };
 
-  handleShow = () => {
-    this.setState({ isVisibleAddExpense: true });
-  };
+  // handleShow = () => {
+  //   this.setState({ isVisibleAddExpense: true });
+  // };
 
   render() {
-    let wydatkiFiled = this.state.collapseMenuClicked === expenses && (
-      <div>
-        <span>
-          Wydatki
-          <FaCaretDown />
-        </span>
-        <span onClick={this.handleShow}>Dodaj</span>
-        <span>Zapisz</span>
-        <span>...</span>
-      </div>
-    );
+    console.log("isVisibleAddExpense", this.state.isVisibleAddExpense);
+    console.log("isAdd", this.props.isAdd);
 
     return (
       <>
         <div>
-          {this.state.isVisibleAddExpense && (
+          {this.props.isAdd && (
             <ExpenseAddModal
               handleClose={this.handleClose}
-              handleShow={this.handleShow}
-              isVisibleAddExpense={this.state.isVisibleAddExpense}
+              // handleShow={this.handleShow}
+              isVisibleAddExpense={this.props.isAdd}
             />
           )}
         </div>
@@ -73,4 +67,4 @@ class expense extends Component {
   }
 }
 
-export default expense;
+export default Expense;
