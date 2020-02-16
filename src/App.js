@@ -77,7 +77,10 @@ class App extends Component {
         <Link to="/expense">
           <span>Wydatki</span>
         </Link>
+        <Link to="/expense/add">
         <span onClick={this.isAddExpense}>Dodaj</span>
+        </Link>
+        {/* <span onClick={this.isAddExpense}>Dodaj</span> */}
         <span>Zapisz</span>
         <span>...</span>
         {/* <Link to="/expense">
@@ -93,7 +96,9 @@ class App extends Component {
         <Link to="/revenue">
           <span>Przychody</span>
         </Link>
+        <Link to="/revenue/add">
         <span onClick={this.isAddRevenue}>Dodaj</span>
+        </Link>
         <span>...</span>
       </div>
     );
