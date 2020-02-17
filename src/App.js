@@ -151,6 +151,8 @@ class App extends Component {
                     isAdd={this.state.isVisibleModalAddExpense}
                     isAddExpense={this.isAddExpense}
                     isAddExpenseSave={this.isAddExpenseSave}
+                    expenseData={""}
+                    expenseColumns={""}
                   />
                 </Route>
                 {/* <Route path="/expense" exact={true}>
@@ -165,6 +167,8 @@ class App extends Component {
                     isAdd={this.state.isVisibleModalAddRevenue}
                     isAddRevenue={this.isAddRevenue}
                     isAddRevenueSave={this.isAddRevenueSave}
+                    revenueData={""}
+                    revenueColumns={""}
                   />
                 </Route>
                 <Route path="/">

@@ -11,7 +11,9 @@ import styles from "../App.module.css";
 class expense extends Component {
   state = {
     // isVisibleAddExpense: false,
-    isVisibleFilterSettings: false
+    isVisibleFilterSettings: false,
+    data: this.props.expenseData,
+    columns: this.props.expenseColumns
   };
 
   displayFilterSettings = () => {
@@ -53,7 +55,10 @@ class expense extends Component {
           </div>
           <div className={styles.centerColumn}>
             <div className={styles.card}>
-              <ExpenseTable />
+              <ExpenseTable
+                expenseData={this.state.data}
+                expenseColumns={this.state.columns}
+              />
             </div>
             <div className={styles.card}>
               <span>PAGINATION</span>
