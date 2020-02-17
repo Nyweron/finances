@@ -1,0 +1,112 @@
+[
+  {
+    "Data": "2018-03-14 20:54",
+    "Id": "1",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "13",
+    "IdOsoba": "1",
+    "Ile": "1800.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-04-13 20:59",
+    "Id": "2",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "13",
+    "IdOsoba": "1",
+    "Ile": "1700.5",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-05-11 14:40",
+    "Id": "3",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "13",
+    "IdOsoba": "1",
+    "Ile": "1600.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-06-13 12:09",
+    "Id": "4",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "13",
+    "IdOsoba": "1",
+    "Ile": "1500.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-07-13 13:11",
+    "Id": "5",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "13",
+    "IdOsoba": "1",
+    "Ile": "1400.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-08-14 21:22",
+    "Id": "6",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "13",
+    "IdOsoba": "1",
+    "Ile": "1300.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-08-31 18:47",
+    "Id": "7",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "15",
+    "IdOsoba": "1",
+    "Ile": "100.0",
+    "Komentarz": "podroz sluzbowa",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-09-14 18:48",
+    "Id": "8",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "10",
+    "IdOsoba": "1",
+    "Ile": "1200.0",
+    "Komentarz": "wynagrodzenie",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-10-12 11:11",
+    "Id": "9",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "13",
+    "IdOsoba": "1",
+    "Ile": "1100.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-11-14 17:59",
+    "Id": "10",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaPrzychody": "13",
+    "IdOsoba": "1",
+    "Ile": "1000.0",
+    "Komentarz": "wynagrodzenie",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  }
+]

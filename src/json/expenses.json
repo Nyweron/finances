@@ -1,0 +1,211 @@
+[
+  {
+    "Data": "2018-03-17 21:31",
+    "Id": "1",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "65",
+    "IdOsoba": "1",
+    "Ile": "22.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-18 13:39",
+    "Id": "2",
+    "IdKategoriaOszczednosci": "13",
+    "IdKategoriaWydatki": "66",
+    "IdOsoba": "1",
+    "Ile": "923.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-19 19:03",
+    "Id": "3",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "67",
+    "IdOsoba": "1",
+    "Ile": "690.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-19 19:04",
+    "Id": "4",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "5",
+    "IdOsoba": "1",
+    "Ile": "5.7",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-19 19:22",
+    "Id": "5",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaWydatki": "68",
+    "IdOsoba": "1",
+    "Ile": "130.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-20 16:33",
+    "Id": "6",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "5",
+    "IdOsoba": "1",
+    "Ile": "12.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-20 16:22",
+    "Id": "7",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "69",
+    "IdOsoba": "1",
+    "Ile": "100.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-20 16:22",
+    "Id": "8",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "15",
+    "IdOsoba": "1",
+    "Ile": "20.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-21 16:23",
+    "Id": "9",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "5",
+    "IdOsoba": "1",
+    "Ile": "6.5",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-22 19:58",
+    "Id": "10",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "5",
+    "IdOsoba": "1",
+    "Ile": "16.5",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-22 21:39",
+    "Id": "11",
+    "IdKategoriaOszczednosci": "12",
+    "IdKategoriaWydatki": "70",
+    "IdOsoba": "1",
+    "Ile": "2248.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-23 14:21",
+    "Id": "12",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "5",
+    "IdOsoba": "1",
+    "Ile": "6.0",
+    "Komentarz": "",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-24 22:17",
+    "Id": "13",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "54",
+    "IdOsoba": "1",
+    "Ile": "30.5",
+    "Komentarz": "Kabel do ładowania telefonu 11zł kupiłem 2x, przesyłka 8,50",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-23 22:18",
+    "Id": "14",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "4",
+    "IdOsoba": "1",
+    "Ile": "123.5",
+    "Komentarz": "Piwo, pizza, shoty z Jarek i Dawid",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-25 14:57",
+    "Id": "15",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "52",
+    "IdOsoba": "1",
+    "Ile": "589.0",
+    "Komentarz": "Myjka ciśnieniowe lavara",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-27 19:27",
+    "Id": "17",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "5",
+    "IdOsoba": "1",
+    "Ile": "3.0",
+    "Komentarz": "Twarozek ",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-27 19:30",
+    "Id": "18",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaWydatki": "11",
+    "IdOsoba": "1",
+    "Ile": "1635.0",
+    "Komentarz": "Materac mkFoam Amerika",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-25 19:35",
+    "Id": "19",
+    "IdKategoriaOszczednosci": "7",
+    "IdKategoriaWydatki": "53",
+    "IdOsoba": "1",
+    "Ile": "165.03",
+    "Komentarz": "Paliwo do c5",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  },
+  {
+    "Data": "2018-03-28 18:03",
+    "Id": "20",
+    "IdKategoriaOszczednosci": "8",
+    "IdKategoriaWydatki": "5",
+    "IdOsoba": "1",
+    "Ile": "13.0",
+    "Komentarz": "Sniadanie i drugie sniadanie, salatki (mango)",
+    "Zalacznik": "",
+    "ZlecenieStale": "0"
+  }
+]
