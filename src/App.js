@@ -14,6 +14,20 @@ import Revenue from "./container/revenue";
 
 import styles from "./App.module.css";
 
+import expenseJson from './json/expenses';
+
+const columns = [
+  { title: 'Id', field: 'Id', type: 'numeric' },
+  { title: 'Data', field: 'Data' },
+  { title: 'IdKategoriaOszczednosci', field: 'IdKategoriaOszczednosci', type: 'numeric'},
+  { title: 'IdKategoriaWydatki', field: 'IdKategoriaWydatki', type: 'numeric'},
+  { title: 'IdOsoba', field: 'IdOsoba', type: 'numeric'},
+  { title: 'Ile', field: 'Ile', type: 'numeric'},
+  { title: 'Komentarz', field: 'Komentarz'},
+  { title: 'Zalacznik', field: 'Zalacznik'},
+  { title: 'ZlecenieStale', field: 'ZlecenieStale', type: 'numeric'}
+];
+
 class App extends Component {
   state = {
     isVisibleCollapseMenu: false,
@@ -21,7 +35,7 @@ class App extends Component {
     isVisibleModalAddRevenue: false,
     collapseMenuClicked: -1,
 
-    data: null
+    expenseData: null
   };
 
   componentDidMount() {
@@ -29,6 +43,9 @@ class App extends Component {
     //   res.json()
     // );
     // this.setState({ data: fetchData });
+
+
+    this.setState({ expenseData: expenseJson });
   }
 
   displayCollapseMenu = id => {
@@ -151,8 +168,8 @@ class App extends Component {
                     isAdd={this.state.isVisibleModalAddExpense}
                     isAddExpense={this.isAddExpense}
                     isAddExpenseSave={this.isAddExpenseSave}
-                    expenseData={""}
-                    expenseColumns={""}
+                    expenseData={expenseJson}
+                    expenseColumns={columns}
                   />
                 </Route>
                 {/* <Route path="/expense" exact={true}>

@@ -45,26 +45,11 @@ const tableIcons = {
 
 
 const ExpenseTable = (props) => {
-  const [state, setState] = useState({columns: [
-    { title: 'Name', field: 'name' },
-    { title: 'FirstName', field: 'firstname' },
-    { title: 'Surname', field: 'surname'},
-    { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-    {
-      title: 'Birth Place',
-      field: 'birthCity',
-      lookup: { 34: 'Istanbul', 63: 'Sansum' },
-    },
-  ],
-  data: [
-    { name: 'Mehmet',firstname:"John", surname: 'Baran', birthYear: 1987, birthCity: 63 },
-    {
-      name: 'Zerya Betül',
-      surname: 'Baran',
-      birthYear: 2017,
-      birthCity: 34,
-    },
-  ],});
+  console.log("props",props)
+  const [state, setState] = useState({
+    columns: props.expenseColumns,
+    data: props.expenseData
+  });
 
 
   return (
