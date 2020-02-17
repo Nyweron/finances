@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import RevenueTable from "../component/revenue/revenueTable";
 import RevenueAddModal from "../component/revenue/revenueAdd";
+import RevenueFilter from "../component/revenue/revenueFilter";
+
 
 import styles from "../App.module.css";
 class revenue extends Component {
@@ -45,7 +47,7 @@ class revenue extends Component {
             >
               Filter settings
             </button>
-            {/* {this.state.isVisibleFilterSettings && <RevenueFilter />} */}
+            {this.state.isVisibleFilterSettings && <RevenueFilter />}
           </div>
           <div className={styles.centerColumn}>
             <div className={styles.card}>

@@ -59,7 +59,7 @@ class App extends Component {
   };
 
   isAddExpenseSave = props => {
-    console.log("props, save", props);
+    console.log("isAddExpenseSave props, save", props);
   };
 
   isAddRevenue = props => {
@@ -67,6 +67,10 @@ class App extends Component {
     this.setState({
       isVisibleModalAddRevenue: !this.state.isVisibleModalAddRevenue
     });
+  };
+
+  isAddRevenueSave = props => {
+    console.log("isAddRevenueSave props, save", props);
   };
 
   render() {
@@ -160,6 +164,7 @@ class App extends Component {
                   <Revenue
                     isAdd={this.state.isVisibleModalAddRevenue}
                     isAddRevenue={this.isAddRevenue}
+                    isAddRevenueSave={this.isAddRevenueSave}
                   />
                 </Route>
                 <Route path="/">
