@@ -1,5 +1,6 @@
 {
   "name": "my-app-finances-1",
+  "author": "Przemysław Juśkiewicz",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
