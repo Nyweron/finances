@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import MaterialTable from "material-table";
 
+import TableContainer from "../myCustomCRUDTable/TableContainer";
+
+
 /* table icons start */
 import { forwardRef } from 'react';
 import AddBox from '@material-ui/icons/AddBox';
@@ -19,6 +22,7 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -50,10 +54,12 @@ const ExpenseTable = (props) => {
     columns: props.expenseColumns,
     data: props.expenseData
   });
-
+  console.log("ExpenseTable columns",state.columns)
+  console.log("ExpenseTable data",state.data)
 
   return (
-    <MaterialTable
+    <>
+    {/* <MaterialTable
       icons={tableIcons}
       title="Editable Example"
       columns={state.columns}
@@ -95,7 +101,17 @@ const ExpenseTable = (props) => {
             }, 600);
           }),
       }}
+    /> */}
+
+
+    <TableContainer
+      columns={state.columns}
+      data={state.data}
+
     />
+
+</>
+
   );
 };
 

@@ -14,18 +14,18 @@ import Revenue from "./container/revenue";
 
 import styles from "./App.module.css";
 
-import expenseJson from './json/expenses';
+import expenseJson from "./json/expenses";
 
 const columns = [
-  { title: 'Id', field: 'Id', type: 'numeric' },
-  { title: 'Data', field: 'Data' },
-  { title: 'IdKategoriaOszczednosci', field: 'IdKategoriaOszczednosci', type: 'numeric'},
-  { title: 'IdKategoriaWydatki', field: 'IdKategoriaWydatki', type: 'numeric'},
-  { title: 'IdOsoba', field: 'IdOsoba', type: 'numeric'},
-  { title: 'Ile', field: 'Ile', type: 'numeric'},
-  { title: 'Komentarz', field: 'Komentarz'},
-  { title: 'Zalacznik', field: 'Zalacznik'},
-  { title: 'ZlecenieStale', field: 'ZlecenieStale', type: 'numeric'}
+  "Id",
+  "Data",
+  "IdKategoriaOszczednosci",
+  "IdKategoriaWydatki",
+  "IdOsoba",
+  "Ile",
+  "Komentarz",
+  "Zalacznik",
+  "ZlecenieStale"
 ];
 
 class App extends Component {
@@ -43,7 +43,6 @@ class App extends Component {
     //   res.json()
     // );
     // this.setState({ data: fetchData });
-
 
     this.setState({ expenseData: expenseJson });
   }
@@ -99,17 +98,10 @@ class App extends Component {
           <span>Wydatki</span>
         </Link>
         <Link to="/expense/add">
-        <span onClick={this.isAddExpense}>Dodaj</span>
+          <span onClick={this.isAddExpense}>Dodaj</span>
         </Link>
-        {/* <span onClick={this.isAddExpense}>Dodaj</span> */}
         <span>Zapisz</span>
         <span>...</span>
-        {/* <Link to="/expense">
-          <span>Wydatki</span>
-        </Link>
-        <span onClick={this.isAddExpense}>Dodaj</span>
-        <span>Zapisz</span>
-        <span>...</span> */}
       </div>
     );
     let przychodyFiled = this.state.collapseMenuClicked === revenues && (
@@ -118,7 +110,7 @@ class App extends Component {
           <span>Przychody</span>
         </Link>
         <Link to="/revenue/add">
-        <span onClick={this.isAddRevenue}>Dodaj</span>
+          <span onClick={this.isAddRevenue}>Dodaj</span>
         </Link>
         <span>...</span>
       </div>
@@ -172,13 +164,6 @@ class App extends Component {
                     expenseColumns={columns}
                   />
                 </Route>
-                {/* <Route path="/expense" exact={true}>
-                  <Expense isAdd={this.state.isVisibleModalAddExpense} />
-                  { <Expense isAdd={this.state.isExpenseAdd} />
-                </Route>
-                <Route path="/expense/add" exact={true}>
-                  <Expense isAdd={this.state.isVisibleModalAddExpense} />
-                </Route> */}
                 <Route path="/revenue">
                   <Revenue
                     isAdd={this.state.isVisibleModalAddRevenue}
