@@ -47,6 +47,7 @@ class TableContainer extends Component {
 
   handleSubmitAddRow = addObj => {
     console.log("TableContainer.handleSubmitAddRow", addObj)
+    this.props.addRow(addObj);
     // if (
     //   addObj === undefined ||
     //   addObj === null ||
@@ -108,6 +109,8 @@ class TableContainer extends Component {
 
   handleRemove = id => {
     console.log("TableContainer.handleRemove",id)
+
+    this.props.removeRow(id)
     // let listOfRows = this.state.rowsFromDbJson;
     // const newListWithoutRemovedItem = removeRowById(listOfRows, id);
 
@@ -131,6 +134,7 @@ class TableContainer extends Component {
 
   handleEdit = editObj => {
     console.log("TableContainer.handleEdit", editObj)
+    this.props.editRow(editObj)
     // let listOfRows = this.state.rowsFromDbJson;
 
     // const editExistRow = {
@@ -190,7 +194,7 @@ class TableContainer extends Component {
 
   negationAdd = () => {
     console.log("TableContainer.negationAdd")
-    // this.setState({ add: !this.state.add });
+    this.setState({ add: !this.state.add });
   };
 
   onPageChanged = data => {
@@ -226,7 +230,7 @@ class TableContainer extends Component {
     return (
       <div className="container">
         <div className="row">
-          <button className="btn" onClick={this.negationAdd}>
+          <button className="btn btn-primary" onClick={this.negationAdd}>
             Add row
           </button>
           {this.state.message && (
