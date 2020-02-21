@@ -195,36 +195,30 @@ class TableContainer extends Component {
 
   onPageChanged = data => {
     console.log("TableContainer.onPageChanged",data)
-    // console.log("data", data);
-    // const offset = (data.currentPage - 1) * data.pageLimit;
-    // const currentRows = this.state.rowsFromDbJson.slice(
-    //   offset,
-    //   offset + data.pageLimit
-    // );
+    const offset = (data.currentPage - 1) * data.pageLimit;
+    const currentRows = this.state.rowsFromDbJson.slice(
+      offset,
+      offset + data.pageLimit
+    );
 
-    // this.setState({
-    //   currentPage: data.currentPage,
-    //   rowsFromDbJson: this.state.rowsFromDbJson,
-    //   currentRows
-    // });
+    this.setState({
+      currentPage: data.currentPage,
+      rowsFromDbJson: this.state.rowsFromDbJson,
+      currentRows
+    });
   };
 
   render() {
     console.log("TableContainer",this.state)
+
     if (this.state.rowsFromDbJson.length === 0) {
       return null;
     }
 
-    if(this.state.currentRows.length === 0){
-
-    }
-
-
-
     const displayTable =
     filterTable(
       this.state.keysFromDbJson,
-      this.state.rowsFromDbJson,
+      this.state.currentRows,
       this.state.columnName,
       this.state.sort
     );
