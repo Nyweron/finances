@@ -169,23 +169,23 @@ class TableContainer extends Component {
   sortColumn = currentColumnName => {
     console.log("TableContainer.sortColumn", currentColumnName)
     /* We use 2 because in list always will be empty row with id=0 and new row which we will create. */
-    // if (this.state.rowsFromDbJson.length === 2) {
-    //   return;
-    // }
-    // if (this.state.previousColumnName === currentColumnName) {
-    //   this.setState({ columnName: currentColumnName });
-    //   this.setState(prevState => ({
-    //     sort: !prevState.sort
-    //   }));
-    // } else {
-    //   this.setState({
-    //     columnName: currentColumnName,
-    //     previousColumnName: currentColumnName
-    //   });
-    //   this.setState(prevState => ({
-    //     sort: !prevState.sort
-    //   }));
-    // }
+    if (this.state.rowsFromDbJson & this.state.rowsFromDbJson.length === 2) {
+      return;
+    }
+    if (this.state.previousColumnName === currentColumnName) {
+      this.setState({ columnName: currentColumnName });
+      this.setState(prevState => ({
+        sort: !prevState.sort
+      }));
+    } else {
+      this.setState({
+        columnName: currentColumnName,
+        previousColumnName: currentColumnName
+      });
+      this.setState(prevState => ({
+        sort: !prevState.sort
+      }));
+    }
   };
 
   negationAdd = () => {
@@ -211,7 +211,7 @@ class TableContainer extends Component {
   render() {
     console.log("TableContainer",this.state)
 
-    if (this.state.rowsFromDbJson.length === 0) {
+    if (this.state.rowsFromDbJson === undefined || this.state.rowsFromDbJson.length === 0) {
       return null;
     }
 

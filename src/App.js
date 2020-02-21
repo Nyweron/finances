@@ -16,8 +16,10 @@ import styles from "./App.module.css";
 
 import expenseJson from "./json/expenses";
 
+
+//TODO remember about lowercase id in all json's...
 const columns = [
-  "Id",
+  "id",
   "Data",
   "IdKategoriaOszczednosci",
   "IdKategoriaWydatki",
