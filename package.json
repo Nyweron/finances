@@ -1,5 +1,6 @@
 {
-  "name": "my-app-finances-1",
+  "name": "finances",
+  "author": "Przemysław Juśkiewicz",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,7 +12,6 @@
     "bootstrap": "^4.4.1",
     "final-form": "^4.18.7",
     "json-server": "^0.15.1",
-    "material-table": "^1.57.2",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
