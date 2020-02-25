@@ -1,0 +1,1 @@
+export const expenseUrl = "http://localhost:8081/expense"
