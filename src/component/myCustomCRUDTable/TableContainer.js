@@ -1,27 +1,14 @@
 import React, { Component } from "react";
 import { TableListRows } from "../myCustomCRUDTable/table/TableListRows";
-// import TableAdd from "../myCustomCRUDTable/table/TableAdd";
+
 import Pagination from "./pagination/Pagination";
 import { filterTable } from "../../lib/crudHelper";
-// import {
-//   getAll,
-//   getKeyFromJson,
-//   filterTable,
-//   createPerson,
-//   deleteRow,
-//   updateRow
-// } from "../lib/personService";
-// import {
-//   removeRowById,
-//   updateByObjectId,
-//   sortIds,
-//   generateNewId
-// } from "../lib/personHelpers";
+
 
 class TableContainer extends Component {
   state = {
-    rowsFromDbJson: null,
-    keysFromDbJson: null,
+    rowsFromDbJson: this.props.data,
+    keysFromDbJson: this.props.columns,
     sort: true,
     columnName: "",
     previousColumnName: "",
@@ -34,17 +21,6 @@ class TableContainer extends Component {
 
   componentDidMount() {
     console.log("TableContainer.componentDidMount");
-    this.setState({
-      rowsFromDbJson: this.props.data,
-      keysFromDbJson: this.props.columns
-    });
-    // getAll().then(rows => {
-    //   this.setState({ rowsFromDbJson: rows });
-    //   const keys = getKeyFromJson(rows);
-    //   if (keys !== null) {
-    //     this.setState({ keysFromDbJson: keys });
-    //   }
-    // });
   }
 
   handleSubmitAddRow = addObj => {

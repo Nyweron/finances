@@ -14,40 +14,15 @@ import Revenue from "./container/revenue";
 
 import styles from "./App.module.css";
 
-// import expenseJson from "./json/expenses";
-
-
-//TODO remember about lowercase id in all json's...
-// const columns = [
-//   "id",
-//   "Data",
-//   "IdKategoriaOszczednosci",
-//   "IdKategoriaWydatki",
-//   "IdOsoba",
-//   "Ile",
-//   "Komentarz",
-//   "Zalacznik",
-//   "ZlecenieStale"
-// ];
 
 class App extends Component {
   state = {
     isVisibleCollapseMenu: false,
     isVisibleModalAddExpense: false,
     isVisibleModalAddRevenue: false,
-    collapseMenuClicked: -1,
-
-    expenseData: null
+    collapseMenuClicked: -1
   };
 
-  componentDidMount() {
-    // const fetchData = fetch("http://localhost:8081/data").then(res =>
-    //   res.json()
-    // );
-    // this.setState({ data: fetchData });
-
-    // this.setState({ expenseData: expenseJson });
-  }
 
   displayCollapseMenu = id => {
     if (this.state.collapseMenuClicked === id) {
@@ -162,8 +137,6 @@ class App extends Component {
                     isAdd={this.state.isVisibleModalAddExpense}
                     isAddExpense={this.isAddExpense}
                     isAddExpenseSave={this.isAddExpenseSave}
-                    // expenseData={expenseJson}
-                    // expenseColumns={columns}
                   />
                 </Route>
                 <Route path="/revenue">
