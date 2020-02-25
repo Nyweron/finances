@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { TableListRows } from "../myCustomCRUDTable/table/TableListRows";
 import TableAdd from "../myCustomCRUDTable/table/TableAdd";
 import Pagination from "./pagination/Pagination";
-import {
-  filterTable
-} from "../../lib/crudHelper";
+import { filterTable } from "../../lib/crudHelper";
 // import {
 //   getAll,
 //   getKeyFromJson,
@@ -46,7 +44,7 @@ class TableContainer extends Component {
   }
 
   handleSubmitAddRow = addObj => {
-    console.log("TableContainer.handleSubmitAddRow", addObj)
+    console.log("TableContainer.handleSubmitAddRow", addObj);
     this.props.addRow(addObj);
     // if (
     //   addObj === undefined ||
@@ -93,7 +91,7 @@ class TableContainer extends Component {
   };
 
   handleChange = event => {
-    console.log("TableContainer.handleChange",event)
+    console.log("TableContainer.handleChange", event);
     // event.preventDefault();
     // if (this.state.keysFromDbJson.length === 0) {
     //   this.setState({
@@ -108,9 +106,9 @@ class TableContainer extends Component {
   };
 
   handleRemove = id => {
-    console.log("TableContainer.handleRemove",id)
+    console.log("TableContainer.handleRemove", id);
 
-    this.props.removeRow(id)
+    this.props.removeRow(id);
     // let listOfRows = this.state.rowsFromDbJson;
     // const newListWithoutRemovedItem = removeRowById(listOfRows, id);
 
@@ -123,7 +121,7 @@ class TableContainer extends Component {
   };
 
   invokePaginationOnPageChanged = () => {
-    console.log("TableContainer.invokePaginationOnPageChanged")
+    console.log("TableContainer.invokePaginationOnPageChanged");
     // const data = {};
     // data.totalRecords = this.state.rowsFromDbJson.length;
     // data.pageLimit = this.state.pageLimit;
@@ -133,8 +131,8 @@ class TableContainer extends Component {
   };
 
   handleEdit = editObj => {
-    console.log("TableContainer.handleEdit", editObj)
-    this.props.editRow(editObj)
+    console.log("TableContainer.handleEdit", editObj);
+    this.props.editRow(editObj);
     // let listOfRows = this.state.rowsFromDbJson;
 
     // const editExistRow = {
@@ -159,11 +157,10 @@ class TableContainer extends Component {
     //     }
     //   )
     // );
-
   };
 
   showTempMessage = msg => {
-    console.log("TableContainer.showTempMessage", msg)
+    console.log("TableContainer.showTempMessage", msg);
     // this.setState({ message: msg });
     // setTimeout(() => {
     //   this.setState({ message: "" });
@@ -171,9 +168,9 @@ class TableContainer extends Component {
   };
 
   sortColumn = currentColumnName => {
-    console.log("TableContainer.sortColumn", currentColumnName)
+    console.log("TableContainer.sortColumn", currentColumnName);
     /* We use 2 because in list always will be empty row with id=0 and new row which we will create. */
-    if (this.state.rowsFromDbJson & this.state.rowsFromDbJson.length === 2) {
+    if (this.state.rowsFromDbJson & (this.state.rowsFromDbJson.length === 2)) {
       return;
     }
     if (this.state.previousColumnName === currentColumnName) {
@@ -193,12 +190,17 @@ class TableContainer extends Component {
   };
 
   negationAdd = () => {
-    console.log("TableContainer.negationAdd")
+    console.log("TableContainer.negationAdd");
     this.setState({ add: !this.state.add });
   };
 
+  handleClose = () => {
+    console.log("TableContainer.handleClose");
+    this.setState({ add: false });
+  };
+
   onPageChanged = data => {
-    console.log("TableContainer.onPageChanged",data)
+    console.log("TableContainer.onPageChanged", data);
     const offset = (data.currentPage - 1) * data.pageLimit;
     const currentRows = this.state.rowsFromDbJson.slice(
       offset,
@@ -213,14 +215,16 @@ class TableContainer extends Component {
   };
 
   render() {
-    console.log("TableContainer",this.state)
+    console.log("TableContainer", this.state);
 
-    if (this.state.rowsFromDbJson === undefined || this.state.rowsFromDbJson.length === 0) {
+    if (
+      this.state.rowsFromDbJson === undefined ||
+      this.state.rowsFromDbJson.length === 0
+    ) {
       return null;
     }
 
-    const displayTable =
-    filterTable(
+    const displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.currentRows,
       this.state.columnName,
@@ -238,12 +242,27 @@ class TableContainer extends Component {
           )}
         </div>
 
-        <TableAdd
+        <this.props.AddComponent
+          show={this.state.add}
+          handleClose={this.handleClose}
+        />
+
+        {/* <TableAdd
           show={this.state.add}
           handleSubmitAddRow={this.handleSubmitAddRow}
           handleChange={this.handleChange}
           negationAdd={this.negationAdd}
         />
+
+
+        <this.props.FormAddComponent
+          show={this.state.add}
+          handleSubmitAddRow={this.handleSubmitAddRow}
+          handleChange={this.handleChange}
+          negationAdd={this.negationAdd}
+        />
+
+        <this.props.EditComponent /> */}
 
         <div className="row">
           <TableListRows

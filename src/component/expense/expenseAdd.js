@@ -1,142 +1,284 @@
-import React from "react";
+import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { Form, Field } from "react-final-form";
 
-const expenseAddModal = props => {
-  console.log("ExpenseAddModal", props);
-  return (
-    <>
-      <Modal show={props.isVisibleAddExpense} onHide={props.handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading Expense Add</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Woohoo, you're reading this text in a modal!
-          <div>
-            {/* */}
-            <br />
-            <form className="needs-validation">
-              <div className="form-row">
-                <div className="col-md-4 mb-3">
-                  <label htmlFor="validationCustom01">First name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom01"
-                    placeholder="First name"
-                    required
-                  />
-                  <div className="valid-feedback">Looks good!</div>
-                </div>
-                <div className="col-md-4 mb-3">
-                  <label htmlFor="validationCustom02">Last name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom02"
-                    placeholder="Last name"
-                    required
-                  />
-                  <div className="valid-feedback">Looks good!</div>
-                </div>
-                <div className="col-md-4 mb-3">
-                  <label htmlFor="validationCustomUsername">Username</label>
-                  <div className="input-group">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text" id="inputGroupPrepend">
-                        @
-                      </span>
-                    </div>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="validationCustomUsername"
-                      placeholder="Username"
-                      aria-describedby="inputGroupPrepend"
-                      required
-                    />
-                    <div className="invalid-feedback">
-                      Please choose a username.
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="validationCustom03">City</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom03"
-                    placeholder="City"
-                    required
-                  />
-                  <div className="invalid-feedback">
-                    Please provide a valid city.
-                  </div>
-                </div>
-                <div className="col-md-3 mb-3">
-                  <label htmlFor="validationCustom04">State</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom04"
-                    placeholder="State"
-                    required
-                  />
-                  <div className="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-                <div className="col-md-3 mb-3">
-                  <label htmlFor="validationCustom05">Zip</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom05"
-                    placeholder="Zip"
-                    required
-                  />
-                  <div className="invalid-feedback">
-                    Please provide a valid zip.
-                  </div>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="invalidCheck"
-                    required
-                  />
-                  <label className="form-check-label" htmlFor="invalidCheck">
-                    Agree to terms and conditions
+class ExpenseAdd extends Component {
+  state = {
+    show: this.props.show
+  };
+
+  saveData = addObj => {
+    console.log("ExpenseAdd.saveData", addObj);
+  };
+
+  onSubmit = temp => {
+    console.log("ExpenseAdd.onSubmit", temp);
+  };
+
+  render() {
+    console.log("ExpenseAddModal", this.props);
+    console.log("ExpenseAdd", this.state);
+    return (
+      <>
+        <Modal show={this.props.show} onHide={this.props.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading Expense Add</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Woohoo, you're reading this text in a modal!
+            <div>
+              {/* */}
+              <br />
+              <form>
+                <div className="form-group">
+                  <label htmlFor="name" className="cols-sm-2 control-label">
+                    Firstname
                   </label>
-                  <div className="invalid-feedback">
-                    You must agree before submitting.
+                  <div className="cols-sm-5">
+                    <div className="input-group">
+                      <span className="input-group-addon">
+                        <i className="fa fa-user fa" aria-hidden="true" />
+                      </span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="firstName"
+                        name="firstName"
+                        value={this.props.firstName}
+                        onChange={this.props.handleChange}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <button className="btn btn-primary" type="submit">
-                Submit form
-              </button>
-            </form>
-            {/* */}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={props.handleShow}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
-};
+                <div className="form-group">
+                  <label htmlFor="name" className="cols-sm-2 control-label">
+                    Lastname
+                  </label>
+                  <div className="cols-sm-5">
+                    <div className="input-group">
+                      <span className="input-group-addon">
+                        <i className="fa fa-user fa" aria-hidden="true" />
+                      </span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="lastName"
+                        name="lastName"
+                        value={this.props.lastName}
+                        onChange={this.props.handleChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="name" className="cols-sm-2 control-label">
+                    Age
+                  </label>
+                  <div className="cols-sm-5">
+                    <div className="input-group">
+                      <span className="input-group-addon">
+                        <i className="fa fa-user fa" aria-hidden="true" />
+                      </span>
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="age"
+                        name="age"
+                        min="0"
+                        max="100"
+                        value={this.props.age}
+                        onChange={this.props.handleChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="name" className="cols-sm-2 control-label">
+                    Hobby
+                  </label>
+                  <div className="cols-sm-5">
+                    <div className="input-group">
+                      <span className="input-group-addon">
+                        <i className="fa fa-user fa" aria-hidden="true" />
+                      </span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="hobby"
+                        name="hobby"
+                        value={this.props.hobby}
+                        onChange={this.props.handleChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+              {/* */}
+            </div>
+            <Form
+              onSubmit={this.onSubmit}
+              initialValues={{ stooge: "larry", employed: false }}
+              render={({
+                handleSubmit,
+                form,
+                submitting,
+                pristine,
+                values
+              }) => (
+                <form onSubmit={handleSubmit}>
+                  <div>
+                    <label>First Name</label>
+                    <Field
+                      name="firstName"
+                      component="input"
+                      type="text"
+                      placeholder="First Name"
+                    />
+                  </div>
+                  <div>
+                    <label>Last Name</label>
+                    <Field
+                      name="lastName"
+                      component="input"
+                      type="text"
+                      placeholder="Last Name"
+                    />
+                  </div>
+                  <div>
+                    <label>Employed</label>
+                    <Field name="employed" component="input" type="checkbox" />
+                  </div>
+                  <div>
+                    <label>Favorite Color</label>
+                    <Field name="favoriteColor" component="select">
+                      <option />
+                      <option value="#ff0000">❤️ Red</option>
+                      <option value="#00ff00">💚 Green</option>
+                      <option value="#0000ff">💙 Blue</option>
+                    </Field>
+                  </div>
+                  <div>
+                    <label>Toppings</label>
+                    <Field name="toppings" component="select" multiple>
+                      <option value="chicken">🐓 Chicken</option>
+                      <option value="ham">🐷 Ham</option>
+                      <option value="mushrooms">🍄 Mushrooms</option>
+                      <option value="cheese">🧀 Cheese</option>
+                      <option value="tuna">🐟 Tuna</option>
+                      <option value="pineapple">🍍 Pineapple</option>
+                    </Field>
+                  </div>
+                  <div>
+                    <label>Sauces</label>
+                    <div>
+                      <label>
+                        <Field
+                          name="sauces"
+                          component="input"
+                          type="checkbox"
+                          value="ketchup"
+                        />{" "}
+                        Ketchup
+                      </label>
+                      <label>
+                        <Field
+                          name="sauces"
+                          component="input"
+                          type="checkbox"
+                          value="mustard"
+                        />{" "}
+                        Mustard
+                      </label>
+                      <label>
+                        <Field
+                          name="sauces"
+                          component="input"
+                          type="checkbox"
+                          value="mayonnaise"
+                        />{" "}
+                        Mayonnaise
+                      </label>
+                      <label>
+                        <Field
+                          name="sauces"
+                          component="input"
+                          type="checkbox"
+                          value="guacamole"
+                        />{" "}
+                        Guacamole 🥑
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label>Best Stooge</label>
+                    <div>
+                      <label>
+                        <Field
+                          name="stooge"
+                          component="input"
+                          type="radio"
+                          value="larry"
+                        />{" "}
+                        Larry
+                      </label>
+                      <label>
+                        <Field
+                          name="stooge"
+                          component="input"
+                          type="radio"
+                          value="moe"
+                        />{" "}
+                        Moe
+                      </label>
+                      <label>
+                        <Field
+                          name="stooge"
+                          component="input"
+                          type="radio"
+                          value="curly"
+                        />{" "}
+                        Curly
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label>Notes</label>
+                    <Field
+                      name="notes"
+                      component="textarea"
+                      placeholder="Notes"
+                    />
+                  </div>
+                  <div className="buttons">
+                    <button type="submit" disabled={submitting || pristine}>
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={form.reset}
+                      disabled={submitting || pristine}
+                    >
+                      Reset
+                    </button>
+                  </div>
+                  <pre>{JSON.stringify(values, 0, 2)}</pre>
+                </form>
+              )}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.props.handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.saveData}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  }
+}
 
-export default expenseAddModal;
+export default ExpenseAdd;
