@@ -12,7 +12,7 @@ class TableContainer extends Component {
     sort: true,
     columnName: "",
     previousColumnName: "",
-    add: false,
+    isDisplayAddForm: false,
     currentRows: [],
     currentPage: 1,
     pageLimit: 5,
@@ -169,14 +169,14 @@ class TableContainer extends Component {
     }
   };
 
-  negationAdd = () => {
-    console.log("TableContainer.negationAdd");
-    this.setState({ add: !this.state.add });
+  displayAddForm = () => {
+    console.log("TableContainer.displayAddForm");
+    this.setState({ isDisplayAddForm: true });
   };
 
   handleClose = () => {
     console.log("TableContainer.handleClose");
-    this.setState({ add: false });
+    this.setState({ isDisplayAddForm: false });
   };
 
   onPageChanged = data => {
@@ -195,8 +195,6 @@ class TableContainer extends Component {
   };
 
   render() {
-    console.log("TableContainer", this.state);
-    console.log("TableContainerProps", this.props);
 
     if (
       this.state.rowsFromDbJson === undefined ||
@@ -205,6 +203,8 @@ class TableContainer extends Component {
     ) {
       return null;
     }
+
+    console.log("TableContainer", this.state);
 
     const displayTable = filterTable(
       this.state.keysFromDbJson,
@@ -216,7 +216,7 @@ class TableContainer extends Component {
     return (
       <div className="container">
         <div className="row">
-          <button className="btn btn-primary" onClick={this.negationAdd}>
+          <button className="btn btn-primary" onClick={this.displayAddForm}>
             Add row
           </button>
           {this.state.message && (
@@ -225,7 +225,7 @@ class TableContainer extends Component {
         </div>
 
         <this.props.AddComponent
-          show={this.state.add}
+          show={this.state.isDisplayAddForm}
           handleClose={this.handleClose}
         />
 
