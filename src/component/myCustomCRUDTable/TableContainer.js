@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { TableListRows } from "../myCustomCRUDTable/table/TableListRows";
-import TableAdd from "../myCustomCRUDTable/table/TableAdd";
+// import TableAdd from "../myCustomCRUDTable/table/TableAdd";
 import Pagination from "./pagination/Pagination";
 import { filterTable } from "../../lib/crudHelper";
 // import {
@@ -20,8 +20,8 @@ import { filterTable } from "../../lib/crudHelper";
 
 class TableContainer extends Component {
   state = {
-    rowsFromDbJson: this.props.data,
-    keysFromDbJson: this.props.columns,
+    rowsFromDbJson: null,
+    keysFromDbJson: null,
     sort: true,
     columnName: "",
     previousColumnName: "",
@@ -34,6 +34,10 @@ class TableContainer extends Component {
 
   componentDidMount() {
     console.log("TableContainer.componentDidMount");
+    this.setState({
+      rowsFromDbJson: this.props.data,
+      keysFromDbJson: this.props.columns
+    });
     // getAll().then(rows => {
     //   this.setState({ rowsFromDbJson: rows });
     //   const keys = getKeyFromJson(rows);
@@ -216,9 +220,11 @@ class TableContainer extends Component {
 
   render() {
     console.log("TableContainer", this.state);
+    console.log("TableContainerProps", this.props);
 
     if (
       this.state.rowsFromDbJson === undefined ||
+      this.state.rowsFromDbJson === null ||
       this.state.rowsFromDbJson.length === 0
     ) {
       return null;
@@ -247,22 +253,7 @@ class TableContainer extends Component {
           handleClose={this.handleClose}
         />
 
-        {/* <TableAdd
-          show={this.state.add}
-          handleSubmitAddRow={this.handleSubmitAddRow}
-          handleChange={this.handleChange}
-          negationAdd={this.negationAdd}
-        />
-
-
-        <this.props.FormAddComponent
-          show={this.state.add}
-          handleSubmitAddRow={this.handleSubmitAddRow}
-          handleChange={this.handleChange}
-          negationAdd={this.negationAdd}
-        />
-
-        <this.props.EditComponent /> */}
+        {/* <this.props.EditComponent /> */}
 
         <div className="row">
           <TableListRows

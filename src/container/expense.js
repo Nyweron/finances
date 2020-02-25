@@ -5,15 +5,28 @@ import ExpenseEdit from "../component/expense/expenseEdit";
 import ExpenseAdd from "../component/expense/expenseAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
+import {getAll} from "../lib/expenseService";
+import {getKeyFromJson} from "../lib/crudHelper";
+
 import styles from "../App.module.css";
+
 
 class expense extends Component {
   state = {
-    // isVisibleAddExpense: false,
     isVisibleFilterSettings: false,
-    data: this.props.expenseData,
-    columns: this.props.expenseColumns
+    data: null,
+    columns: null
   };
+
+  componentDidMount(){
+    getAll().then(rows => {
+      this.setState({ data: rows });
+      const keys = getKeyFromJson(rows);
+      if (keys !== null) {
+        this.setState({ columns: keys });
+      }
+    });
+  }
 
   displayFilterSettings = () => {
     this.setState({
@@ -97,6 +110,10 @@ class expense extends Component {
   render() {
     // console.log("Data", this.state.data);
 
+    if(this.state.data === null || this.state.columns === null){
+      return null;
+    }
+
     return (
       <>
         <div className={styles.row}>
@@ -111,7 +128,6 @@ class expense extends Component {
           </div>
           <div className={styles.centerColumn}>
             <div className={styles.card}>
-              {/* HOW pass component into component, i need passExpenseForm, revenueForm itp... somethink like modal... */}
               <TableContainer
                 columns={this.state.columns}
                 data={this.state.data}
