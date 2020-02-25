@@ -69,3 +69,10 @@ function sortAscending(x, y) {
     return 0;
   }
 }
+
+export const getKeyFromJson = rows => {
+  if (rows !== null && rows.length > 0) {
+    return Object.keys(rows[0]);
+  }
+  return rows;
+};
