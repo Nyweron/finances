@@ -15,7 +15,7 @@ class ExpenseAdd extends Component {
       <>
         <Form
           onSubmit={this.onSubmit}
-          initialValues={{ stooge: "larry", employed: false }}
+          initialValues={{ stooge: "larry", autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
               show={this.props.show}
@@ -35,128 +35,85 @@ class ExpenseAdd extends Component {
                 </Modal.Header>
                 <Modal.Body>
                   <div>
-                    <label>First Name</label>
+                    <label>Kwota</label>
                     <Field
-                      name="firstName"
+                      name="amount"
                       component="input"
-                      type="text"
-                      placeholder="First Name"
+                      type="number"
+                      placeholder="Kwota"
                     />
                   </div>
                   <div>
-                    <label>Last Name</label>
-                    <Field
-                      name="lastName"
-                      component="input"
-                      type="text"
-                      placeholder="Last Name"
-                    />
-                  </div>
-                  <div>
-                    <label>Employed</label>
-                    <Field name="employed" component="input" type="checkbox" />
-                  </div>
-                  <div>
-                    <label>Favorite Color</label>
-                    <Field name="favoriteColor" component="select">
+                    <label>Na co</label>
+                    <Field name="forWhat" component="select">
                       <option />
-                      <option value="#ff0000">❤️ Red</option>
-                      <option value="#00ff00">💚 Green</option>
-                      <option value="#0000ff">💙 Blue</option>
+                      <option value="56">Artykuły spożywcze</option>
+                      <option value="77">Lekarz</option>
+                      <option value="88">Samochód</option>
                     </Field>
                   </div>
                   <div>
-                    <label>Toppings</label>
-                    <Field name="toppings" component="select" multiple>
-                      <option value="chicken">🐓 Chicken</option>
-                      <option value="ham">🐷 Ham</option>
-                      <option value="mushrooms">🍄 Mushrooms</option>
-                      <option value="cheese">🧀 Cheese</option>
-                      <option value="tuna">🐟 Tuna</option>
-                      <option value="pineapple">🍍 Pineapple</option>
+                    <label>Czym zapłacono</label>
+                    <Field name="whatWasPaid" component="select">
+                      <option />
+                      <option value="1">Konto banku X</option>
+                      <option value="2">Karta banku X</option>
+                      <option value="3">Konto banku Y</option>
                     </Field>
                   </div>
                   <div>
-                    <label>Sauces</label>
-                    <div>
-                      <label>
-                        <Field
-                          name="sauces"
-                          component="input"
-                          type="checkbox"
-                          value="ketchup"
-                        />{" "}
-                        Ketchup
-                      </label>
-                      <label>
-                        <Field
-                          name="sauces"
-                          component="input"
-                          type="checkbox"
-                          value="mustard"
-                        />{" "}
-                        Mustard
-                      </label>
-                      <label>
-                        <Field
-                          name="sauces"
-                          component="input"
-                          type="checkbox"
-                          value="mayonnaise"
-                        />{" "}
-                        Mayonnaise
-                      </label>
-                      <label>
-                        <Field
-                          name="sauces"
-                          component="input"
-                          type="checkbox"
-                          value="guacamole"
-                        />{" "}
-                        Guacamole 🥑
-                      </label>
-                    </div>
+                    <label style={{ fontSize: "small" }}>
+                      Aktualny stan wybranych oszczędności: "Konto banku X
+                      value=1..."
+                    </label>
                   </div>
                   <div>
-                    <label>Best Stooge</label>
-                    <div>
-                      <label>
-                        <Field
-                          name="stooge"
-                          component="input"
-                          type="radio"
-                          value="larry"
-                        />{" "}
-                        Larry
-                      </label>
-                      <label>
-                        <Field
-                          name="stooge"
-                          component="input"
-                          type="radio"
-                          value="moe"
-                        />{" "}
-                        Moe
-                      </label>
-                      <label>
-                        <Field
-                          name="stooge"
-                          component="input"
-                          type="radio"
-                          value="curly"
-                        />{" "}
-                        Curly
-                      </label>
-                    </div>
+                  <label>Kiedy</label>
+                    <Field
+                      name="when"
+                      component="input"
+                      type="number"
+                      placeholder="Kiedy datepicker"
+                    />
                   </div>
                   <div>
-                    <label>Notes</label>
+                    <label>Kto</label>
+                    <Field name="who" component="select">
+                      <option />
+                      <option value="1">Ja</option>
+                      <option value="2">Brat</option>
+                      <option value="3">Siostra</option>
+                    </Field>
+                  </div>
+                  <div>
+                    <label>Komentarz</label>
                     <Field
                       name="notes"
                       component="textarea"
-                      placeholder="Notes"
+                      placeholder="Komentarz"
                     />
                   </div>
+
+                  <div>
+                    <label>Załącznik</label>
+                    <Field
+                      name="notes"
+                      component="input"
+                      type="text"
+                      placeholder="Załącznik"
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: "small" }}>Automatycznie odejmi wpisaną kwotę z wybranego typu oszczędności (pole Czym zapłacono)</label>
+                    <Field
+                    name="autoSubtractAmount"
+                    component="input"
+                    type="checkbox"
+                    />
+                  </div>
+
+
                 </Modal.Body>
                 <Modal.Footer>
                   <Button
@@ -177,7 +134,7 @@ class ExpenseAdd extends Component {
                     Save Changes
                   </Button>
 
-                  {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
+                  <pre>{JSON.stringify(values, 0, 2)}</pre>
                 </Modal.Footer>
               </form>
             </Modal>
