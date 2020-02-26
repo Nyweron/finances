@@ -4,14 +4,6 @@ import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
 
 class ExpenseAdd extends Component {
-  state = {};
-
-  componentDidMount() {}
-
-  saveData = addObj => {
-    console.log("ExpenseAdd.saveData", addObj);
-  };
-
   onSubmit = temp => {
     console.log("ExpenseAdd.onSubmit", temp);
     this.props.handleClose();
@@ -25,7 +17,13 @@ class ExpenseAdd extends Component {
           onSubmit={this.onSubmit}
           initialValues={{ stooge: "larry", employed: false }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
-            <Modal show={this.props.show} onHide={this.props.handleClose}>
+            <Modal
+              show={this.props.show}
+              onHide={() => {
+                this.props.handleClose();
+                form.reset();
+              }}
+            >
               <form
                 onSubmit={async event => {
                   await handleSubmit(event);
@@ -164,7 +162,10 @@ class ExpenseAdd extends Component {
                   <Button
                     variant="secondary"
                     type="button"
-                    onClick={form.reset}
+                    onClick={() => {
+                      form.reset();
+                      this.props.handleClose();
+                    }}
                   >
                     Close
                   </Button>
