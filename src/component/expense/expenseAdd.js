@@ -26,7 +26,12 @@ class ExpenseAdd extends Component {
           initialValues={{ stooge: "larry", employed: false }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal show={this.props.show} onHide={this.props.handleClose}>
-              <form onSubmit={handleSubmit}>
+              <form
+                onSubmit={async event => {
+                  await handleSubmit(event);
+                  form.reset();
+                }}
+              >
                 <Modal.Header closeButton>
                   <Modal.Title>Modal heading Expense Add</Modal.Title>
                 </Modal.Header>
