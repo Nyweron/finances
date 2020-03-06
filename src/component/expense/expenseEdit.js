@@ -1,115 +1,238 @@
 import React, { Component } from "react";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import { Form, Field } from "react-final-form";
 
 class ExpenseEdit extends Component {
   state = {
-    firstName: this.props.data === undefined ? "" : this.props.data.firstName,
-    lastName: this.props.data === undefined ? "" : this.props.data.lastName,
-    age: this.props.data === undefined ? 0 : this.props.data.age,
-    hobby: this.props.data === undefined ? "" : this.props.data.hobby,
-    id: this.props.data === undefined ? 0 : this.props.data.id,
-    isActive: this.props.data === undefined ? "" : this.props.data.isActive
+    show: false
   };
 
-  handleChange = event => {
-    event.preventDefault();
-    this.setState({ [event.target.name]: event.target.value });
+  onSubmit = temp => {
+    console.log("ExpenseEdit.onSubmit", temp);
+    this.hideModal();
+    this.props.handleEdit(temp);
   };
 
-  saveEdit = () => {
-    this.props.hideModal();
-    this.props.submitEditForm(this.state);
+  showModal = () => {
+    this.setState({ show: true });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false });
+  };
+
+  editForm = () => {
+    this.showModal();
   };
 
   render() {
+    console.log("ExpenseEditProps", this.props);
+
     return (
-      <div className="modal-body">
-        <form>
-          <div className="form-group">
-            <label htmlFor="name" className="cols-sm-2 control-label">
-              Firstnamefghfghf
-            </label>
-            <div className="cols-sm-5">
-              <div className="input-group">
-                <span className="input-group-addon">
-                  <i className="fa fa-user fa" aria-hidden="true" />
-                </span>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="firstName"
-                  name="firstName"
-                  value={this.state.firstName}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="name" className="cols-sm-2 control-label">
-              Lastname
-            </label>
-            <div className="cols-sm-5">
-              <div className="input-group">
-                <span className="input-group-addon">
-                  <i className="fa fa-user fa" aria-hidden="true" />
-                </span>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="lastName"
-                  name="lastName"
-                  value={this.state.lastName}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="name" className="cols-sm-2 control-label">
-              Age
-            </label>
-            <div className="cols-sm-5">
-              <div className="input-group">
-                <span className="input-group-addon">
-                  <i className="fa fa-user fa" aria-hidden="true" />
-                </span>
-                <input
-                  type="number"
-                  className="form-control"
-                  placeholder="age"
-                  name="age"
-                  min="0"
-                  max="100"
-                  value={this.state.age}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="name" className="cols-sm-2 control-label">
-              Hobby
-            </label>
-            <div className="cols-sm-5">
-              <div className="input-group">
-                <span className="input-group-addon">
-                  <i className="fa fa-user fa" aria-hidden="true" />
-                </span>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="hobby"
-                  name="hobby"
-                  value={this.state.hobby}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-          </div>
-        </form>
-        <button onClick={this.saveEdit}>Save editing row7</button>
-        <button onClick={this.props.hideModal}>Close7</button>
-      </div>
+      <>
+        <a onClick={this.editForm} style={{ color: "red" }}>
+          edit
+        </a>
+        <Form
+          onSubmit={this.onSubmit}
+          initialValues={{ amount: 55.01, autoSubtractAmount: true }}
+          render={({ handleSubmit, form, submitting, pristine, values }) => (
+            <Modal
+              show={this.state.show}
+              onHide={() => {
+                this.hideModal();
+                form.reset();
+              }}
+            >
+              <form
+                onSubmit={async event => {
+                  await handleSubmit(event);
+                  form.reset();
+                }}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Modal heading Expense Edit</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div className={"form-group row"}>
+                    <label className={"col-sm-2 col-form-label"}>Kwota</label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="amount"
+                        component="input"
+                        type="number"
+                        placeholder="Kwota"
+                        className={"form-control"}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>Na co</label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="forWhat"
+                        component="select"
+                        className={"custom-select"}
+                      >
+                        <option />
+                        <option value="56">Artykuły spożywcze</option>
+                        <option value="77">Lekarz</option>
+                        <option value="88">Samochód</option>
+                      </Field>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>
+                      Czym zapłacono
+                    </label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="whatWasPaid"
+                        component="select"
+                        className={"custom-select"}
+                      >
+                        <option />
+                        <option value="1">Konto banku X</option>
+                        <option value="2">Karta banku X</option>
+                        <option value="3">Konto banku Y</option>
+                      </Field>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label
+                      style={{ fontSize: "small" }}
+                      className={"col-sm-12"}
+                    >
+                      Aktualny stan wybranych oszczędności: "Konto banku X
+                      value=1..."
+                    </label>
+                  </div>
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className={"col-2 col-form-label"}>Dzień:</label>
+                    <div className={"col-4"}>
+                      <Field
+                        name="whenDay"
+                        component="input"
+                        type="number"
+                        placeholder="Dzień"
+                        className={"form-control"}
+                      />
+                    </div>
+                    <label className={"col-2 col-form-label"}>Miesiąc:</label>
+                    <div className={"col-4"}>
+                      <Field
+                        name="whenMonth"
+                        component="input"
+                        type="number"
+                        placeholder="Miesiąc"
+                        className={"form-control"}
+                      />
+                    </div>
+                    <label className={"col-2 col-form-label"}>Rok:</label>
+                    <div className={"col-4"}>
+                      <Field
+                        name="whenYear"
+                        component="input"
+                        type="number"
+                        placeholder="Rok"
+                        className={"form-control"}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>Kto</label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="who"
+                        component="select"
+                        className={"form-control"}
+                      >
+                        <option />
+                        <option value="1">Ja</option>
+                        <option value="2">Brat</option>
+                        <option value="3">Siostra</option>
+                      </Field>
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>
+                      Komentarz
+                    </label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="notes"
+                        component="textarea"
+                        placeholder="Komentarz"
+                        className={"form-control"}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>
+                      Załącznik
+                    </label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="attachment"
+                        component="input"
+                        type="text"
+                        placeholder="Załącznik"
+                        className={"form-control"}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label
+                      style={{ fontSize: "small" }}
+                      className={"col-sm-12"}
+                    >
+                      Automatycznie odejmi wpisaną kwotę z wybranego typu
+                      oszczędności (pole Czym zapłacono)
+                    </label>
+                    <div className="form-check">
+                      <Field
+                        name="autoSubtractAmount"
+                        component="input"
+                        type="checkbox"
+                      />
+                    </div>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={() => {
+                      form.reset();
+                      this.hideModal();
+                    }}
+                  >
+                    Close
+                  </Button>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    disabled={submitting || pristine}
+                  >
+                    Save Changes
+                  </Button>
+
+                  <pre>{JSON.stringify(values, 0, 2)}</pre>
+                </Modal.Footer>
+              </form>
+            </Modal>
+          )}
+        />
+      </>
     );
   }
 }

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TableEdit from "./TableEdit";
 
 export const TableRow = props => {
+  console.log("TableRow", props)
   if (props.rows === undefined) {
     return null;
   }
@@ -25,7 +26,8 @@ export const TableRow = props => {
           </a>
         </td>
         <td className="edit-item">
-          <TableEdit row={row} handleEdit={props.handleEdit} />
+          {/* <TableEdit row={row} handleEdit={props.handleEdit} /> */}
+          <props.EditComponent row={row} handleEdit={props.handleEdit} />
         </td>
       </tr>
     );

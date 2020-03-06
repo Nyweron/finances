@@ -244,6 +244,7 @@ class TableContainer extends Component {
             sortColumn={this.sortColumn}
             handleRemove={this.handleRemove}
             handleEdit={this.handleEdit}
+            EditComponent={this.props.EditComponent}
           />
         </div>
         <div className="container mb-5">
