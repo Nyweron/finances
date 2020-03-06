@@ -59,12 +59,11 @@ class ExpenseEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Kwota</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="Ile"
+                        name="HowMuch"
                         component="input"
                         type="number"
                         placeholder="Kwota"
                         className={"form-control"}
-                        value={this.props.row.Ile}
                       />
                     </div>
                   </div>
@@ -72,12 +71,12 @@ class ExpenseEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Na co</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="forWhat"
+                        name="IdExpensesCategory"
                         component="select"
                         className={"custom-select"}
                       >
                         <option />
-                        <option value="56">Artykuły spożywcze</option>
+                        <option value="67">Artykuły spożywcze</option>
                         <option value="77">Lekarz</option>
                         <option value="88">Samochód</option>
                       </Field>
@@ -150,7 +149,7 @@ class ExpenseEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Kto</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="who"
+                        name="IdPerson"
                         component="select"
                         className={"form-control"}
                       >
@@ -168,7 +167,7 @@ class ExpenseEdit extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="Komentarz"
+                        name="Comment"
                         component="textarea"
                         placeholder="Komentarz"
                         className={"form-control"}
