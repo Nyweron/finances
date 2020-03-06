@@ -5,8 +5,8 @@
     "IdKategoriaOszczednosci": "8",
     "IdKategoriaWydatki": "65",
     "IdOsoba": "1",
-    "Ile": "22.0",
-    "Komentarz": "",
+    "Ile": 22.0,
+    "Komentarz": "Test2",
     "Zalacznik": "",
     "ZlecenieStale": "0"
   },
@@ -17,7 +17,7 @@
     "IdKategoriaWydatki": "66",
     "IdOsoba": "1",
     "Ile": "923.0",
-    "Komentarz": "",
+    "Komentarz": "Test1",
     "Zalacznik": "",
     "ZlecenieStale": "0"
   },

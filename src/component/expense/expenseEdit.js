@@ -28,6 +28,7 @@ class ExpenseEdit extends Component {
 
   render() {
     console.log("ExpenseEditProps", this.props);
+    console.log("ExpenseEditProps", this.props.row.Ile);
 
     return (
       <>
@@ -36,7 +37,7 @@ class ExpenseEdit extends Component {
         </a>
         <Form
           onSubmit={this.onSubmit}
-          initialValues={{ amount: 55.01, autoSubtractAmount: true }}
+          initialValues={{  ...this.props.row, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
               show={this.state.show}
@@ -59,11 +60,12 @@ class ExpenseEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Kwota</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="amount"
+                        name="Ile"
                         component="input"
                         type="number"
                         placeholder="Kwota"
                         className={"form-control"}
+                        value={this.props.row.Ile}
                       />
                     </div>
                   </div>
@@ -167,7 +169,7 @@ class ExpenseEdit extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="notes"
+                        name="Komentarz"
                         component="textarea"
                         placeholder="Komentarz"
                         className={"form-control"}
