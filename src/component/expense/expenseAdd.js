@@ -34,86 +34,140 @@ class ExpenseAdd extends Component {
                   <Modal.Title>Modal heading Expense Add</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <div>
-                    <label>Kwota</label>
-                    <Field
-                      name="amount"
-                      component="input"
-                      type="number"
-                      placeholder="Kwota"
-                    />
+                  <div className={"form-group row"}>
+                    <label className={"col-sm-2 col-form-label"}>Kwota</label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="amount"
+                        component="input"
+                        type="number"
+                        placeholder="Kwota"
+                        className={styles.input}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label>Na co</label>
-                    <Field name="forWhat" component="select">
-                      <option />
-                      <option value="56">Artykuły spożywcze</option>
-                      <option value="77">Lekarz</option>
-                      <option value="88">Samochód</option>
-                    </Field>
+                  <div class="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>Na co</label>
+                    <div className={"col-sm-10"}>
+                      <Field name="forWhat" component="select" className={"custom-select"}>
+                        <option />
+                        <option value="56">Artykuły spożywcze</option>
+                        <option value="77">Lekarz</option>
+                        <option value="88">Samochód</option>
+                      </Field>
+                    </div>
                   </div>
-                  <div>
-                    <label>Czym zapłacono</label>
-                    <Field name="whatWasPaid" component="select">
-                      <option />
-                      <option value="1">Konto banku X</option>
-                      <option value="2">Karta banku X</option>
-                      <option value="3">Konto banku Y</option>
-                    </Field>
+                  <div class="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>
+                      Czym zapłacono
+                    </label>
+                    <div className={"col-sm-10"}>
+                      <Field name="whatWasPaid" component="select" className={"custom-select"}>
+                        <option />
+                        <option value="1">Konto banku X</option>
+                        <option value="2">Karta banku X</option>
+                        <option value="3">Konto banku Y</option>
+                      </Field>
+                    </div>
                   </div>
-                  <div>
-                    <label style={{ fontSize: "small" }}>
+                  <div class="form-group row">
+                  <label style={{ fontSize: "small" }} className={"col-sm-12"}>
                       Aktualny stan wybranych oszczędności: "Konto banku X
                       value=1..."
                     </label>
                   </div>
-                  <div>
-                  <label>Kiedy</label>
-                    <Field
-                      name="when"
-                      component="input"
-                      type="number"
-                      placeholder="Kiedy datepicker"
-                    />
-                  </div>
-                  <div>
-                    <label>Kto</label>
-                    <Field name="who" component="select">
-                      <option />
-                      <option value="1">Ja</option>
-                      <option value="2">Brat</option>
-                      <option value="3">Siostra</option>
-                    </Field>
-                  </div>
-                  <div>
-                    <label>Komentarz</label>
-                    <Field
-                      name="notes"
-                      component="textarea"
-                      placeholder="Komentarz"
-                    />
+                  <div class="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
                   </div>
 
-                  <div>
-                    <label>Załącznik</label>
+                  <div class="form-group row">
+                    <label className={"col-2 col-form-label"}>Dzień:</label>
+                    <div className={"col-4"}>
+                      <Field
+                        name="whenDay"
+                        component="input"
+                        type="number"
+                        placeholder="Dzień"
+                        className={'form-control'}
+                      />
+                    </div>
+                    <label className={"col-2 col-form-label"}>Miesiąc:</label>
+                    <div className={"col-4"}>
+                      <Field
+                        name="whenMonth"
+                        component="input"
+                        type="number"
+                        placeholder="Miesiąc"
+                        className={'form-control'}
+                      />
+                    </div>
+                    <label className={"col-2 col-form-label"}>Rok:</label>
+                      <div className={"col-4"}>
+                        <Field
+                          name="whenYear"
+                          component="input"
+                          type="number"
+                          placeholder="Rok"
+                          className={'form-control'}
+                        />
+                      </div>
+                  </div>
+
+                  <div class="form-group row">
+
+                    <label className={"col-sm-2 col-form-label"}>Kto</label>
+                    <div className={"col-sm-10"}>
+                      <Field name="who" component="select"      className={'form-control'}>
+                        <option />
+                        <option value="1">Ja</option>
+                        <option value="2">Brat</option>
+                        <option value="3">Siostra</option>
+                      </Field>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>
+                      Komentarz
+                    </label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="notes"
+                        component="textarea"
+                        placeholder="Komentarz"
+                        className={'form-control'}
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>
+                      Załącznik
+                    </label>
+                    <div className={"col-sm-10"}>
                     <Field
                       name="notes"
                       component="input"
                       type="text"
                       placeholder="Załącznik"
+                      className={'form-control'}
                     />
                   </div>
+                  </div>
 
-                  <div>
-                    <label style={{ fontSize: "small" }}>Automatycznie odejmi wpisaną kwotę z wybranego typu oszczędności (pole Czym zapłacono)</label>
+                  <div class="form-group row">
+                    <label style={{ fontSize: "small" }} className={"col-sm-12"}>
+                      Automatycznie odejmi wpisaną kwotę z wybranego typu
+                      oszczędności (pole Czym zapłacono)
+                    </label>
+                    <div class="form-check">
                     <Field
-                    name="autoSubtractAmount"
-                    component="input"
-                    type="checkbox"
+                      name="autoSubtractAmount"
+                      component="input"
+                      type="checkbox"
                     />
                   </div>
-
-
+                  </div>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button
