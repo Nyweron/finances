@@ -1,3 +1,13 @@
+// "Data" - "Date"
+// "id" - "id"
+// "IdKategoriaOszczednosci" - "IdSavingsCategory"
+// "IdKategoriaWydatki" - "IdExpensesCategory"
+// "IdOsoba" - "IdPerson
+// "Ile" - HowMuch
+// "Komentarz" - "Comment"
+// "Zalacznik" - "Attachment
+// "ZlecenieStale" - "StandingOrders"
+
 [
   {
     "Data": "2018-03-17 21:31",

@@ -28,7 +28,6 @@ class ExpenseEdit extends Component {
 
   render() {
     console.log("ExpenseEditProps", this.props);
-    console.log("ExpenseEditProps", this.props.row.Ile);
 
     return (
       <>
@@ -37,7 +36,7 @@ class ExpenseEdit extends Component {
         </a>
         <Form
           onSubmit={this.onSubmit}
-          initialValues={{  ...this.props.row, autoSubtractAmount: true }}
+          initialValues={{ ...this.props.row, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
               show={this.state.show}
