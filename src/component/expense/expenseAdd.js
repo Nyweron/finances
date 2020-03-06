@@ -42,7 +42,7 @@ class ExpenseAdd extends Component {
                         component="input"
                         type="number"
                         placeholder="Kwota"
-                        className={styles.input}
+                        className={'form-control'}
                       />
                     </div>
                   </div>
