@@ -15,7 +15,7 @@ class ExpenseAdd extends Component {
       <>
         <Form
           onSubmit={this.onSubmit}
-          initialValues={{ stooge: "larry", autoSubtractAmount: true }}
+          initialValues={{ amount: 55.01, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
               show={this.props.show}
@@ -46,7 +46,7 @@ class ExpenseAdd extends Component {
                       />
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Na co</label>
                     <div className={"col-sm-10"}>
                       <Field name="forWhat" component="select" className={"custom-select"}>
@@ -57,7 +57,7 @@ class ExpenseAdd extends Component {
                       </Field>
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>
                       Czym zapłacono
                     </label>
@@ -70,17 +70,17 @@ class ExpenseAdd extends Component {
                       </Field>
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <div className="form-group row">
                   <label style={{ fontSize: "small" }} className={"col-sm-12"}>
                       Aktualny stan wybranych oszczędności: "Konto banku X
                       value=1..."
                     </label>
                   </div>
-                  <div class="form-group row">
+                  <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
                   </div>
 
-                  <div class="form-group row">
+                  <div className="form-group row">
                     <label className={"col-2 col-form-label"}>Dzień:</label>
                     <div className={"col-4"}>
                       <Field
@@ -113,7 +113,7 @@ class ExpenseAdd extends Component {
                       </div>
                   </div>
 
-                  <div class="form-group row">
+                  <div className="form-group row">
 
                     <label className={"col-sm-2 col-form-label"}>Kto</label>
                     <div className={"col-sm-10"}>
@@ -126,7 +126,7 @@ class ExpenseAdd extends Component {
                     </div>
                   </div>
 
-                  <div class="form-group row">
+                  <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>
                       Komentarz
                     </label>
@@ -140,13 +140,13 @@ class ExpenseAdd extends Component {
                     </div>
                   </div>
 
-                  <div class="form-group row">
+                  <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>
                       Załącznik
                     </label>
                     <div className={"col-sm-10"}>
                     <Field
-                      name="notes"
+                      name="attachment"
                       component="input"
                       type="text"
                       placeholder="Załącznik"
@@ -155,12 +155,12 @@ class ExpenseAdd extends Component {
                   </div>
                   </div>
 
-                  <div class="form-group row">
+                  <div className="form-group row">
                     <label style={{ fontSize: "small" }} className={"col-sm-12"}>
                       Automatycznie odejmi wpisaną kwotę z wybranego typu
                       oszczędności (pole Czym zapłacono)
                     </label>
-                    <div class="form-check">
+                    <div className="form-check">
                     <Field
                       name="autoSubtractAmount"
                       component="input"
