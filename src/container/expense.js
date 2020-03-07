@@ -108,8 +108,6 @@ class expense extends Component {
   };
 
   render() {
-    // console.log("Data", this.state.data);
-
     if(this.state.data === null || this.state.columns === null){
       return null;
     }

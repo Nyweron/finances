@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TableEdit from "./TableEdit";
 
 export const TableRow = props => {
   console.log("TableRow", props)
@@ -21,12 +20,11 @@ export const TableRow = props => {
           return <td data-testid={row.id + "-" + i} key={row.id + "-" + i} />;
         })}
         <td className="delete-item">
-          <a href="#/" onClick={() => props.handleRemove(row.id)}>
+          <p style={{ color: "red", cursor: "default" }} onClick={() => props.handleRemove(row.id)}>
             X
-          </a>
+          </p>
         </td>
         <td className="edit-item">
-          {/* <TableEdit row={row} handleEdit={props.handleEdit} /> */}
           <props.EditComponent row={row} handleEdit={props.handleEdit} />
         </td>
       </tr>
