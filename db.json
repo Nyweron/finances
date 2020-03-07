@@ -209,5 +209,117 @@
       "Attachment": "",
       "StandingOrders": "0"
     }
+  ],
+  "revenue": [
+    {
+      "Date": "2018-03-14 20:54",
+      "id": "1",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "13",
+      "IdPerson": "1",
+      "HowMuch": "1800.0",
+      "Comment": "",
+      "Attachment": "",
+      "StandingOrders": "0"
+    },
+    {
+      "Date": "2018-04-13 20:59",
+      "id": "2",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "13",
+      "IdPerson": "1",
+      "HowMuch": "1700.5",
+      "Comment": "",
+      "Attachment": "",
+      "StandingOrders": "0"
+    },
+    {
+      "Date": "2018-05-11 14:40",
+      "id": "3",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "13",
+      "IdPerson": "1",
+      "HowMuch": "1600.0",
+      "Comment": "Test96",
+      "Attachment": "",
+      "StandingOrders": "0"
+    },
+    {
+      "Date": "2018-06-13 12:09",
+      "id": "4",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "13",
+      "IdPerson": "1",
+      "HowMuch": "1500.0",
+      "Comment": "",
+      "Attachment": "",
+      "StandingOrders": "0"
+    },
+    {
+      "Date": "2018-07-13 13:11",
+      "id": "5",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "13",
+      "IdPerson": "1",
+      "HowMuch": "1400.0",
+      "Comment": "Test98",
+      "Attachment": "",
+      "StandingOrders": "0"
+    },
+    {
+      "Date": "2018-08-14 21:22",
+      "id": "6",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "13",
+      "IdPerson": "1",
+      "HowMuch": "1300.0",
+      "Comment": "Test99",
+      "Attachment": "",
+      "StandingOrders": "0"
+    },
+    {
+      "Date": "2018-08-31 18:47",
+      "id": "7",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "15",
+      "IdPerson": "1",
+      "HowMuch": "100.0",
+      "Comment": "Test53",
+      "Attachment": "",
+      "StandingOrders": "0"
+    },
+    {
+      "Date": "2018-09-14 18:48",
+      "id": "8",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "10",
+      "IdPerson": "1",
+      "HowMuch": "1200.0",
+      "Comment": "wynagrodzenie",
+      "Attachment": "",
+      "StandingOrders": "0"
+    },
+    {
+      "Date": "2018-10-12 11:11",
+      "id": "9",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "13",
+      "IdPerson": "1",
+      "HowMuch": "1100.0",
+      "Comment": "",
+      "Attachment": "",
+      "StandingOrders": "0"
+    },
+    {
+      "Date": "2018-11-14 17:59",
+      "id": "10",
+      "IdSavingsCategory": "7",
+      "IdRevenuesCategory": "13",
+      "IdPerson": "1",
+      "HowMuch": "1000.0",
+      "Comment": "wynagrodzenie",
+      "Attachment": "",
+      "StandingOrders": "0"
+    }
   ]
 }
