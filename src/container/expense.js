@@ -11,7 +11,7 @@ import {getKeyFromJson} from "../lib/crudHelper";
 import styles from "../App.module.css";
 
 
-class expense extends Component {
+class Expense extends Component {
   state = {
     isVisibleFilterSettings: false,
     data: null,
@@ -138,4 +138,4 @@ class expense extends Component {
   }
 }
 
-export default expense;
+export default Expense;
