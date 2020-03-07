@@ -1,0 +1,98 @@
+[
+  {
+    "Data": "2019-02-17 16:57",
+    "Id": "1",
+    "IdKategoriaOszczednosci": "7",
+    "Ile": "100.05",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2019-02-17 16:54",
+    "Id": "2",
+    "IdKategoriaOszczednosci": "8",
+    "Ile": "200.74",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2018-12-16 16:48",
+    "Id": "3",
+    "IdKategoriaOszczednosci": "10",
+    "Ile": "300.78",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2019-02-17 16:55",
+    "Id": "4",
+    "IdKategoriaOszczednosci": "9",
+    "Ile": "400.0",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2019-02-17 16:54",
+    "Id": "5",
+    "IdKategoriaOszczednosci": "11",
+    "Ile": "500.96",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2019-02-17 16:55",
+    "Id": "7",
+    "IdKategoriaOszczednosci": "13",
+    "Ile": "600.0",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2019-02-17 16:55",
+    "Id": "8",
+    "IdKategoriaOszczednosci": "12",
+    "Ile": "700.0",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2019-02-17 16:54",
+    "Id": "9",
+    "IdKategoriaOszczednosci": "15",
+    "Ile": "800.0",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2018-08-30 20:28",
+    "Id": "10",
+    "IdKategoriaOszczednosci": "6",
+    "Ile": "0.0",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2019-02-04 14:18",
+    "Id": "11",
+    "IdKategoriaOszczednosci": "3",
+    "Ile": "900.62",
+    "Komentarz": "Test1",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2019-02-17 16:55",
+    "Id": "12",
+    "IdKategoriaOszczednosci": "16",
+    "Ile": "1000.0",
+    "Komentarz": "Test2",
+    "TypOszczednosci": "1"
+  },
+  {
+    "Data": "2019-02-17 16:57",
+    "Id": "13",
+    "IdKategoriaOszczednosci": "17",
+    "Ile": "1100.0",
+    "Komentarz": "",
+    "TypOszczednosci": "1"
+  }
+]

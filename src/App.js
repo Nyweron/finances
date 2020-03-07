@@ -22,7 +22,6 @@ class App extends Component {
     collapseMenuClicked: -1
   };
 
-
   displayCollapseMenu = id => {
     if (this.state.collapseMenuClicked === id) {
       this.setState({
@@ -42,8 +41,6 @@ class App extends Component {
       });
     }
   };
-
-
 
   render() {
     let cleanField = <span></span>;
