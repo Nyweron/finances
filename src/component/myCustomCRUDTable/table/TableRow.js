@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const TableRow = props => {
-  console.log("TableRow", props)
+  // console.log("TableRow", props)
   if (props.rows === undefined) {
     return null;
   }

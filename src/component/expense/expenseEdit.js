@@ -27,7 +27,7 @@ class ExpenseEdit extends Component {
   };
 
   render() {
-    console.log("ExpenseEditProps", this.props);
+    // console.log("ExpenseEditProps", this.props);
 
     return (
       <>

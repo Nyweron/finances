@@ -34,14 +34,6 @@ class expense extends Component {
     });
   };
 
-  handleClose = () => {
-    this.props.isAddExpense(false);
-  };
-
-  handleShow = () => {
-    this.props.isAddExpense(true);
-  };
-
   addExpense = addObj => {
     console.log("expense.js addExpense", addObj);
 

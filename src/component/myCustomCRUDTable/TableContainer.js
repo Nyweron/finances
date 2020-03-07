@@ -70,21 +70,6 @@ class TableContainer extends Component {
     // }
   };
 
-  handleChange = event => {
-    console.log("TableContainer.handleChange", event);
-    // event.preventDefault();
-    // if (this.state.keysFromDbJson.length === 0) {
-    //   this.setState({
-    //     keysFromDbJson: this.state.keysFromDbJson.push(event.target.name)
-    //   });
-    // }
-    // for (let index = 0; index < this.state.keysFromDbJson.length; index++) {
-    //   if (event.target.name === this.state.keysFromDbJson[index].toString()) {
-    //     this.setState({ [event.target.name]: event.target.value });
-    //   }
-    // }
-  };
-
   handleRemove = id => {
     console.log("TableContainer.handleRemove", id);
 
@@ -204,7 +189,7 @@ class TableContainer extends Component {
       return null;
     }
 
-    console.log("TableContainer", this.state);
+    // console.log("TableContainer", this.state);
 
     const displayTable = filterTable(
       this.state.keysFromDbJson,
@@ -229,8 +214,6 @@ class TableContainer extends Component {
           handleClose={this.handleClose}
         />
 
-        {/* <this.props.EditComponent /> */}
-
         <div className="row">
           <TableListRows
             rows={displayTable}
@@ -240,7 +223,6 @@ class TableContainer extends Component {
                 : this.state.keysFromDbJson
             }
             classCss="table table-striped table-bordered"
-            handleChange={this.handleChange}
             sortColumn={this.sortColumn}
             handleRemove={this.handleRemove}
             handleEdit={this.handleEdit}

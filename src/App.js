@@ -18,7 +18,6 @@ import styles from "./App.module.css";
 class App extends Component {
   state = {
     isVisibleCollapseMenu: false,
-    isVisibleModalAddExpense: false,
     isVisibleModalAddRevenue: false,
     collapseMenuClicked: -1
   };
@@ -44,27 +43,7 @@ class App extends Component {
     }
   };
 
-  isAddExpense = props => {
-    console.log("App.isAddExpense", props);
-    this.setState({
-      isVisibleModalAddExpense: !this.state.isVisibleModalAddExpense
-    });
-  };
 
-  isAddExpenseSave = props => {
-    console.log("isAddExpenseSave props, save", props);
-  };
-
-  isAddRevenue = props => {
-    console.log("App.isAddRevenue", props);
-    this.setState({
-      isVisibleModalAddRevenue: !this.state.isVisibleModalAddRevenue
-    });
-  };
-
-  isAddRevenueSave = props => {
-    console.log("isAddRevenueSave props, save", props);
-  };
 
   render() {
     let cleanField = <span></span>;
@@ -74,9 +53,9 @@ class App extends Component {
         <Link to="/expense">
           <span>Wydatki</span>
         </Link>
-        <Link to="/expense/add">
+        {/* <Link to="/expense/add">
           <span onClick={this.isAddExpense}>Dodaj</span>
-        </Link>
+        </Link> */}
         <span>Zapisz</span>
         <span>...</span>
       </div>
@@ -86,9 +65,9 @@ class App extends Component {
         <Link to="/revenue">
           <span>Przychody</span>
         </Link>
-        <Link to="/revenue/add">
+        {/* <Link to="/revenue/add">
           <span onClick={this.isAddRevenue}>Dodaj</span>
-        </Link>
+        </Link> */}
         <span>...</span>
       </div>
     );
@@ -133,20 +112,10 @@ class App extends Component {
             <div>
               <Switch>
                 <Route path="/expense">
-                  <Expense
-                    isAdd={this.state.isVisibleModalAddExpense}
-                    isAddExpense={this.isAddExpense}
-                    isAddExpenseSave={this.isAddExpenseSave}
-                  />
+                  <Expense />
                 </Route>
                 <Route path="/revenue">
-                  <Revenue
-                    isAdd={this.state.isVisibleModalAddRevenue}
-                    isAddRevenue={this.isAddRevenue}
-                    isAddRevenueSave={this.isAddRevenueSave}
-                    revenueData={""}
-                    revenueColumns={""}
-                  />
+                  <Revenue />
                 </Route>
                 <Route path="/">
                   <Index3 />
