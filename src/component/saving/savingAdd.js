@@ -3,19 +3,19 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
 
-class ExpenseAdd extends Component {
+class SavingAdd extends Component {
   onSubmit = temp => {
-    console.log("ExpenseAdd.onSubmit", temp);
+    console.log("SavingAdd.onSubmit", temp);
     this.props.handleClose();
   };
 
   render() {
-    console.log("ExpenseAddProps", this.props);
+    console.log("SavingAddProps", this.props);
     return (
       <>
         <Form
           onSubmit={this.onSubmit}
-          initialValues={{ howMuch: 55.01, autoSubtractAmount: true }}
+          initialValues={{ amount: 55.01, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
               show={this.props.show}
@@ -31,14 +31,31 @@ class ExpenseAdd extends Component {
                 }}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Modal heading Expense Add</Modal.Title>
+                  <Modal.Title>Modal heading Saving Add</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                  <div className={"form-group row"}>
+                    <label className={"col-sm-2 col-form-label"}>
+                      Rodzaj oszczędności
+                    </label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="TypeOfSavings"
+                        component="select"
+                        className={"custom-select"}
+                      >
+                        <option />
+                        <option value="56">Konto internetowe</option>
+                        <option value="77">konto z X banku</option>
+                        <option value="88">Konto z Y banku</option>
+                      </Field>
+                    </div>
+                  </div>
                   <div className={"form-group row"}>
                     <label className={"col-sm-2 col-form-label"}>Kwota</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="howMuch"
+                        name="HowMuch"
                         component="input"
                         type="number"
                         placeholder="Kwota"
@@ -46,51 +63,25 @@ class ExpenseAdd extends Component {
                       />
                     </div>
                   </div>
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>Na co</label>
-                    <div className={"col-sm-10"}>
+                  <div className={"form-group row"}>
+                    <div className="form-check col-sm-2">
                       <Field
-                        name="forWhat"
-                        component="select"
-                        className={"custom-select"}
-                      >
-                        <option />
-                        <option value="56">Artykuły spożywcze</option>
-                        <option value="77">Lekarz</option>
-                        <option value="88">Samochód</option>
-                      </Field>
+                        name="autoSubtractAmount"
+                        component="input"
+                        type="checkbox"
+                      />
+                    </div>
+                    <div className={"col-sm-10"}>
+                      <label style={{ fontSize: "small" }}>
+                        Stan dodawanej oszczędności (kwota)
+                      </label>
                     </div>
                   </div>
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>
-                      Czym zapłacono
-                    </label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="whatWasPaid"
-                        component="select"
-                        className={"custom-select"}
-                      >
-                        <option />
-                        <option value="1">Konto banku X</option>
-                        <option value="2">Karta banku X</option>
-                        <option value="3">Konto banku Y</option>
-                      </Field>
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label
-                      style={{ fontSize: "small" }}
-                      className={"col-sm-12"}
-                    >
-                      Aktualny stan wybranych oszczędności: "Konto banku X
-                      value=1..."
-                    </label>
-                  </div>
-                  <div className="form-group row">
+
+                  <div className={"form-group row"}>
                     <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
                   </div>
-                  <div className="form-group row">
+                  <div className={"form-group row"}>
                     <label className={"col-2 col-form-label"}>Dzień:</label>
                     <div className={"col-4"}>
                       <Field
@@ -122,22 +113,7 @@ class ExpenseAdd extends Component {
                       />
                     </div>
                   </div>
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>Kto</label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="who"
-                        component="select"
-                        className={"form-control"}
-                      >
-                        <option />
-                        <option value="1">Ja</option>
-                        <option value="2">Brat</option>
-                        <option value="3">Siostra</option>
-                      </Field>
-                    </div>
-                  </div>
-                  <div className="form-group row">
+                  <div className={"form-group row"}>
                     <label className={"col-sm-2 col-form-label"}>
                       Komentarz
                     </label>
@@ -147,36 +123,6 @@ class ExpenseAdd extends Component {
                         component="textarea"
                         placeholder="Komentarz"
                         className={"form-control"}
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>
-                      Załącznik
-                    </label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="attachment"
-                        component="input"
-                        type="text"
-                        placeholder="Załącznik"
-                        className={"form-control"}
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label
-                      style={{ fontSize: "small" }}
-                      className={"col-sm-12"}
-                    >
-                      Automatycznie odejmi wpisaną kwotę z wybranego typu
-                      oszczędności (pole Czym zapłacono)
-                    </label>
-                    <div className="form-check">
-                      <Field
-                        name="autoSubtractAmount"
-                        component="input"
-                        type="checkbox"
                       />
                     </div>
                   </div>
@@ -211,4 +157,4 @@ class ExpenseAdd extends Component {
   }
 }
 
-export default ExpenseAdd;
+export default SavingAdd;

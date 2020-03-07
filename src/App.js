@@ -11,42 +11,17 @@ import Index3 from "./container/index3";
 
 import Expense from "./container/expense";
 import Revenue from "./container/revenue";
+import Saving from "./container/saving";
 
 import styles from "./App.module.css";
 
-import expenseJson from './json/expenses';
-
-const columns = [
-  { title: 'Id', field: 'Id', type: 'numeric' },
-  { title: 'Data', field: 'Data' },
-  { title: 'IdKategoriaOszczednosci', field: 'IdKategoriaOszczednosci', type: 'numeric'},
-  { title: 'IdKategoriaWydatki', field: 'IdKategoriaWydatki', type: 'numeric'},
-  { title: 'IdOsoba', field: 'IdOsoba', type: 'numeric'},
-  { title: 'Ile', field: 'Ile', type: 'numeric'},
-  { title: 'Komentarz', field: 'Komentarz'},
-  { title: 'Zalacznik', field: 'Zalacznik'},
-  { title: 'ZlecenieStale', field: 'ZlecenieStale', type: 'numeric'}
-];
 
 class App extends Component {
   state = {
     isVisibleCollapseMenu: false,
-    isVisibleModalAddExpense: false,
     isVisibleModalAddRevenue: false,
-    collapseMenuClicked: -1,
-
-    expenseData: null
+    collapseMenuClicked: -1
   };
-
-  componentDidMount() {
-    // const fetchData = fetch("http://localhost:8081/data").then(res =>
-    //   res.json()
-    // );
-    // this.setState({ data: fetchData });
-
-
-    this.setState({ expenseData: expenseJson });
-  }
 
   displayCollapseMenu = id => {
     if (this.state.collapseMenuClicked === id) {
@@ -68,28 +43,6 @@ class App extends Component {
     }
   };
 
-  isAddExpense = props => {
-    console.log("App.isAddExpense", props);
-    this.setState({
-      isVisibleModalAddExpense: !this.state.isVisibleModalAddExpense
-    });
-  };
-
-  isAddExpenseSave = props => {
-    console.log("isAddExpenseSave props, save", props);
-  };
-
-  isAddRevenue = props => {
-    console.log("App.isAddRevenue", props);
-    this.setState({
-      isVisibleModalAddRevenue: !this.state.isVisibleModalAddRevenue
-    });
-  };
-
-  isAddRevenueSave = props => {
-    console.log("isAddRevenueSave props, save", props);
-  };
-
   render() {
     let cleanField = <span></span>;
 
@@ -98,18 +51,11 @@ class App extends Component {
         <Link to="/expense">
           <span>Wydatki</span>
         </Link>
-        <Link to="/expense/add">
-        <span onClick={this.isAddExpense}>Dodaj</span>
-        </Link>
-        {/* <span onClick={this.isAddExpense}>Dodaj</span> */}
+        {/* <Link to="/expense/add">
+          <span onClick={this.isAddExpense}>Dodaj</span>
+        </Link> */}
         <span>Zapisz</span>
         <span>...</span>
-        {/* <Link to="/expense">
-          <span>Wydatki</span>
-        </Link>
-        <span onClick={this.isAddExpense}>Dodaj</span>
-        <span>Zapisz</span>
-        <span>...</span> */}
       </div>
     );
     let przychodyFiled = this.state.collapseMenuClicked === revenues && (
@@ -117,15 +63,17 @@ class App extends Component {
         <Link to="/revenue">
           <span>Przychody</span>
         </Link>
-        <Link to="/revenue/add">
-        <span onClick={this.isAddRevenue}>Dodaj</span>
-        </Link>
+        {/* <Link to="/revenue/add">
+          <span onClick={this.isAddRevenue}>Dodaj</span>
+        </Link> */}
         <span>...</span>
       </div>
     );
     let oszczednosciFiled = this.state.collapseMenuClicked === savings && (
       <div>
-        <span>Link55</span>
+        <Link to="/saving">
+          <span>Oszczędności</span>
+        </Link>
         <span>Link66</span>
         <span>...</span>
       </div>
@@ -164,29 +112,13 @@ class App extends Component {
             <div>
               <Switch>
                 <Route path="/expense">
-                  <Expense
-                    isAdd={this.state.isVisibleModalAddExpense}
-                    isAddExpense={this.isAddExpense}
-                    isAddExpenseSave={this.isAddExpenseSave}
-                    expenseData={expenseJson}
-                    expenseColumns={columns}
-                  />
+                  <Expense />
                 </Route>
-                {/* <Route path="/expense" exact={true}>
-                  <Expense isAdd={this.state.isVisibleModalAddExpense} />
-                  { <Expense isAdd={this.state.isExpenseAdd} />
-                </Route>
-                <Route path="/expense/add" exact={true}>
-                  <Expense isAdd={this.state.isVisibleModalAddExpense} />
-                </Route> */}
                 <Route path="/revenue">
-                  <Revenue
-                    isAdd={this.state.isVisibleModalAddRevenue}
-                    isAddRevenue={this.isAddRevenue}
-                    isAddRevenueSave={this.isAddRevenueSave}
-                    revenueData={""}
-                    revenueColumns={""}
-                  />
+                  <Revenue />
+                </Route>
+                <Route path="/saving">
+                  <Saving />
                 </Route>
                 <Route path="/">
                   <Index3 />

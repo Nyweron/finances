@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 
-import ExpenseFilter from "../component/expense/expenseFilter";
-import ExpenseEdit from "../component/expense/expenseEdit";
-import ExpenseAdd from "../component/expense/expenseAdd";
+import SavingFilter from "../component/saving/savingFilter";
+import SavingEdit from "../component/saving/savingEdit";
+import SavingAdd from "../component/saving/savingAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
-import {getAll} from "../lib/expenseService";
+import {getAll} from "../lib/savingService";
 import {getKeyFromJson} from "../lib/crudHelper";
 
 import styles from "../App.module.css";
 
 
-class Expense extends Component {
+class Saving extends Component {
   state = {
     isVisibleFilterSettings: false,
     data: null,
@@ -34,8 +34,8 @@ class Expense extends Component {
     });
   };
 
-  addExpense = addObj => {
-    console.log("expense.js addExpense", addObj);
+  addSaving = addObj => {
+    console.log("saving.js addSaving", addObj);
 
     // if (
     //   addObj === undefined ||
@@ -81,8 +81,8 @@ class Expense extends Component {
     // }
   };
 
-  removeExpense = id => {
-    console.log("expense.js removeExpense", id);
+  removeSaving = id => {
+    console.log("saving.js removeSaving", id);
 
     // let listOfRows = this.state.rowsFromDbJson;
     // const newListWithoutRemovedItem = removeRowById(listOfRows, id);
@@ -95,8 +95,8 @@ class Expense extends Component {
     // );
   };
 
-  editExpense = editObj => {
-    console.log("expense.js editExpense", editObj);
+  editSaving = editObj => {
+    console.log("saving.js editSaving", editObj);
   };
 
   render() {
@@ -114,18 +114,18 @@ class Expense extends Component {
             >
               Filter settings
             </button>
-            {this.state.isVisibleFilterSettings && <ExpenseFilter />}
+            {this.state.isVisibleFilterSettings && <SavingFilter />}
           </div>
           <div className={styles.centerColumn}>
             <div className={styles.card}>
               <TableContainer
                 columns={this.state.columns}
                 data={this.state.data}
-                addRow={this.addExpense}
-                removeRow={this.removeExpense}
-                editRow={this.editExpense}
-                EditComponent={ExpenseEdit}
-                AddComponent={ExpenseAdd}
+                addRow={this.addSaving}
+                removeRow={this.removeSaving}
+                editRow={this.editSaving}
+                EditComponent={SavingEdit}
+                AddComponent={SavingAdd}
               />
             </div>
             <div className={styles.card}>
@@ -138,4 +138,4 @@ class Expense extends Component {
   }
 }
 
-export default Expense;
+export default Saving;

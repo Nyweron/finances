@@ -3,24 +3,47 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
 
-class ExpenseAdd extends Component {
+class ExpenseEdit extends Component {
+  state = {
+    show: false
+  };
+
   onSubmit = temp => {
-    console.log("ExpenseAdd.onSubmit", temp);
-    this.props.handleClose();
+    console.log("ExpenseEdit.onSubmit", temp);
+    this.hideModal();
+    this.props.handleEdit(temp);
+  };
+
+  showModal = () => {
+    this.setState({ show: true });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false });
+  };
+
+  editForm = () => {
+    this.showModal();
   };
 
   render() {
-    console.log("ExpenseAddProps", this.props);
+    // console.log("ExpenseEditProps", this.props);
+
     return (
       <>
+        <p onClick={this.editForm}
+        style={{ color: "red", cursor: "default" }}
+        >
+          edit
+        </p>
         <Form
           onSubmit={this.onSubmit}
-          initialValues={{ howMuch: 55.01, autoSubtractAmount: true }}
+          initialValues={{ ...this.props.row, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
-              show={this.props.show}
+              show={this.state.show}
               onHide={() => {
-                this.props.handleClose();
+                this.hideModal();
                 form.reset();
               }}
             >
@@ -31,14 +54,14 @@ class ExpenseAdd extends Component {
                 }}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Modal heading Expense Add</Modal.Title>
+                  <Modal.Title>Modal heading Expense Edit</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <div className={"form-group row"}>
                     <label className={"col-sm-2 col-form-label"}>Kwota</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="howMuch"
+                        name="HowMuch"
                         component="input"
                         type="number"
                         placeholder="Kwota"
@@ -50,12 +73,12 @@ class ExpenseAdd extends Component {
                     <label className={"col-sm-2 col-form-label"}>Na co</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="forWhat"
+                        name="IdExpensesCategory"
                         component="select"
                         className={"custom-select"}
                       >
                         <option />
-                        <option value="56">Artykuły spożywcze</option>
+                        <option value="67">Artykuły spożywcze</option>
                         <option value="77">Lekarz</option>
                         <option value="88">Samochód</option>
                       </Field>
@@ -90,6 +113,7 @@ class ExpenseAdd extends Component {
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
                   </div>
+
                   <div className="form-group row">
                     <label className={"col-2 col-form-label"}>Dzień:</label>
                     <div className={"col-4"}>
@@ -122,11 +146,12 @@ class ExpenseAdd extends Component {
                       />
                     </div>
                   </div>
+
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Kto</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="who"
+                        name="IdPerson"
                         component="select"
                         className={"form-control"}
                       >
@@ -137,19 +162,21 @@ class ExpenseAdd extends Component {
                       </Field>
                     </div>
                   </div>
+
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>
                       Komentarz
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="notes"
+                        name="Comment"
                         component="textarea"
                         placeholder="Komentarz"
                         className={"form-control"}
                       />
                     </div>
                   </div>
+
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>
                       Załącznik
@@ -164,6 +191,7 @@ class ExpenseAdd extends Component {
                       />
                     </div>
                   </div>
+
                   <div className="form-group row">
                     <label
                       style={{ fontSize: "small" }}
@@ -187,7 +215,7 @@ class ExpenseAdd extends Component {
                     type="button"
                     onClick={() => {
                       form.reset();
-                      this.props.handleClose();
+                      this.hideModal();
                     }}
                   >
                     Close
@@ -211,4 +239,4 @@ class ExpenseAdd extends Component {
   }
 }
 
-export default ExpenseAdd;
+export default ExpenseEdit;

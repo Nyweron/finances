@@ -1,142 +1,214 @@
-import React from "react";
+import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { Form, Field } from "react-final-form";
 
-const revenueAddModal = props => {
-  console.log("revenueAddModal", props);
-  return (
-    <>
-      <Modal show={props.isVisibleAddRevenue} onHide={props.handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading Revenue Add</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Woohoo, you're reading this text in a modal!
-          <div>
-            {/* */}
-            <br />
-            <form className="needs-validation">
-              <div className="form-row">
-                <div className="col-md-4 mb-3">
-                  <label htmlFor="validationCustom01">First name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom01"
-                    placeholder="First name"
-                    required
-                  />
-                  <div className="valid-feedback">Looks good!</div>
-                </div>
-                <div className="col-md-4 mb-3">
-                  <label htmlFor="validationCustom02">Last name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom02"
-                    placeholder="Last name"
-                    required
-                  />
-                  <div className="valid-feedback">Looks good!</div>
-                </div>
-                <div className="col-md-4 mb-3">
-                  <label htmlFor="validationCustomUsername">Username</label>
-                  <div className="input-group">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text" id="inputGroupPrepend">
-                        @
-                      </span>
-                    </div>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="validationCustomUsername"
-                      placeholder="Username"
-                      aria-describedby="inputGroupPrepend"
-                      required
-                    />
-                    <div className="invalid-feedback">
-                      Please choose a username.
+class RevenueAdd extends Component {
+  onSubmit = temp => {
+    console.log("RevenueAdd.onSubmit", temp);
+    this.props.handleClose();
+  };
+
+  render() {
+    console.log("RevenueAddProps", this.props);
+    return (
+      <>
+        <Form
+          onSubmit={this.onSubmit}
+          initialValues={{ amount: 55.01, autoSubtractAmount: true }}
+          render={({ handleSubmit, form, submitting, pristine, values }) => (
+            <Modal
+              show={this.props.show}
+              onHide={() => {
+                this.props.handleClose();
+                form.reset();
+              }}
+            >
+              <form
+                onSubmit={async event => {
+                  await handleSubmit(event);
+                  form.reset();
+                }}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Modal heading Revenue Add</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div className={"form-group row"}>
+                    <label className={"col-sm-2 col-form-label"}>Kwota</label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="HowMuch"
+                        component="input"
+                        type="number"
+                        placeholder="Kwota"
+                        className={"form-control"}
+                      />
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="validationCustom03">City</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom03"
-                    placeholder="City"
-                    required
-                  />
-                  <div className="invalid-feedback">
-                    Please provide a valid city.
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>Na co</label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="forWhat"
+                        component="select"
+                        className={"custom-select"}
+                      >
+                        <option />
+                        <option value="56">Artykuły spożywcze</option>
+                        <option value="77">Lekarz</option>
+                        <option value="88">Samochód</option>
+                      </Field>
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-3 mb-3">
-                  <label htmlFor="validationCustom04">State</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom04"
-                    placeholder="State"
-                    required
-                  />
-                  <div className="invalid-feedback">
-                    Please provide a valid state.
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>
+                      Czym zapłacono
+                    </label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="whatWasPaid"
+                        component="select"
+                        className={"custom-select"}
+                      >
+                        <option />
+                        <option value="1">Konto banku X</option>
+                        <option value="2">Karta banku X</option>
+                        <option value="3">Konto banku Y</option>
+                      </Field>
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-3 mb-3">
-                  <label htmlFor="validationCustom05">Zip</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="validationCustom05"
-                    placeholder="Zip"
-                    required
-                  />
-                  <div className="invalid-feedback">
-                    Please provide a valid zip.
+                  <div className="form-group row">
+                    <label
+                      style={{ fontSize: "small" }}
+                      className={"col-sm-12"}
+                    >
+                      Aktualny stan wybranych oszczędności: "Konto banku X
+                      value=1..."
+                    </label>
                   </div>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="invalidCheck"
-                    required
-                  />
-                  <label className="form-check-label" htmlFor="invalidCheck">
-                    Agree to terms and conditions
-                  </label>
-                  <div className="invalid-feedback">
-                    You must agree before submitting.
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
                   </div>
-                </div>
-              </div>
-              <button className="btn btn-primary" type="submit">
-                Submit form
-              </button>
-            </form>
-            {/* */}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={props.handleShow}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
-};
+                  <div className="form-group row">
+                    <label className={"col-2 col-form-label"}>Dzień:</label>
+                    <div className={"col-4"}>
+                      <Field
+                        name="whenDay"
+                        component="input"
+                        type="number"
+                        placeholder="Dzień"
+                        className={"form-control"}
+                      />
+                    </div>
+                    <label className={"col-2 col-form-label"}>Miesiąc:</label>
+                    <div className={"col-4"}>
+                      <Field
+                        name="whenMonth"
+                        component="input"
+                        type="number"
+                        placeholder="Miesiąc"
+                        className={"form-control"}
+                      />
+                    </div>
+                    <label className={"col-2 col-form-label"}>Rok:</label>
+                    <div className={"col-4"}>
+                      <Field
+                        name="whenYear"
+                        component="input"
+                        type="number"
+                        placeholder="Rok"
+                        className={"form-control"}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>Kto</label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="who"
+                        component="select"
+                        className={"form-control"}
+                      >
+                        <option />
+                        <option value="1">Ja</option>
+                        <option value="2">Brat</option>
+                        <option value="3">Siostra</option>
+                      </Field>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>
+                      Komentarz
+                    </label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="notes"
+                        component="textarea"
+                        placeholder="Komentarz"
+                        className={"form-control"}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className={"col-sm-2 col-form-label"}>
+                      Załącznik
+                    </label>
+                    <div className={"col-sm-10"}>
+                      <Field
+                        name="attachment"
+                        component="input"
+                        type="text"
+                        placeholder="Załącznik"
+                        className={"form-control"}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label
+                      style={{ fontSize: "small" }}
+                      className={"col-sm-12"}
+                    >
+                      Automatycznie odejmi wpisaną kwotę z wybranego typu
+                      oszczędności (pole Czym zapłacono)
+                    </label>
+                    <div className="form-check">
+                      <Field
+                        name="autoSubtractAmount"
+                        component="input"
+                        type="checkbox"
+                      />
+                    </div>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={() => {
+                      form.reset();
+                      this.props.handleClose();
+                    }}
+                  >
+                    Close
+                  </Button>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    disabled={submitting || pristine}
+                  >
+                    Save Changes
+                  </Button>
 
-export default revenueAddModal;
+                  <pre>{JSON.stringify(values, 0, 2)}</pre>
+                </Modal.Footer>
+              </form>
+            </Modal>
+          )}
+        />
+      </>
+    );
+  }
+}
+
+export default RevenueAdd;
