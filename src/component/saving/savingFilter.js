@@ -110,4 +110,4 @@ const SavingFilter = () => {
   );
 };
 
-export default RevenueFilter;
+export default SavingFilter;
