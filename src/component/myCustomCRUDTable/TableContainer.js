@@ -189,7 +189,7 @@ class TableContainer extends Component {
       return null;
     }
 
-    // console.log("TableContainer", this.state);
+     console.log("TableContainer", this.state);
 
     const displayTable = filterTable(
       this.state.keysFromDbJson,
