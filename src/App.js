@@ -11,6 +11,7 @@ import Index3 from "./container/index3";
 
 import Expense from "./container/expense";
 import Revenue from "./container/revenue";
+import Saving from "./container/saving";
 
 import styles from "./App.module.css";
 
@@ -70,7 +71,9 @@ class App extends Component {
     );
     let oszczednosciFiled = this.state.collapseMenuClicked === savings && (
       <div>
-        <span>Link55</span>
+        <Link to="/saving">
+          <span>Oszczędności</span>
+        </Link>
         <span>Link66</span>
         <span>...</span>
       </div>
@@ -113,6 +116,9 @@ class App extends Component {
                 </Route>
                 <Route path="/revenue">
                   <Revenue />
+                </Route>
+                <Route path="/saving">
+                  <Saving />
                 </Route>
                 <Route path="/">
                   <Index3 />

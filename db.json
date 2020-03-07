@@ -321,5 +321,103 @@
       "Attachment": "",
       "StandingOrders": "0"
     }
+  ],
+  "saving": [
+    {
+      "Date": "2019-02-17 16:57",
+      "id": "1",
+      "IdSavingsCategory": "7",
+      "HowMuch": "100.05",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2019-02-17 16:54",
+      "id": "2",
+      "IdSavingsCategory": "8",
+      "HowMuch": "200.74",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2018-12-16 16:48",
+      "id": "3",
+      "IdSavingsCategory": "10",
+      "HowMuch": "300.78",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2019-02-17 16:55",
+      "id": "4",
+      "IdSavingsCategory": "9",
+      "HowMuch": "400.0",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2019-02-17 16:54",
+      "id": "5",
+      "IdSavingsCategory": "11",
+      "HowMuch": "500.96",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2019-02-17 16:55",
+      "id": "7",
+      "IdSavingsCategory": "13",
+      "HowMuch": "600.0",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2019-02-17 16:55",
+      "id": "8",
+      "IdSavingsCategory": "12",
+      "HowMuch": "700.0",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2019-02-17 16:54",
+      "id": "9",
+      "IdSavingsCategory": "15",
+      "HowMuch": "800.0",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2018-08-30 20:28",
+      "id": "10",
+      "IdSavingsCategory": "6",
+      "HowMuch": "0.0",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2019-02-04 14:18",
+      "id": "11",
+      "IdSavingsCategory": "3",
+      "HowMuch": "900.62",
+      "Comment": "Test1",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2019-02-17 16:55",
+      "id": "12",
+      "IdSavingsCategory": "16",
+      "HowMuch": "1000.0",
+      "Comment": "Test2",
+      "TypeOfSavings": "1"
+    },
+    {
+      "Date": "2019-02-17 16:57",
+      "id": "13",
+      "IdSavingsCategory": "17",
+      "HowMuch": "1100.0",
+      "Comment": "",
+      "TypeOfSavings": "1"
+    }
   ]
 }
