@@ -31,11 +31,7 @@ class ExpenseEdit extends Component {
 
     return (
       <>
-        <p onClick={this.editForm}
-        style={{ color: "red", cursor: "default" }}
-        >
-          edit
-        </p>
+        <Button variant="success" onClick={this.editForm}>edit</Button>
         <Form
           onSubmit={this.onSubmit}
           initialValues={{ ...this.props.row, autoSubtractAmount: true }}

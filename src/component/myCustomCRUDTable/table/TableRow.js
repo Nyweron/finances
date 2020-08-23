@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import Button from "react-bootstrap/Button";
+
 export const TableRow = props => {
   // console.log("TableRow", props)
   if (props.rows === undefined) {
@@ -20,9 +22,7 @@ export const TableRow = props => {
           return <td data-testid={row.id + "-" + i} key={row.id + "-" + i} />;
         })}
         <td className="delete-item">
-          <p style={{ color: "red", cursor: "default" }} onClick={() => props.handleRemove(row.id)}>
-            X
-          </p>
+          <Button variant="danger" onClick={() => props.handleRemove(row.id)}>X</Button>
         </td>
         <td className="edit-item">
           <props.EditComponent row={row} handleEdit={props.handleEdit} />
