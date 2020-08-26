@@ -27,7 +27,7 @@ class ExpenseEdit extends Component {
   };
 
   render() {
-    // console.log("ExpenseEditProps", this.props);
+    console.log("ExpenseEditProps", this.props.row);
 
     return (
       <>
@@ -57,7 +57,7 @@ class ExpenseEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Kwota</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="HowMuch"
+                        name="howMuch"
                         component="input"
                         type="number"
                         placeholder="Kwota"
@@ -69,14 +69,14 @@ class ExpenseEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Na co</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="IdExpensesCategory"
+                        name="categoryExpenseId"
                         component="select"
                         className={"custom-select"}
                       >
                         <option />
-                        <option value="67">Artykuły spożywcze</option>
-                        <option value="77">Lekarz</option>
-                        <option value="88">Samochód</option>
+                        <option value="1">Artykuły spożywcze</option>
+                        <option value="2">Lekarz</option>
+                        <option value="3">Samochód</option>
                       </Field>
                     </div>
                   </div>
@@ -86,7 +86,7 @@ class ExpenseEdit extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="whatWasPaid"
+                        name="categoryExpenseId"
                         component="select"
                         className={"custom-select"}
                       >
@@ -147,7 +147,7 @@ class ExpenseEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Kto</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="IdPerson"
+                        name="userId"
                         component="select"
                         className={"form-control"}
                       >
@@ -165,7 +165,7 @@ class ExpenseEdit extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="Comment"
+                        name="comment"
                         component="textarea"
                         placeholder="Komentarz"
                         className={"form-control"}

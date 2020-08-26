@@ -12,3 +12,24 @@ export const getAll = (controller) => {
 
 };
 
+export const createExpense = (temp) => {
+
+console.log("temp",temp);
+  fetch(backendUrl+"expense", {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    method: "POST",
+    body: JSON.stringify({temp})
+
+})
+  .then(res => {
+    if (!res.ok) throw Error(res.statusText);
+    return res.json();
+  })
+  .then(data => console.log(data))
+  .catch(error => console.log(error));
+}
+

@@ -5,8 +5,8 @@ import ExpenseEdit from "../component/expense/expenseEdit";
 import ExpenseAdd from "../component/expense/expenseAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
-import {getAll} from "../lib/expenseService";
-import {getKeyFromJson, sortIds, generateNewId, createPerson} from "../lib/crudHelper";
+import {getAll, createExpense} from "../lib/expenseService";
+import {getKeyFromJson, sortIds, generateNewId} from "../lib/crudHelper";
 
 import styles from "../App.module.css";
 
@@ -45,9 +45,10 @@ class Expense extends Component {
   addExpense = addObj => {
     console.log("expense.js addExpense", addObj);
 
-    const allRows = this.state.rowsFromDbJson;
+    const allRows = this.state.data;
+    console.log("expense.js addExpense allRows", allRows);
     const sortedIds = sortIds(allRows);
-    if (sortedIds.length === 0) {
+    if (sortedIds && sortedIds.length === 0) {
       sortedIds.push("");
     }
     const newId = generateNewId(sortedIds);
@@ -60,6 +61,8 @@ class Expense extends Component {
       isActive: true,
       hobby: addObj.hobby
     };
+
+    createExpense(addObj);
 
     // createPerson(newPerson).then(
     //   () => this.showTempMessage("person created"),
@@ -94,6 +97,7 @@ class Expense extends Component {
 
   editExpense = editObj => {
     console.log("expense.js editExpense", editObj);
+
   };
 
   render() {
