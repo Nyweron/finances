@@ -20,12 +20,12 @@ class TableContainer extends Component {
   };
 
   componentDidMount() {
-    console.log("TableContainer.componentDidMount");
+   // console.log("TableContainer.componentDidMount");
   }
 
   handleSubmitAddRow = addObj => {
     console.log("TableContainer.handleSubmitAddRow", addObj);
-    this.props.addRow(addObj);
+this.props.addRow(addObj);
     // if (
     //   addObj === undefined ||
     //   addObj === null ||
@@ -212,6 +212,7 @@ class TableContainer extends Component {
         <this.props.AddComponent
           show={this.state.isDisplayAddForm}
           handleClose={this.handleClose}
+          addRow={this.handleSubmitAddRow}
         />
 
         <div className="row">

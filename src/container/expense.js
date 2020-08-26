@@ -6,7 +6,7 @@ import ExpenseAdd from "../component/expense/expenseAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
 import {getAll} from "../lib/expenseService";
-import {getKeyFromJson} from "../lib/crudHelper";
+import {getKeyFromJson, sortIds, generateNewId, createPerson} from "../lib/crudHelper";
 
 import styles from "../App.module.css";
 
@@ -19,7 +19,7 @@ class Expense extends Component {
   };
 
   componentDidMount(){
-    getAll().then(rows => {
+    getAll("expense").then(rows => {
       this.setState({ data: rows });
       const keys = getKeyFromJson(rows);
       if (keys !== null) {
@@ -34,35 +34,32 @@ class Expense extends Component {
     });
   };
 
+  showTempMessage = msg => {
+    console.log("expense.showTempMessage", msg);
+    // this.setState({ message: msg });
+    // setTimeout(() => {
+    //   this.setState({ message: "" });
+    // }, 2000);
+  };
+
   addExpense = addObj => {
     console.log("expense.js addExpense", addObj);
 
-    // if (
-    //   addObj === undefined ||
-    //   addObj === null ||
-    //   addObj.firstName === null ||
-    //   addObj.firstName === undefined ||
-    //   addObj.firstName === ""
-    // ) {
-    //   this.showTempMessage("Firstname is required");
-    //   return;
-    // }
+    const allRows = this.state.rowsFromDbJson;
+    const sortedIds = sortIds(allRows);
+    if (sortedIds.length === 0) {
+      sortedIds.push("");
+    }
+    const newId = generateNewId(sortedIds);
 
-    // const allRows = this.state.rowsFromDbJson;
-    // const sortedIds = sortIds(allRows);
-    // if (sortedIds.length === 0) {
-    //   sortedIds.push("");
-    // }
-    // const newId = generateNewId(sortedIds);
-
-    // const newPerson = {
-    //   id: newId,
-    //   firstName: addObj.firstName,
-    //   lastName: addObj.lastName,
-    //   age: addObj.age,
-    //   isActive: true,
-    //   hobby: addObj.hobby
-    // };
+    const newPerson = {
+      id: newId,
+      firstName: addObj.firstName,
+      lastName: addObj.lastName,
+      age: addObj.age,
+      isActive: true,
+      hobby: addObj.hobby
+    };
 
     // createPerson(newPerson).then(
     //   () => this.showTempMessage("person created"),
@@ -76,9 +73,9 @@ class Expense extends Component {
     //   )
     // );
 
-    // for (var key in addObj) {
-    //   delete addObj[key];
-    // }
+    for (var key in addObj) {
+      delete addObj[key];
+    }
   };
 
   removeExpense = id => {

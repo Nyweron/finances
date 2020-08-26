@@ -4,7 +4,7 @@ import { TableRow } from "./TableRow";
 import { TableHead } from "./TableHead";
 
 export const TableListRows = props => {
-  console.log("TableListRows:",props)
+  //console.log("TableListRows:",props)
   return (
     <table className={props.classCss}>
       <thead>

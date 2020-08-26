@@ -12,10 +12,10 @@ export const TableRow = props => {
     return (
       <tr style={{ height: "115px" }} key={row.id}>
         {props.keys.map((key, i) => {
-          if (row[key] !== undefined) {
+          if (row[key] !== undefined || row[key] !== null) {
             return (
               <td data-testid={row.id + "-" + i} key={row.id + "-" + i}>
-                {row[key].toString()}
+                {row[key]?.toString()}
               </td>
             );
           }

@@ -7,6 +7,7 @@ class ExpenseAdd extends Component {
   onSubmit = temp => {
     console.log("ExpenseAdd.onSubmit", temp);
     this.props.handleClose();
+    this.props.addRow(temp);
   };
 
   render() {
