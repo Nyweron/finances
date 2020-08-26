@@ -24,7 +24,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "jsonserver": "json-server --watch db.json --port 8081",
+    "dev": "npm run start && npm run jsonserver --env_MOCK_JSON_SERVER=false",
+    "dev2": "cross-env MOCK_JSON_SERVER=false npm run start"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
   }
 }
