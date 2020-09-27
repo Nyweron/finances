@@ -19,6 +19,7 @@ class ExpenseAdd extends Component {
           initialValues={{ howMuch: 55.01, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
+            size={"lg"}
               show={this.props.show}
               onHide={() => {
                 this.props.handleClose();

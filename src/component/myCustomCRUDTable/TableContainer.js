@@ -199,7 +199,7 @@ this.props.addRow(addObj);
     );
 
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <button className="btn btn-primary" onClick={this.displayAddForm}>
             Add row
@@ -230,7 +230,7 @@ this.props.addRow(addObj);
             EditComponent={this.props.EditComponent}
           />
         </div>
-        <div className="container mb-5">
+        <div className="">
           <div className="d-flex flex-row py-4 align-items-center justify-content-center">
             <Pagination
               totalRecords={this.state.rowsFromDbJson.length}
