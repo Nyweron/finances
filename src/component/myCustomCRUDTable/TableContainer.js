@@ -96,7 +96,7 @@ this.props.addRow(addObj);
   };
 
   handleEdit = editObj => {
-    console.log("TableContainer.handleEdit", editObj);
+    //console.log("TableContainer.handleEdit", editObj);
     this.props.editRow(editObj);
     // let listOfRows = this.state.rowsFromDbJson;
 
@@ -125,7 +125,7 @@ this.props.addRow(addObj);
   };
 
   showTempMessage = msg => {
-    console.log("TableContainer.showTempMessage", msg);
+    //console.log("TableContainer.showTempMessage", msg);
     // this.setState({ message: msg });
     // setTimeout(() => {
     //   this.setState({ message: "" });
@@ -133,7 +133,7 @@ this.props.addRow(addObj);
   };
 
   sortColumn = currentColumnName => {
-    console.log("TableContainer.sortColumn", currentColumnName);
+   // console.log("TableContainer.sortColumn", currentColumnName);
     /* We use 2 because in list always will be empty row with id=0 and new row which we will create. */
     if (this.state.rowsFromDbJson & (this.state.rowsFromDbJson.length === 2)) {
       return;
@@ -155,17 +155,17 @@ this.props.addRow(addObj);
   };
 
   displayAddForm = () => {
-    console.log("TableContainer.displayAddForm");
+   // console.log("TableContainer.displayAddForm");
     this.setState({ isDisplayAddForm: true });
   };
 
   handleClose = () => {
-    console.log("TableContainer.handleClose");
+   // console.log("TableContainer.handleClose");
     this.setState({ isDisplayAddForm: false });
   };
 
   onPageChanged = data => {
-    console.log("TableContainer.onPageChanged", data);
+   // console.log("TableContainer.onPageChanged", data);
     const offset = (data.currentPage - 1) * data.pageLimit;
     const currentRows = this.state.rowsFromDbJson.slice(
       offset,
@@ -189,7 +189,7 @@ this.props.addRow(addObj);
       return null;
     }
 
-     console.log("TableContainer", this.state);
+    // console.log("TableContainer", this.state);
 
     const displayTable = filterTable(
       this.state.keysFromDbJson,

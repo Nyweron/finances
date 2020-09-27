@@ -53,16 +53,29 @@ class Expense extends Component {
     }
     const newId = generateNewId(sortedIds);
 
-    const newPerson = {
-      id: newId,
-      firstName: addObj.firstName,
-      lastName: addObj.lastName,
-      age: addObj.age,
-      isActive: true,
-      hobby: addObj.hobby
+
+    //TODO: Check problems with date...
+    //TODO: ADD validate...
+    let monthRemove = 0;
+    if(parseInt(addObj.whenMonth) != 0){
+      monthRemove = parseInt(addObj.whenMonth) - 1;
+    }
+    const builtDate = new Date(parseInt(addObj.whenYear), monthRemove, parseInt(addObj.whenDay)+1,);
+    const ExpenseFromFront = {
+     id: newId,
+      howMuch: parseFloat(addObj.howMuch),
+      date: builtDate,
+      comment: addObj.comment,
+      attachment: addObj.attachment,
+      //standingorder
+      userId: parseInt(addObj.who),
+      categorySavingId: parseInt(addObj.whatWasPaid),
+      categoryExpenseId : parseInt(addObj.forWhat)
     };
 
-    createExpense(addObj);
+
+
+    createExpense(ExpenseFromFront);
 
     // createPerson(newPerson).then(
     //   () => this.showTempMessage("person created"),

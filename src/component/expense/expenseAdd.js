@@ -5,13 +5,13 @@ import { Form, Field } from "react-final-form";
 
 class ExpenseAdd extends Component {
   onSubmit = temp => {
-    console.log("ExpenseAdd.onSubmit", temp);
+    //console.log("ExpenseAdd.onSubmit", temp);
     this.props.handleClose();
     this.props.addRow(temp);
   };
 
   render() {
-    console.log("ExpenseAddProps", this.props);
+   // console.log("ExpenseAddProps", this.props);
     return (
       <>
         <Form
@@ -144,7 +144,7 @@ class ExpenseAdd extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="notes"
+                        name="comment"
                         component="textarea"
                         placeholder="Komentarz"
                         className={"form-control"}
