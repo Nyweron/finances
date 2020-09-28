@@ -5,21 +5,25 @@ import ExpenseEdit from "../component/expense/expenseEdit";
 import ExpenseAdd from "../component/expense/expenseAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
-import {getAll, createExpense} from "../lib/expenseService";
-import {getKeyFromJson, sortIds, generateNewId} from "../lib/crudHelper";
+import { getAll, createExpense, deleteRowExpense } from "../lib/expenseService";
+import {
+  getKeyFromJson,
+  sortIds,
+  generateNewId,
+  removeRowById,
+} from "../lib/crudHelper";
 
 import styles from "../App.module.css";
-
 
 class Expense extends Component {
   state = {
     isVisibleFilterSettings: false,
     data: null,
-    columns: null
+    columns: null,
   };
 
-  componentDidMount(){
-    getAll("expense").then(rows => {
+  componentDidMount() {
+    getAll("expense").then((rows) => {
       this.setState({ data: rows });
       const keys = getKeyFromJson(rows);
       if (keys !== null) {
@@ -30,11 +34,12 @@ class Expense extends Component {
 
   displayFilterSettings = () => {
     this.setState({
-      isVisibleFilterSettings: !this.state.isVisibleFilterSettings
+      isVisibleFilterSettings: !this.state.isVisibleFilterSettings,
     });
   };
 
-  showTempMessage = msg => {
+  showTempMessage = (msg) => {
+    //react-toastify
     console.log("expense.showTempMessage", msg);
     // this.setState({ message: msg });
     // setTimeout(() => {
@@ -42,46 +47,51 @@ class Expense extends Component {
     // }, 2000);
   };
 
-  addExpense = addObj => {
+  addExpense = (addObj) => {
     console.log("expense.js addExpense", addObj);
 
     const allRows = this.state.data;
-    console.log("expense.js addExpense allRows", allRows);
+    //console.log("expense.js addExpense allRows", allRows);
     const sortedIds = sortIds(allRows);
     if (sortedIds && sortedIds.length === 0) {
       sortedIds.push("");
     }
     const newId = generateNewId(sortedIds);
 
-
     //TODO: Check problems with date...
     //TODO: ADD validate...
     let monthRemove = 0;
-    if(parseInt(addObj.whenMonth) != 0){
+    if (parseInt(addObj.whenMonth) !== 0) {
       monthRemove = parseInt(addObj.whenMonth) - 1;
     }
-    const builtDate = new Date(parseInt(addObj.whenYear), monthRemove, parseInt(addObj.whenDay)+1,);
-    const ExpenseFromFront = {
-     id: newId,
+
+    const builtDate = new Date(
+      parseInt(addObj.whenYear),
+      monthRemove,
+      parseInt(addObj.whenDay) + 1
+    );
+
+    const expenseFromFront = {
+      id: newId,
       howMuch: parseFloat(addObj.howMuch),
       date: builtDate,
       comment: addObj.comment,
       attachment: addObj.attachment,
-      //standingorder
+      standingOrder: addObj.autoSubtractAmount,
       userId: parseInt(addObj.who),
       categorySavingId: parseInt(addObj.whatWasPaid),
-      categoryExpenseId : parseInt(addObj.forWhat)
+      categoryExpenseId: parseInt(addObj.forWhat),
     };
 
+    createExpense(expenseFromFront);
+    //TODO pass expenseFromFront to TableContainer invokePaginationOnPageChanged
 
 
-    createExpense(ExpenseFromFront);
-
-    // createPerson(newPerson).then(
-    //   () => this.showTempMessage("person created"),
+    // createExpense(expenseFromFront).then(
+    //   () => this.showTempMessage("expense created"),
     //   this.setState(
     //     {
-    //       rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
+    //       data: [...this.state.data, expenseFromFront],
     //     },
     //     () => {
     //       this.invokePaginationOnPageChanged();
@@ -94,27 +104,21 @@ class Expense extends Component {
     }
   };
 
-  removeExpense = id => {
+  removeExpense = (id) => {
     console.log("expense.js removeExpense", id);
 
-    // let listOfRows = this.state.rowsFromDbJson;
-    // const newListWithoutRemovedItem = removeRowById(listOfRows, id);
+    const listOfRows = this.state.data;
+    const newListWithoutRemovedItem = removeRowById(listOfRows, id);
 
-    // deleteRow(id).then(
-    //   () => this.showTempMessage("row deleted"),
-    //   this.setState({ rowsFromDbJson: newListWithoutRemovedItem }, () => {
-    //     this.invokePaginationOnPageChanged();
-    //   })
-    // );
+    deleteRowExpense(id);
   };
 
-  editExpense = editObj => {
+  editExpense = (editObj) => {
     console.log("expense.js editExpense", editObj);
-
   };
 
   render() {
-    if(this.state.data === null || this.state.columns === null){
+    if (this.state.data === null || this.state.columns === null) {
       return null;
     }
 

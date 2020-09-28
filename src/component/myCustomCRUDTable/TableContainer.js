@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { TableListRows } from "../myCustomCRUDTable/table/TableListRows";
 
 import Pagination from "./pagination/Pagination";
-import { filterTable } from "../../lib/crudHelper";
-
+import { filterTable, removeRowById } from "../../lib/crudHelper";
 
 class TableContainer extends Component {
   state = {
@@ -16,86 +15,40 @@ class TableContainer extends Component {
     currentRows: [],
     currentPage: 1,
     pageLimit: 5,
-    pageNeighbours: 5
+    pageNeighbours: 5,
   };
 
   componentDidMount() {
-   // console.log("TableContainer.componentDidMount");
+     console.log("TableContainer.componentDidMount");
   }
 
-  handleSubmitAddRow = addObj => {
+  handleSubmitAddRow = (addObj) => {
     console.log("TableContainer.handleSubmitAddRow", addObj);
-this.props.addRow(addObj);
-    // if (
-    //   addObj === undefined ||
-    //   addObj === null ||
-    //   addObj.firstName === null ||
-    //   addObj.firstName === undefined ||
-    //   addObj.firstName === ""
-    // ) {
-    //   this.showTempMessage("Firstname is required");
-    //   return;
-    // }
-
-    // const allRows = this.state.rowsFromDbJson;
-    // const sortedIds = sortIds(allRows);
-    // if (sortedIds.length === 0) {
-    //   sortedIds.push("");
-    // }
-    // const newId = generateNewId(sortedIds);
-
-    // const newPerson = {
-    //   id: newId,
-    //   firstName: addObj.firstName,
-    //   lastName: addObj.lastName,
-    //   age: addObj.age,
-    //   isActive: true,
-    //   hobby: addObj.hobby
-    // };
-
-    // createPerson(newPerson).then(
-    //   () => this.showTempMessage("person created"),
-    //   this.setState(
-    //     {
-    //       rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
-    //     },
-    //     () => {
-    //       this.invokePaginationOnPageChanged();
-    //     }
-    //   )
-    // );
-
-    // for (var key in addObj) {
-    //   delete addObj[key];
-    // }
+    this.props.addRow(addObj);
   };
 
-  handleRemove = id => {
+  handleRemove = (id) => {
     console.log("TableContainer.handleRemove", id);
-
     this.props.removeRow(id);
-    // let listOfRows = this.state.rowsFromDbJson;
-    // const newListWithoutRemovedItem = removeRowById(listOfRows, id);
 
-    // deleteRow(id).then(
-    //   () => this.showTempMessage("row deleted"),
-    //   this.setState({ rowsFromDbJson: newListWithoutRemovedItem }, () => {
-    //     this.invokePaginationOnPageChanged();
-    //   })
-    // );
+    let listOfRows = this.state.rowsFromDbJson;
+    const newListWithoutRemovedItem = removeRowById(listOfRows, id);
+    this.setState({ rowsFromDbJson: newListWithoutRemovedItem }, () => {
+      this.invokePaginationOnPageChanged();
+    });
   };
 
   invokePaginationOnPageChanged = () => {
     console.log("TableContainer.invokePaginationOnPageChanged");
-    // const data = {};
-    // data.totalRecords = this.state.rowsFromDbJson.length;
-    // data.pageLimit = this.state.pageLimit;
-    // data.pageNeighbours = this.state.pageNeighbours;
-    // data.currentPage = this.state.currentPage;
-    // this.onPageChanged(data);
+    const data = {};
+    data.totalRecords = this.state.rowsFromDbJson.length;
+    data.pageLimit = this.state.pageLimit;
+    data.pageNeighbours = this.state.pageNeighbours;
+    data.currentPage = this.state.currentPage;
+    this.onPageChanged(data);
   };
 
-  handleEdit = editObj => {
+  handleEdit = (editObj) => {
     //console.log("TableContainer.handleEdit", editObj);
     this.props.editRow(editObj);
     // let listOfRows = this.state.rowsFromDbJson;
@@ -124,7 +77,7 @@ this.props.addRow(addObj);
     // );
   };
 
-  showTempMessage = msg => {
+  showTempMessage = (msg) => {
     //console.log("TableContainer.showTempMessage", msg);
     // this.setState({ message: msg });
     // setTimeout(() => {
@@ -132,40 +85,40 @@ this.props.addRow(addObj);
     // }, 2000);
   };
 
-  sortColumn = currentColumnName => {
-   // console.log("TableContainer.sortColumn", currentColumnName);
+  sortColumn = (currentColumnName) => {
+    // console.log("TableContainer.sortColumn", currentColumnName);
     /* We use 2 because in list always will be empty row with id=0 and new row which we will create. */
     if (this.state.rowsFromDbJson & (this.state.rowsFromDbJson.length === 2)) {
       return;
     }
     if (this.state.previousColumnName === currentColumnName) {
       this.setState({ columnName: currentColumnName });
-      this.setState(prevState => ({
-        sort: !prevState.sort
+      this.setState((prevState) => ({
+        sort: !prevState.sort,
       }));
     } else {
       this.setState({
         columnName: currentColumnName,
-        previousColumnName: currentColumnName
+        previousColumnName: currentColumnName,
       });
-      this.setState(prevState => ({
-        sort: !prevState.sort
+      this.setState((prevState) => ({
+        sort: !prevState.sort,
       }));
     }
   };
 
   displayAddForm = () => {
-   // console.log("TableContainer.displayAddForm");
+    // console.log("TableContainer.displayAddForm");
     this.setState({ isDisplayAddForm: true });
   };
 
   handleClose = () => {
-   // console.log("TableContainer.handleClose");
+    // console.log("TableContainer.handleClose");
     this.setState({ isDisplayAddForm: false });
   };
 
-  onPageChanged = data => {
-   // console.log("TableContainer.onPageChanged", data);
+  onPageChanged = (data) => {
+    console.log("TableContainer.onPageChanged", data);
     const offset = (data.currentPage - 1) * data.pageLimit;
     const currentRows = this.state.rowsFromDbJson.slice(
       offset,
@@ -175,12 +128,11 @@ this.props.addRow(addObj);
     this.setState({
       currentPage: data.currentPage,
       rowsFromDbJson: this.state.rowsFromDbJson,
-      currentRows
+      currentRows,
     });
   };
 
   render() {
-
     if (
       this.state.rowsFromDbJson === undefined ||
       this.state.rowsFromDbJson === null ||
