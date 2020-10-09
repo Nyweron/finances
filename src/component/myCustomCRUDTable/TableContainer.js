@@ -22,13 +22,25 @@ class TableContainer extends Component {
     console.log("componentDidMount TableContainer.js");
   }
 
+  componentDidUpdate(prevProps) {
+
+    if (this.props.data.length !== prevProps.data.length) {
+      this.setState(
+        { rowsFromDbJson: this.props.data, keysFromDbJson: this.props.columns },
+        () => {
+          this.invokePaginationOnPageChanged();
+        }
+      );
+    }
+  }
+
   handleSubmitAddRow = (addObj) => {
-    console.log("TableContainer.handleSubmitAddRow", addObj);
+    // console.log("TableContainer.handleSubmitAddRow", addObj);
     this.props.addRow(addObj);
   };
 
   handleRemove = (id) => {
-    console.log("TableContainer.handleRemove", id);
+    // console.log("TableContainer.handleRemove", id);
     this.props.removeRow(id);
 
     let listOfRows = this.state.rowsFromDbJson;
@@ -39,7 +51,7 @@ class TableContainer extends Component {
   };
 
   invokePaginationOnPageChanged = () => {
-    console.log("TableContainer.invokePaginationOnPageChanged");
+    console.log("TableContainer.invokePaginationOnPageChanged",this.state.rowsFromDbJson.length);
     const data = {};
     data.totalRecords = this.state.rowsFromDbJson.length;
     data.pageLimit = this.state.pageLimit;
@@ -118,7 +130,7 @@ class TableContainer extends Component {
   };
 
   onPageChanged = (data) => {
-    console.log("TableContainer.onPageChanged", data);
+    // console.log("TableContainer.onPageChanged", data);
     const offset = (data.currentPage - 1) * data.pageLimit;
     const currentRows = this.state.rowsFromDbJson.slice(
       offset,
@@ -133,6 +145,9 @@ class TableContainer extends Component {
   };
 
   render() {
+
+    // console.log("tablecontainer.js this.props.data", this.props.data);
+
     if (
       this.state.rowsFromDbJson === undefined ||
       this.state.rowsFromDbJson === null ||
@@ -140,8 +155,6 @@ class TableContainer extends Component {
     ) {
       return null;
     }
-
-
 
     const displayTable = filterTable(
       this.state.keysFromDbJson,

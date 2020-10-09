@@ -35,7 +35,7 @@ class Expense extends Component {
   }
 
   componentDidUpdate() {
-    if(this.state.isRowCreated === true) {
+    if (this.state.isRowCreated === true) {
       console.log("componentDidUpdate - expense.js true");
       getAll("expense").then((rows) => {
         this.setState({ data: rows, isRowCreated: false });
@@ -44,8 +44,6 @@ class Expense extends Component {
           this.setState({ columns: keys });
         }
       });
-    } else {
-      console.log("componentDidUpdate - expense.js false");
     }
   }
 
@@ -65,8 +63,7 @@ class Expense extends Component {
   };
 
   addExpense = (addObj) => {
-    this.setState({ isRowCreated: true });
-    console.log("expense.js addExpense", addObj);
+    //console.log("expense.js addExpense", addObj);
 
     const allRows = this.state.data;
 
@@ -101,7 +98,9 @@ class Expense extends Component {
       categoryExpenseId: parseInt(addObj.forWhat),
     };
 
-    createExpense(expenseFromFront);
+    createExpense(expenseFromFront).then((res) => {
+      this.setState({ isRowCreated: true });
+    });
 
     for (var key in addObj) {
       delete addObj[key];
@@ -125,6 +124,8 @@ class Expense extends Component {
     if (this.state.data === null || this.state.columns === null) {
       return null;
     }
+
+    //console.log("ComponentDidupdate expense.js", this.state.data);
 
     return (
       <>

@@ -57,9 +57,9 @@ class ExpenseAdd extends Component {
                         className={"custom-select"}
                       >
                         <option />
-                        <option value="56">Artykuły spożywcze</option>
-                        <option value="77">Lekarz</option>
-                        <option value="88">Samochód</option>
+                        <option value="11">Artykuły spożywcze</option>
+                        <option value="22">Lekarz</option>
+                        <option value="33">Samochód</option>
                       </Field>
                     </div>
                   </div>

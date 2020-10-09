@@ -11,10 +11,10 @@ export const getAll = (controller) => {
   }
 };
 
-export const createExpense = (temp) => {
+export const createExpense = async (temp) => {
   //console.log("temp1", temp);
   //console.log("temp2", JSON.stringify(temp));
-  fetch(backendUrl + "expense", {
+  return await fetch(backendUrl + "expense", {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -24,9 +24,13 @@ export const createExpense = (temp) => {
   })
     .then((res) => {
       if (!res.ok) throw Error(res.statusText);
-      return res.status;
+      //console.log(res.status);
+      return res.status
     })
-    .then((data) => console.log(data))
+    .then((data) => {
+      //console.log(data);
+      return data
+    })
     .catch((error) => console.log(error));
 };
 
