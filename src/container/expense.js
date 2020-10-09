@@ -20,9 +20,11 @@ class Expense extends Component {
     isVisibleFilterSettings: false,
     data: null,
     columns: null,
+    isRowCreated: false,
   };
 
   componentDidMount() {
+    console.log("componentDidMount - expense.js");
     getAll("expense").then((rows) => {
       this.setState({ data: rows });
       const keys = getKeyFromJson(rows);
@@ -30,6 +32,21 @@ class Expense extends Component {
         this.setState({ columns: keys });
       }
     });
+  }
+
+  componentDidUpdate() {
+    if(this.state.isRowCreated === true) {
+      console.log("componentDidUpdate - expense.js true");
+      getAll("expense").then((rows) => {
+        this.setState({ data: rows, isRowCreated: false });
+        const keys = getKeyFromJson(rows);
+        if (keys !== null) {
+          this.setState({ columns: keys });
+        }
+      });
+    } else {
+      console.log("componentDidUpdate - expense.js false");
+    }
   }
 
   displayFilterSettings = () => {
@@ -48,10 +65,11 @@ class Expense extends Component {
   };
 
   addExpense = (addObj) => {
+    this.setState({ isRowCreated: true });
     console.log("expense.js addExpense", addObj);
 
     const allRows = this.state.data;
-    //console.log("expense.js addExpense allRows", allRows);
+
     const sortedIds = sortIds(allRows);
     if (sortedIds && sortedIds.length === 0) {
       sortedIds.push("");
@@ -84,20 +102,6 @@ class Expense extends Component {
     };
 
     createExpense(expenseFromFront);
-    //TODO pass expenseFromFront to TableContainer invokePaginationOnPageChanged
-
-
-    // createExpense(expenseFromFront).then(
-    //   () => this.showTempMessage("expense created"),
-    //   this.setState(
-    //     {
-    //       data: [...this.state.data, expenseFromFront],
-    //     },
-    //     () => {
-    //       this.invokePaginationOnPageChanged();
-    //     }
-    //   )
-    // );
 
     for (var key in addObj) {
       delete addObj[key];

@@ -19,7 +19,7 @@ class TableContainer extends Component {
   };
 
   componentDidMount() {
-     console.log("TableContainer.componentDidMount");
+    console.log("componentDidMount TableContainer.js");
   }
 
   handleSubmitAddRow = (addObj) => {
@@ -141,7 +141,7 @@ class TableContainer extends Component {
       return null;
     }
 
-    // console.log("TableContainer", this.state);
+
 
     const displayTable = filterTable(
       this.state.keysFromDbJson,
@@ -182,15 +182,14 @@ class TableContainer extends Component {
             EditComponent={this.props.EditComponent}
           />
         </div>
-        <div className="">
-          <div className="d-flex flex-row py-4 align-items-center justify-content-center">
-            <Pagination
-              totalRecords={this.state.rowsFromDbJson.length}
-              pageLimit={this.state.pageLimit}
-              pageNeighbours={this.state.pageNeighbours}
-              onPageChanged={this.onPageChanged}
-            />
-          </div>
+
+        <div className="d-flex flex-row py-4 align-items-center justify-content-center">
+          <Pagination
+            totalRecords={this.state.rowsFromDbJson.length}
+            pageLimit={this.state.pageLimit}
+            pageNeighbours={this.state.pageNeighbours}
+            onPageChanged={this.onPageChanged}
+          />
         </div>
       </div>
     );
