@@ -39,8 +39,18 @@ class Pagination extends Component {
     this.gotoPage(1);
   }
 
-  gotoPage = page => {
-    const { onPageChanged = f => f } = this.props;
+  componentDidUpdate(prev) {
+    const currentPage = Math.ceil(prev.totalRecords / prev.pageLimit);
+    if (this.totalRecords !== prev.totalRecords) {
+      this.fetchPageNumbers();
+      if (currentPage !== this.totalPages) {
+        this.gotoPage(currentPage);
+      }
+    }
+  }
+
+  gotoPage = (page) => {
+    const { onPageChanged = (f) => f } = this.props;
 
     const currentPage = Math.max(0, Math.min(page, this.totalPages));
 
@@ -48,7 +58,7 @@ class Pagination extends Component {
       currentPage,
       totalPages: this.totalPages,
       pageLimit: this.pageLimit,
-      totalRecords: this.totalRecords
+      totalRecords: this.totalRecords,
     };
 
     this.setState({ currentPage }, () => onPageChanged(paginationData));
@@ -59,12 +69,12 @@ class Pagination extends Component {
     this.gotoPage(page);
   };
 
-  handleMoveLeft = evt => {
+  handleMoveLeft = (evt) => {
     evt.preventDefault();
     this.gotoPage(this.state.currentPage - this.pageNeighbours * 2 - 1);
   };
 
-  handleMoveRight = evt => {
+  handleMoveRight = (evt) => {
     evt.preventDefault();
     this.gotoPage(this.state.currentPage + this.pageNeighbours * 2 + 1);
   };
@@ -168,7 +178,7 @@ class Pagination extends Component {
                   <a
                     className="page-link"
                     href="/#"
-                    onClick={e => this.handleClick(page, e)}
+                    onClick={(e) => this.handleClick(page, e)}
                   >
                     {page}
                   </a>
@@ -186,7 +196,7 @@ Pagination.propTypes = {
   totalRecords: PropTypes.number.isRequired,
   pageLimit: PropTypes.number,
   pageNeighbours: PropTypes.number,
-  onPageChanged: PropTypes.func
+  onPageChanged: PropTypes.func,
 };
 
 export default Pagination;
