@@ -34,6 +34,30 @@ export const createExpense = async (temp) => {
     .catch((error) => console.log(error));
 };
 
+export const editPutExpense = async (temp) => {
+  console.log("temp1", temp);
+  console.log("temp2", temp.id);
+  //console.log("temp2", JSON.stringify(temp));
+  return await fetch(backendUrl + "expense/" + temp.id, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify(temp),
+  })
+    .then((res) => {
+      if (!res.ok) throw Error(res.statusText);
+      //console.log(res.status);
+      return res.status
+    })
+    .then((data) => {
+      //console.log(data);
+      return data
+    })
+    .catch((error) => console.log(error));
+};
+
 export const deleteRowExpense = (id) => {
   fetch(backendUrl + "expense/" + id, {
     method: "DELETE",

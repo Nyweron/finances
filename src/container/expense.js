@@ -5,7 +5,12 @@ import ExpenseEdit from "../component/expense/expenseEdit";
 import ExpenseAdd from "../component/expense/expenseAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
-import { getAll, createExpense, deleteRowExpense } from "../lib/expenseService";
+import {
+  getAll,
+  createExpense,
+  deleteRowExpense,
+  editPutExpense,
+} from "../lib/expenseService";
 import {
   getKeyFromJson,
   sortIds,
@@ -118,6 +123,32 @@ class Expense extends Component {
 
   editExpense = (editObj) => {
     console.log("expense.js editExpense", editObj);
+
+    var year =  editObj.date.substring(0, 4);
+    var month =  editObj.date.substring(5, 7);
+    var day =  editObj.date.substring(8, 10);
+    console.log(year)
+    console.log(month)
+    console.log(day)
+
+    var builtDate =  new Date(year, month, day)
+
+    const expenseFromFront = {
+      id: editObj.id,
+      howMuch: parseFloat(editObj.howMuch),
+      date: builtDate,
+      comment: editObj.comment,
+      attachment: editObj.attachment,
+      standingOrder: editObj.autoSubtractAmount,
+      userId: parseInt(editObj.userId),
+      categorySavingId: parseInt(editObj.categorySavingId),
+      categoryExpenseId: parseInt(editObj.categoryExpenseId),
+    };
+
+    editPutExpense(expenseFromFront).then((res) => {
+      this.setState({ isRowCreated: true });
+      console.log("res",res)
+    });
   };
 
   render() {

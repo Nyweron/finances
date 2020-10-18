@@ -60,7 +60,7 @@ class TableContainer extends Component {
   };
 
   handleEdit = (editObj) => {
-    //console.log("TableContainer.handleEdit", editObj);
+    console.log("TableContainer.handleEdit", editObj);
     this.props.editRow(editObj);
     // let listOfRows = this.state.rowsFromDbJson;
 
