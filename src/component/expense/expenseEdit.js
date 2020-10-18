@@ -5,10 +5,10 @@ import { Form, Field } from "react-final-form";
 
 class ExpenseEdit extends Component {
   state = {
-    show: false
+    show: false,
   };
 
-  onSubmit = temp => {
+  onSubmit = (temp) => {
     console.log("ExpenseEdit.onSubmit", temp);
     this.hideModal();
     this.props.handleEdit(temp);
@@ -27,16 +27,19 @@ class ExpenseEdit extends Component {
   };
 
   render() {
-  //  console.log("ExpenseEditProps", this.props.row);
+    console.log("ExpenseEditProps", this.props.row);
 
     return (
       <>
-        <Button variant="success" onClick={this.editForm}>edit</Button>
+        <Button variant="success" onClick={this.editForm}>
+          edit
+        </Button>
         <Form
           onSubmit={this.onSubmit}
           initialValues={{ ...this.props.row, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
+              size={"lg"}
               show={this.state.show}
               onHide={() => {
                 this.hideModal();
@@ -44,7 +47,7 @@ class ExpenseEdit extends Component {
               }}
             >
               <form
-                onSubmit={async event => {
+                onSubmit={async (event) => {
                   await handleSubmit(event);
                   form.reset();
                 }}
@@ -86,7 +89,7 @@ class ExpenseEdit extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="categoryExpenseId"
+                        name="categorySavingId"
                         component="select"
                         className={"custom-select"}
                       >
