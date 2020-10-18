@@ -23,7 +23,6 @@ class TableContainer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-
     if (this.props.data.length !== prevProps.data.length) {
       this.setState(
         { rowsFromDbJson: this.props.data, keysFromDbJson: this.props.columns },
@@ -51,12 +50,12 @@ class TableContainer extends Component {
   };
 
   invokePaginationOnPageChanged = () => {
-    console.log("TableContainer.invokePaginationOnPageChanged",this.state.rowsFromDbJson.length);
     const data = {};
-    data.totalRecords = this.state.rowsFromDbJson.length;
-    data.pageLimit = this.state.pageLimit;
-    data.pageNeighbours = this.state.pageNeighbours;
     data.currentPage = this.state.currentPage;
+    data.totalPages = Math.ceil(this.state.rowsFromDbJson.length / this.state.pageLimit);
+    data.pageLimit = this.state.pageLimit;
+    data.totalRecords = this.state.rowsFromDbJson.length;
+
     this.onPageChanged(data);
   };
 
@@ -130,7 +129,6 @@ class TableContainer extends Component {
   };
 
   onPageChanged = (data) => {
-    // console.log("TableContainer.onPageChanged", data);
     const offset = (data.currentPage - 1) * data.pageLimit;
     const currentRows = this.state.rowsFromDbJson.slice(
       offset,
@@ -145,7 +143,6 @@ class TableContainer extends Component {
   };
 
   render() {
-
     // console.log("tablecontainer.js this.props.data", this.props.data);
 
     if (
