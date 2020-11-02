@@ -40,8 +40,9 @@ class Expense extends Component {
   }
 
   componentDidUpdate() {
-    console.log("componentDidUpdate - expense.js true");
+    console.log("componentDidUpdate - expense.js");
     if (this.state.isRowCreated === true) {
+      console.log("componentDidUpdate IF - expense.js");
       getAll("expense").then((rows) => {
         this.setState({ data: rows, isRowCreated: false });
         const keys = getKeyFromJson(rows);
@@ -149,8 +150,6 @@ class Expense extends Component {
       this.setState({ isRowCreated: true });
       //console.log("res",res)
     });
-    //console.log("result",result)
-
   };
 
   render() {

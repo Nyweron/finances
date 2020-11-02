@@ -25,6 +25,7 @@ class TableContainer extends Component {
   componentDidUpdate(prevProps) {
     console.log("componentDidUpdate TableContainer.js");
     if (this.props.data !== prevProps.data) {
+      console.log("componentDidUpdate IF TableContainer.js");
       this.setState(
         { rowsFromDbJson: this.props.data, keysFromDbJson: this.props.columns },
         () => {
@@ -35,12 +36,10 @@ class TableContainer extends Component {
   }
 
   handleSubmitAddRow = (addObj) => {
-    // console.log("TableContainer.handleSubmitAddRow", addObj);
     this.props.addRow(addObj);
   };
 
   handleRemove = (id) => {
-    // console.log("TableContainer.handleRemove", id);
     this.props.removeRow(id);
 
     let listOfRows = this.state.rowsFromDbJson;
@@ -120,7 +119,6 @@ class TableContainer extends Component {
   };
 
   render() {
-    // console.log("tablecontainer.js this.props.data", this.props.data);
 
     if (
       this.state.rowsFromDbJson === undefined ||
