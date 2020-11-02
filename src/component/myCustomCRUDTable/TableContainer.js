@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { TableListRows } from "../myCustomCRUDTable/table/TableListRows";
 
 import Pagination from "./pagination/Pagination";
-import { filterTable, removeRowById } from "../../lib/crudHelper";
+import { filterTable, removeRowById, updateByObjectId } from "../../lib/crudHelper";
 
 class TableContainer extends Component {
   state = {
@@ -23,7 +23,8 @@ class TableContainer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.data.length !== prevProps.data.length) {
+    console.log("componentDidUpdate TableContainer.js");
+    if (this.props.data !== prevProps.data) {
       this.setState(
         { rowsFromDbJson: this.props.data, keysFromDbJson: this.props.columns },
         () => {
@@ -60,32 +61,8 @@ class TableContainer extends Component {
   };
 
   handleEdit = (editObj) => {
-    console.log("TableContainer.handleEdit", editObj);
-    this.props.editRow(editObj);
-    // let listOfRows = this.state.rowsFromDbJson;
-
-    // const editExistRow = {
-    //   id: editObj.id,
-    //   firstName: editObj.firstName,
-    //   lastName: editObj.lastName,
-    //   age: editObj.age,
-    //   isActive: true,
-    //   hobby: editObj.hobby
-    // };
-
-    // const newUpdatedRowList = updateByObjectId(listOfRows, editExistRow);
-
-    // updateRow(editExistRow).then(
-    //   () => this.showTempMessage("row updated"),
-    //   this.setState(
-    //     {
-    //       rowsFromDbJson: newUpdatedRowList
-    //     },
-    //     () => {
-    //       this.invokePaginationOnPageChanged();
-    //     }
-    //   )
-    // );
+     console.log("TableContainer.handleEdit", editObj);
+     this.props.editRow(editObj);
   };
 
   showTempMessage = (msg) => {
