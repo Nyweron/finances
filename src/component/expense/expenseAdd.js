@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
-import { DateTimePicker } from 'react-widgets';
+import { DateTimePicker } from "react-widgets";
 
 class ExpenseAdd extends Component {
-  onSubmit = temp => {
+  onSubmit = (temp) => {
     //console.log("ExpenseAdd.onSubmit", temp);
     this.props.handleClose();
     this.props.addRow(temp);
   };
 
   render() {
-   // console.log("ExpenseAddProps", this.props);
+    // console.log("ExpenseAddProps", this.props);
     return (
       <>
         <Form
@@ -20,7 +20,7 @@ class ExpenseAdd extends Component {
           initialValues={{ howMuch: 55.01, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
-            size={"lg"}
+              size={"lg"}
               show={this.props.show}
               onHide={() => {
                 this.props.handleClose();
@@ -28,7 +28,7 @@ class ExpenseAdd extends Component {
               }}
             >
               <form
-                onSubmit={async event => {
+                onSubmit={async (event) => {
                   await handleSubmit(event);
                   form.reset();
                 }}
@@ -50,9 +50,14 @@ class ExpenseAdd extends Component {
                     </div>
                   </div>
                   <div className={"form-group row"}>
-                    <label className={"col-sm-2 col-form-label"}>DatePicker</label>
-                    <div className={"col-sm-10"}>
-                      <DateTimePicker />
+                    <label className={"col-sm-2 col-form-label"}>
+                      DatePicker
+                    </label>
+                    <div className={"col-sm-5"}>
+                      <DateTimePicker time={false} />
+                    </div>
+                    <div className={"col-sm-5"}>
+                      <DateTimePicker date={false} />
                     </div>
                   </div>
                   <div className="form-group row">
