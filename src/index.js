@@ -2,8 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'react-widgets/dist/css/react-widgets.css';
+import dateFnsLocalizer from 'react-widgets-date-fns';
 import App from "./App";
 //import * as serviceWorker from "./serviceWorker";
+
+dateFnsLocalizer();
 
 const app = (
   <BrowserRouter>
