@@ -17,6 +17,7 @@ import {
   generateNewId,
   removeRowById,
 } from "../lib/crudHelper";
+import {format} from 'date-fns';
 
 import styles from "../App.module.css";
 
@@ -157,7 +158,9 @@ class Expense extends Component {
       return null;
     }
 
-    //console.log("ComponentDidupdate expense.js", this.state.data);
+    console.log("expense.js", this.state.data[0].date);
+    console.log("expense.js", new Date(this.state.data[0].date));
+    console.log("expense.js", format(new Date(this.state.data[0].date), 'd M yyyy'));
 
     return (
       <>

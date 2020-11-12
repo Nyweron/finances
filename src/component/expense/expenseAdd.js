@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
+import { DateTimePicker } from 'react-widgets';
 
 class ExpenseAdd extends Component {
   onSubmit = temp => {
@@ -46,6 +47,12 @@ class ExpenseAdd extends Component {
                         placeholder="Kwota"
                         className={"form-control"}
                       />
+                    </div>
+                  </div>
+                  <div className={"form-group row"}>
+                    <label className={"col-sm-2 col-form-label"}>DatePicker</label>
+                    <div className={"col-sm-10"}>
+                      <DateTimePicker />
                     </div>
                   </div>
                   <div className="form-group row">
