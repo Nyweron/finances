@@ -3,6 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
 import { DateTimePicker } from "react-widgets";
+import { format } from "date-fns";
+import pl from "date-fns/locale/pl";
 
 class ExpenseAdd extends Component {
   onSubmit = (temp) => {
@@ -49,17 +51,7 @@ class ExpenseAdd extends Component {
                       />
                     </div>
                   </div>
-                  <div className={"form-group row"}>
-                    <label className={"col-sm-2 col-form-label"}>
-                      DatePicker
-                    </label>
-                    <div className={"col-sm-5"}>
-                      <DateTimePicker time={false} />
-                    </div>
-                    <div className={"col-sm-5"}>
-                      <DateTimePicker date={false} />
-                    </div>
-                  </div>
+
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Na co</label>
                     <div className={"col-sm-10"}>
@@ -101,10 +93,32 @@ class ExpenseAdd extends Component {
                       value=1..."
                     </label>
                   </div>
-                  <div className="form-group row">
+                  {/* <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
+                  </div> */}
+
+                  <div className={"form-group row"}>
+                    <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
+                    <div className={"col-sm-5"}>
+                      <DateTimePicker
+                        time={false}
+                        defaultValue={new Date()}
+                        format="dd/MM/yyyy"
+                        culture={"pl"}
+                      />
+                    </div>
+                    <div className={"col-sm-5"}>
+                      {/* <DateTimePicker
+                        date={false}
+                        // defaultValue={format(new Date().getTime(), 'h:mm:ss')}
+                        defaultValue={new Date()}
+                        culture={pl}
+                        // onChange={}
+                      /> */}
+                    </div>
                   </div>
-                  <div className="form-group row">
+
+                  {/* <div className="form-group row">
                     <label className={"col-2 col-form-label"}>Dzień:</label>
                     <div className={"col-4"}>
                       <Field
@@ -135,7 +149,7 @@ class ExpenseAdd extends Component {
                         className={"form-control"}
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Kto</label>
                     <div className={"col-sm-10"}>
