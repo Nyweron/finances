@@ -5,12 +5,12 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
-import { expenses, revenues, savings } from "./shared/constData";
+import { expenses, incomes, savings } from "./shared/constData";
 
 import Index3 from "./container/index3";
 
 import Expense from "./container/expense";
-import Revenue from "./container/revenue";
+import Income from "./container/income";
 import Saving from "./container/saving";
 
 import styles from "./App.module.css";
@@ -19,7 +19,7 @@ import styles from "./App.module.css";
 class App extends Component {
   state = {
     isVisibleCollapseMenu: false,
-    isVisibleModalAddRevenue: false,
+    isVisibleModalAddIncome: false,
     collapseMenuClicked: -1
   };
 
@@ -32,7 +32,7 @@ class App extends Component {
       this.setState({
         collapseMenuClicked: id
       });
-    } else if (revenues === id) {
+    } else if (incomes === id) {
       this.setState({
         collapseMenuClicked: id
       });
@@ -58,13 +58,13 @@ class App extends Component {
         <span>...</span>
       </div>
     );
-    let przychodyFiled = this.state.collapseMenuClicked === revenues && (
+    let przychodyFiled = this.state.collapseMenuClicked === incomes && (
       <div>
-        <Link to="/revenue">
+        <Link to="/income">
           <span>Przychody</span>
         </Link>
-        {/* <Link to="/revenue/add">
-          <span onClick={this.isAddRevenue}>Dodaj</span>
+        {/* <Link to="/income/add">
+          <span onClick={this.isAddIncome}>Dodaj</span>
         </Link> */}
         <span>...</span>
       </div>
@@ -105,7 +105,7 @@ class App extends Component {
               style={{ backgroundColor: "#808080" }}
             >
               {this.state.collapseMenuClicked === expenses && wydatkiFiled}
-              {this.state.collapseMenuClicked === revenues && przychodyFiled}
+              {this.state.collapseMenuClicked === incomes && przychodyFiled}
               {this.state.collapseMenuClicked === savings && oszczednosciFiled}
             </div>
 
@@ -114,8 +114,8 @@ class App extends Component {
                 <Route path="/expense">
                   <Expense />
                 </Route>
-                <Route path="/revenue">
-                  <Revenue />
+                <Route path="/income">
+                  <Income />
                 </Route>
                 <Route path="/saving">
                   <Saving />

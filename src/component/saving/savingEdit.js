@@ -54,7 +54,7 @@ class SavingEdit extends Component {
                 }}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Modal heading Revenue Edit</Modal.Title>
+                  <Modal.Title>Modal heading Income Edit</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <div className={"form-group row"}>
@@ -73,7 +73,7 @@ class SavingEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Na co</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="IdRevenuesCategory"
+                        name="IdIncomesCategory"
                         component="select"
                         className={"custom-select"}
                       >

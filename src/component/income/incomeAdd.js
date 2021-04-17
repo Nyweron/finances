@@ -3,14 +3,14 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
 
-class RevenueAdd extends Component {
+class IncomeAdd extends Component {
   onSubmit = temp => {
-    console.log("RevenueAdd.onSubmit", temp);
+    console.log("IncomeAdd.onSubmit", temp);
     this.props.handleClose();
   };
 
   render() {
-    console.log("RevenueAddProps", this.props);
+    console.log("IncomeAddProps", this.props);
     return (
       <>
         <Form
@@ -31,7 +31,7 @@ class RevenueAdd extends Component {
                 }}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Modal heading Revenue Add</Modal.Title>
+                  <Modal.Title>Modal heading Income Add</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <div className={"form-group row"}>
@@ -211,4 +211,4 @@ class RevenueAdd extends Component {
   }
 }
 
-export default RevenueAdd;
+export default IncomeAdd;

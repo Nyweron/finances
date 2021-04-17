@@ -1,6 +1,6 @@
 import React from "react";
 
-const RevenueFilter = () => {
+const IncomeFilter = () => {
   return (
     <div>
       <br />
@@ -110,4 +110,4 @@ const RevenueFilter = () => {
   );
 };
 
-export default RevenueFilter;
+export default IncomeFilter;

@@ -3,13 +3,13 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
 
-class RevenueEdit extends Component {
+class IncomeEdit extends Component {
   state = {
     show: false
   };
 
   onSubmit = temp => {
-    console.log("RevenueEdit.onSubmit", temp);
+    console.log("IncomeEdit.onSubmit", temp);
     this.hideModal();
     this.props.handleEdit(temp);
   };
@@ -27,7 +27,7 @@ class RevenueEdit extends Component {
   };
 
   render() {
-    // console.log("RevenueEditProps", this.props);
+    // console.log("IncomeEditProps", this.props);
 
     return (
       <>
@@ -54,7 +54,7 @@ class RevenueEdit extends Component {
                 }}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Modal heading Revenue Edit</Modal.Title>
+                  <Modal.Title>Modal heading Income Edit</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <div className={"form-group row"}>
@@ -73,7 +73,7 @@ class RevenueEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Na co</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="IdRevenuesCategory"
+                        name="IdIncomesCategory"
                         component="select"
                         className={"custom-select"}
                       >
@@ -239,4 +239,4 @@ class RevenueEdit extends Component {
   }
 }
 
-export default RevenueEdit;
+export default IncomeEdit;

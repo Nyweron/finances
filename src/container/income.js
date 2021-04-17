@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 
-import RevenueFilter from "../component/revenue/revenueFilter";
-import RevenueEdit from "../component/revenue/revenueEdit";
-import RevenueAdd from "../component/revenue/revenueAdd";
+import IncomesFilter from "../component/income/incomeFilter";
+import IncomesEdit from "../component/income/incomeEdit";
+import IncomesAdd from "../component/income/incomeAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
-import {getAll} from "../lib/revenueService";
+import {getAll} from "../lib/incomeService";
 import {getKeyFromJson} from "../lib/crudHelper";
 
 import styles from "../App.module.css";
 
-class Revenue extends Component {
+class Incomes extends Component {
   state = {
     isVisibleFilterSettings: false,
     data: null,
@@ -34,8 +34,8 @@ class Revenue extends Component {
     });
   };
 
-  addRevenue = addObj => {
-    console.log("Revenue.js addRevenue", addObj);
+  addIncomes = addObj => {
+    console.log("Incomes.js addIncomes", addObj);
 
     // if (
     //   addObj === undefined ||
@@ -81,8 +81,8 @@ class Revenue extends Component {
     // }
   };
 
-  removeRevenue = id => {
-    console.log("Revenue.js removeRevenue", id);
+  removeIncomes = id => {
+    console.log("Incomes.js removeIncomes", id);
 
     // let listOfRows = this.state.rowsFromDbJson;
     // const newListWithoutRemovedItem = removeRowById(listOfRows, id);
@@ -95,8 +95,8 @@ class Revenue extends Component {
     // );
   };
 
-  editRevenue = editObj => {
-    console.log("Revenue.js editRevenue", editObj);
+  editIncomes = editObj => {
+    console.log("Incomes.js editIncomes", editObj);
   };
 
   render() {
@@ -114,18 +114,18 @@ class Revenue extends Component {
             >
               Filter settings
             </button>
-            {this.state.isVisibleFilterSettings && <RevenueFilter />}
+            {this.state.isVisibleFilterSettings && <IncomesFilter />}
           </div>
           <div className={styles.centerColumn}>
             <div className={styles.card}>
               <TableContainer
                 columns={this.state.columns}
                 data={this.state.data}
-                addRow={this.addRevenue}
-                removeRow={this.removeRevenue}
-                editRow={this.editRevenue}
-                EditComponent={RevenueEdit}
-                AddComponent={RevenueAdd}
+                addRow={this.addIncomes}
+                removeRow={this.removeIncomes}
+                editRow={this.editIncomes}
+                EditComponent={IncomesEdit}
+                AddComponent={IncomesAdd}
               />
             </div>
             <div className={styles.card}>
@@ -138,4 +138,4 @@ class Revenue extends Component {
   }
 }
 
-export default Revenue;
+export default Incomes;

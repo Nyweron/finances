@@ -70,7 +70,7 @@ class Expense extends Component {
   };
 
   addExpense = (addObj) => {
-    //console.log("expense.js addExpense", addObj);
+   console.log("expense.js addExpense", addObj);
 
     const allRows = this.state.data;
 
