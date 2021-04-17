@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import IncomesFilter from "../component/income/incomeFilter";
-import IncomesEdit from "../component/income/incomeEdit";
-import IncomesAdd from "../component/income/incomeAdd";
+import IncomeFilter from "../component/income/incomeFilter";
+import IncomeEdit from "../component/income/incomeEdit";
+import IncomeAdd from "../component/income/incomeAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
 import {getAll} from "../lib/incomeService";
@@ -10,7 +10,7 @@ import {getKeyFromJson} from "../lib/crudHelper";
 
 import styles from "../App.module.css";
 
-class Incomes extends Component {
+class Income extends Component {
   state = {
     isVisibleFilterSettings: false,
     data: null,
@@ -19,7 +19,7 @@ class Incomes extends Component {
 
   componentDidMount(){
 
-    getAll().then(rows => {
+    getAll("income").then(rows => {
       this.setState({ data: rows });
       const keys = getKeyFromJson(rows);
       if (keys !== null) {
@@ -34,8 +34,8 @@ class Incomes extends Component {
     });
   };
 
-  addIncomes = addObj => {
-    console.log("Incomes.js addIncomes", addObj);
+  addIncome = addObj => {
+    console.log("Income.js addIncome", addObj);
 
     // if (
     //   addObj === undefined ||
@@ -81,8 +81,8 @@ class Incomes extends Component {
     // }
   };
 
-  removeIncomes = id => {
-    console.log("Incomes.js removeIncomes", id);
+  removeIncome = id => {
+    console.log("Income.js removeIncome", id);
 
     // let listOfRows = this.state.rowsFromDbJson;
     // const newListWithoutRemovedItem = removeRowById(listOfRows, id);
@@ -95,8 +95,8 @@ class Incomes extends Component {
     // );
   };
 
-  editIncomes = editObj => {
-    console.log("Incomes.js editIncomes", editObj);
+  editIncome = editObj => {
+    console.log("Income.js editIncome", editObj);
   };
 
   render() {
@@ -114,18 +114,18 @@ class Incomes extends Component {
             >
               Filter settings
             </button>
-            {this.state.isVisibleFilterSettings && <IncomesFilter />}
+            {this.state.isVisibleFilterSettings && <IncomeFilter />}
           </div>
           <div className={styles.centerColumn}>
             <div className={styles.card}>
               <TableContainer
                 columns={this.state.columns}
                 data={this.state.data}
-                addRow={this.addIncomes}
-                removeRow={this.removeIncomes}
-                editRow={this.editIncomes}
-                EditComponent={IncomesEdit}
-                AddComponent={IncomesAdd}
+                addRow={this.addIncome}
+                removeRow={this.removeIncome}
+                editRow={this.editIncome}
+                EditComponent={IncomeEdit}
+                AddComponent={IncomeAdd}
               />
             </div>
             <div className={styles.card}>
@@ -138,4 +138,4 @@ class Incomes extends Component {
   }
 }
 
-export default Incomes;
+export default Income;

@@ -25,11 +25,11 @@ export const createExpense = async (temp) => {
     .then((res) => {
       if (!res.ok) throw Error(res.statusText);
       //console.log(res.status);
-      return res.status
+      return res.status;
     })
     .then((data) => {
       //console.log(data);
-      return data
+      return data;
     })
     .catch((error) => console.log(error));
 };
@@ -49,11 +49,11 @@ export const editPutExpense = async (temp) => {
     .then((res) => {
       if (!res.ok) throw Error(res.statusText);
       //console.log(res.status);
-      return res.status
+      return res.status;
     })
     .then((data) => {
       //console.log(data);
-      return data
+      return data;
     })
     .catch((error) => console.log(error));
 };
