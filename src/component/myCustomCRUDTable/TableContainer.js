@@ -36,6 +36,7 @@ class TableContainer extends Component {
   }
 
   handleSubmitAddRow = (addObj) => {
+    console.log("TableContainer.js addObj",addObj)
     this.props.addRow(addObj);
   };
 

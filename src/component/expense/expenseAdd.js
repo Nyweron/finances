@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
-import { DateTimePicker } from "react-widgets";
-import { format } from "date-fns";
-import pl from "date-fns/locale/pl";
+
+import RenderDatePicker from "../DateInput/RenderDatePicker";
 
 class ExpenseAdd extends Component {
   onSubmit = (temp) => {
@@ -93,63 +92,14 @@ class ExpenseAdd extends Component {
                       value=1..."
                     </label>
                   </div>
-                  {/* <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
-                  </div> */}
 
                   <div className={"form-group row"}>
                     <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
                     <div className={"col-sm-5"}>
-                      <DateTimePicker
-                        time={false}
-                        defaultValue={new Date()}
-                        format="dd/MM/yyyy"
-                        culture={"pl"}
-                      />
-                    </div>
-                    <div className={"col-sm-5"}>
-                      {/* <DateTimePicker
-                        date={false}
-                        // defaultValue={format(new Date().getTime(), 'h:mm:ss')}
-                        defaultValue={new Date()}
-                        culture={pl}
-                        // onChange={}
-                      /> */}
+                      <Field name="date" component={RenderDatePicker} />
                     </div>
                   </div>
 
-                  {/* <div className="form-group row">
-                    <label className={"col-2 col-form-label"}>Dzień:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenDay"
-                        component="input"
-                        type="number"
-                        placeholder="Dzień"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Miesiąc:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenMonth"
-                        component="input"
-                        type="number"
-                        placeholder="Miesiąc"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Rok:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenYear"
-                        component="input"
-                        type="number"
-                        placeholder="Rok"
-                        className={"form-control"}
-                      />
-                    </div>
-                  </div> */}
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Kto</label>
                     <div className={"col-sm-10"}>

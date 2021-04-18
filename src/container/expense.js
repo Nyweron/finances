@@ -17,7 +17,7 @@ import {
   generateNewId,
   removeRowById,
 } from "../lib/crudHelper";
-import {format} from 'date-fns';
+import { format } from "date-fns";
 
 import styles from "../App.module.css";
 
@@ -70,7 +70,7 @@ class Expense extends Component {
   };
 
   addExpense = (addObj) => {
-   console.log("expense.js addExpense", addObj);
+    console.log("expense.js addExpense", addObj);
 
     const allRows = this.state.data;
 
@@ -82,17 +82,19 @@ class Expense extends Component {
 
     //TODO: Check problems with date...
     //TODO: ADD validate...
-    let monthRemove = 0;
-    if (parseInt(addObj.whenMonth) !== 0) {
-      monthRemove = parseInt(addObj.whenMonth) - 1;
-    }
+    let dateFromForm = addObj.date.split("-");
+    const day = dateFromForm[0];
+    const month = dateFromForm[1];
+    const year = dateFromForm[2];
+    console.log("dateFromForm", dateFromForm);
 
-    const builtDate = new Date(
-      parseInt(addObj.whenYear),
-      monthRemove,
-      parseInt(addObj.whenDay) + 1
-    );
+    const actualDate = new Date();
+    const actualHour = actualDate.getHours();//roznica czasu na serwerze -2h  front 19:00 bacnekdn 17:00
+    const actualMinutes = actualDate.getMinutes();
 
+
+    const builtDate = new Date(parseInt(year), month - 1, parseInt(day), parseInt(actualHour), parseInt(actualMinutes));
+    console.log("builtDate", builtDate);
     const expenseFromFront = {
       id: newId,
       howMuch: parseFloat(addObj.howMuch),
@@ -126,14 +128,14 @@ class Expense extends Component {
   editExpense = (editObj) => {
     console.log("expense.js editExpense", editObj);
 
-    var year =  editObj.date.substring(0, 4);
-    var month =  editObj.date.substring(5, 7);
-    var day =  editObj.date.substring(8, 10);
+    var year = editObj.date.substring(0, 4);
+    var month = editObj.date.substring(5, 7);
+    var day = editObj.date.substring(8, 10);
     //console.log(year)
     //console.log(month)
     //console.log(day)
 
-    var builtDate =  new Date(year, month, day)
+    var builtDate = new Date(year, month, day);
 
     const expenseFromFront = {
       id: editObj.id,
@@ -160,8 +162,14 @@ class Expense extends Component {
 
     console.log("expense.js", this.state.data[0].date);
     console.log("expense.js", new Date(this.state.data[0].date));
-    console.log("expense.js", format(new Date(this.state.data[0].date), 'd M yyyy'));
-    console.log("expense.js", format(new Date(this.state.data[0].date), 'h:mm:ss'));
+    console.log(
+      "expense.js",
+      format(new Date(this.state.data[0].date), "d M yyyy")
+    );
+    console.log(
+      "expense.js",
+      format(new Date(this.state.data[0].date), "h:mm:ss")
+    );
 
     return (
       <>
