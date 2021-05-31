@@ -82,19 +82,24 @@ class Expense extends Component {
 
     //TODO: Check problems with date...
     //TODO: ADD validate...
+    console.log("TEST44 ", addObj.date);
     let dateFromForm = addObj.date.split("-");
     const day = dateFromForm[0];
-    const month = dateFromForm[1];
+    const month = dateFromForm[1]; /*from 0 to 11. 0 - january etc...;*/
     const year = dateFromForm[2];
-    console.log("dateFromForm", dateFromForm);
 
     const actualDate = new Date();
-    const actualHour = actualDate.getHours();//roznica czasu na serwerze -2h  front 19:00 bacnekdn 17:00
+    const actualHour = actualDate.getHours(); //Different time on server -2h. Front 19:00 backend 17:00
     const actualMinutes = actualDate.getMinutes();
 
+    const builtDate = new Date(
+      parseInt(year),
+      parseInt(month) - 1,
+      parseInt(day),
+      parseInt(actualHour),
+      parseInt(actualMinutes)
+    );
 
-    const builtDate = new Date(parseInt(year), month - 1, parseInt(day), parseInt(actualHour), parseInt(actualMinutes));
-    console.log("builtDate", builtDate);
     const expenseFromFront = {
       id: newId,
       howMuch: parseFloat(addObj.howMuch),

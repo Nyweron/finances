@@ -12,8 +12,6 @@ export const getAll = (controller) => {
 };
 
 export const createExpense = async (temp) => {
-  //console.log("temp1", temp);
-  //console.log("temp2", JSON.stringify(temp));
   return await fetch(backendUrl + "expense", {
     headers: {
       Accept: "application/json",
