@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { TableListRows } from "../myCustomCRUDTable/table/TableListRows";
 
 import Pagination from "./pagination/Pagination";
-import { filterTable, removeRowById, updateByObjectId } from "../../lib/crudHelper";
+import { filterTable, removeRowById } from "../../lib/crudHelper";
 
 class TableContainer extends Component {
   state = {
@@ -36,7 +36,7 @@ class TableContainer extends Component {
   }
 
   handleSubmitAddRow = (addObj) => {
-    console.log("TableContainer.js addObj",addObj)
+    console.log("TableContainer.js addObj", addObj);
     this.props.addRow(addObj);
   };
 
@@ -53,7 +53,9 @@ class TableContainer extends Component {
   invokePaginationOnPageChanged = () => {
     const data = {};
     data.currentPage = this.state.currentPage;
-    data.totalPages = Math.ceil(this.state.rowsFromDbJson.length / this.state.pageLimit);
+    data.totalPages = Math.ceil(
+      this.state.rowsFromDbJson.length / this.state.pageLimit
+    );
     data.pageLimit = this.state.pageLimit;
     data.totalRecords = this.state.rowsFromDbJson.length;
 
@@ -61,8 +63,8 @@ class TableContainer extends Component {
   };
 
   handleEdit = (editObj) => {
-     console.log("TableContainer.handleEdit", editObj);
-     this.props.editRow(editObj);
+    console.log("TableContainer.handleEdit", editObj);
+    this.props.editRow(editObj);
   };
 
   showTempMessage = (msg) => {

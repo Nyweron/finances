@@ -15,7 +15,7 @@ import {
   getKeyFromJson,
   sortIds,
   generateNewId,
-  removeRowById,
+  //removeRowById,
 } from "../lib/crudHelper";
 import { format } from "date-fns";
 
@@ -124,8 +124,8 @@ class Expense extends Component {
   removeExpense = (id) => {
     console.log("expense.js removeExpense", id);
 
-    const listOfRows = this.state.data;
-    const newListWithoutRemovedItem = removeRowById(listOfRows, id);
+    //const listOfRows = this.state.data;
+    //const newListWithoutRemovedItem = removeRowById(listOfRows, id);
 
     deleteRowExpense(id);
   };
@@ -165,16 +165,6 @@ class Expense extends Component {
       return null;
     }
 
-    console.log("expense.js", this.state.data[0].date);
-    console.log("expense.js", new Date(this.state.data[0].date));
-    console.log(
-      "expense.js",
-      format(new Date(this.state.data[0].date), "d M yyyy")
-    );
-    console.log(
-      "expense.js",
-      format(new Date(this.state.data[0].date), "h:mm:ss")
-    );
 
     return (
       <>

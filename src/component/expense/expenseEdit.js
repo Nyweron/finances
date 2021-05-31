@@ -3,6 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
 
+import RenderDatePicker from "../DateInput/RenderDatePicker";
+
 class ExpenseEdit extends Component {
   state = {
     show: false,
@@ -109,40 +111,11 @@ class ExpenseEdit extends Component {
                       value=1..."
                     </label>
                   </div>
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
-                  </div>
 
-                  <div className="form-group row">
-                    <label className={"col-2 col-form-label"}>Dzień:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenDay"
-                        component="input"
-                        type="number"
-                        placeholder="Dzień"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Miesiąc:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenMonth"
-                        component="input"
-                        type="number"
-                        placeholder="Miesiąc"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Rok:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenYear"
-                        component="input"
-                        type="number"
-                        placeholder="Rok"
-                        className={"form-control"}
-                      />
+                  <div className={"form-group row"}>
+                    <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
+                    <div className={"col-sm-5"}>
+                      <Field name="date" editDate={this.props.row.date} component={RenderDatePicker} />
                     </div>
                   </div>
 
