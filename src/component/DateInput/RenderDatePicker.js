@@ -8,7 +8,7 @@ const RenderDatePicker = ({
   input: { value, onChange },
   editDate,
 }) => {
-  console.log("editDate", editDate);
+  // console.log("editDate", editDate);
   return (
     <DateTimePicker
       name="date"

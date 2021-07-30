@@ -5,8 +5,8 @@ import IncomeEdit from "../component/income/incomeEdit";
 import IncomeAdd from "../component/income/incomeAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
-import {getAll} from "../lib/incomeService";
-import {getKeyFromJson} from "../lib/crudHelper";
+import { getAll, createIncome } from "../lib/incomeService";
+import { getKeyFromJson, sortIds, generateNewId } from "../lib/crudHelper";
 
 import styles from "../App.module.css";
 
@@ -14,12 +14,13 @@ class Income extends Component {
   state = {
     isVisibleFilterSettings: false,
     data: null,
-    columns: null
+    columns: null,
+    isRowCreated: false,
   };
 
-  componentDidMount(){
-
-    getAll("income").then(rows => {
+  componentDidMount() {
+    console.log("componentDidMount - income.js");
+    getAll("income").then((rows) => {
       this.setState({ data: rows });
       const keys = getKeyFromJson(rows);
       if (keys !== null) {
@@ -28,60 +29,84 @@ class Income extends Component {
     });
   }
 
+  componentDidUpdate() {
+    console.log("componentDidUpdate - income.js");
+    if (this.state.isRowCreated === true) {
+      console.log("componentDidUpdate IF - income.js");
+      getAll("income").then((rows) => {
+        this.setState({ data: rows, isRowCreated: false });
+        const keys = getKeyFromJson(rows);
+        if (keys !== null) {
+          this.setState({ columns: keys });
+        }
+      });
+    }
+  }
+
   displayFilterSettings = () => {
     this.setState({
-      isVisibleFilterSettings: !this.state.isVisibleFilterSettings
+      isVisibleFilterSettings: !this.state.isVisibleFilterSettings,
     });
   };
 
-  addIncome = addObj => {
+  addIncome = (addObj) => {
     console.log("Income.js addIncome", addObj);
 
-    // if (
-    //   addObj === undefined ||
-    //   addObj === null ||
-    //   addObj.firstName === null ||
-    //   addObj.firstName === undefined ||
-    //   addObj.firstName === ""
-    // ) {
-    //   this.showTempMessage("Firstname is required");
-    //   return;
-    // }
+    const allRows = this.state.data;
+    console.log("TEST56 income allRows ", allRows);
+    const sortedIds = sortIds(allRows);
+    if (sortedIds && sortedIds.length === 0) {
+      sortedIds.push("");
+    }
 
-    // const allRows = this.state.rowsFromDbJson;
-    // const sortedIds = sortIds(allRows);
-    // if (sortedIds.length === 0) {
-    //   sortedIds.push("");
-    // }
-    // const newId = generateNewId(sortedIds);
+    console.log("TEST56 income sortedIds ", sortedIds);
+    //TODO FIX generateNewId for empty rows when table is empty
+    const newId = generateNewId(sortedIds);
 
-    // const newPerson = {
-    //   id: newId,
-    //   firstName: addObj.firstName,
-    //   lastName: addObj.lastName,
-    //   age: addObj.age,
-    //   isActive: true,
-    //   hobby: addObj.hobby
-    // };
+    console.log("TEST56 income newId ", newId);
 
-    // createPerson(newPerson).then(
-    //   () => this.showTempMessage("person created"),
-    //   this.setState(
-    //     {
-    //       rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
-    //     },
-    //     () => {
-    //       this.invokePaginationOnPageChanged();
-    //     }
-    //   )
-    // );
+     //TODO: Check problems with date...
+    //TODO: ADD validate...
+    console.log("TEST55 ", addObj.date);
+    let dateFromForm = addObj.date.split("-");
+    const day = dateFromForm[0];
+    const month = dateFromForm[1]; /*from 0 to 11. 0 - january etc...;*/
+    const year = dateFromForm[2];
 
-    // for (var key in addObj) {
-    //   delete addObj[key];
-    // }
+    const actualDate = new Date();
+    const actualHour = actualDate.getHours(); //Different time on server -2h. Front 19:00 backend 17:00
+    const actualMinutes = actualDate.getMinutes();
+
+    const builtDate = new Date(
+      parseInt(year),
+      parseInt(month) - 1,
+      parseInt(day),
+      parseInt(actualHour),
+      parseInt(actualMinutes)
+    );
+
+    const incomeFromFront = {
+      id: newId,
+      howMuch: parseFloat(addObj.howMuch),
+      date: builtDate,
+      comment: addObj.comment,
+      standingOrder: addObj.autoSubtractAmount,
+      attachment: addObj.attachment,
+      userId: parseInt(addObj.who),
+      categorySavingId: parseInt(addObj.whatWasPaidFor),
+      categoryIncomeId: parseInt(addObj.categoryIncomeId),
+    };
+
+    createIncome(incomeFromFront).then((res) => {
+      this.setState({ isRowCreated: true });
+    });
+
+    for (let key in addObj) {
+      delete addObj[key];
+    }
   };
 
-  removeIncome = id => {
+  removeIncome = (id) => {
     console.log("Income.js removeIncome", id);
 
     // let listOfRows = this.state.rowsFromDbJson;
@@ -95,12 +120,12 @@ class Income extends Component {
     // );
   };
 
-  editIncome = editObj => {
+  editIncome = (editObj) => {
     console.log("Income.js editIncome", editObj);
   };
 
   render() {
-    if(this.state.data === null || this.state.columns === null){
+    if (this.state.data === null || this.state.columns === null) {
       return null;
     }
 

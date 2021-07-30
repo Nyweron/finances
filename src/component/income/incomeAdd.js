@@ -3,10 +3,13 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
 
+import RenderDatePicker from "../DateInput/RenderDatePicker";
+
 class IncomeAdd extends Component {
   onSubmit = temp => {
     console.log("IncomeAdd.onSubmit", temp);
     this.props.handleClose();
+    this.props.addRow(temp);
   };
 
   render() {
@@ -15,9 +18,10 @@ class IncomeAdd extends Component {
       <>
         <Form
           onSubmit={this.onSubmit}
-          initialValues={{ amount: 55.01, autoSubtractAmount: true }}
+          initialValues={{ HowMuch: 21.01, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
+              size={"lg"}
               show={this.props.show}
               onHide={() => {
                 this.props.handleClose();
@@ -47,34 +51,34 @@ class IncomeAdd extends Component {
                     </div>
                   </div>
                   <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>Na co</label>
+                    <label className={"col-sm-2 col-form-label"}>Tytuł przychodu:</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="forWhat"
+                        name="categoryIncomeId"
                         component="select"
                         className={"custom-select"}
                       >
                         <option />
-                        <option value="56">Artykuły spożywcze</option>
-                        <option value="77">Lekarz</option>
-                        <option value="88">Samochód</option>
+                        <option value="56">Darowizna</option>
+                        <option value="77">Pożyczka</option>
+                        <option value="88">Wynagrodzenie</option>
                       </Field>
                     </div>
                   </div>
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>
-                      Czym zapłacono
+                      Na co wpłacono
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="whatWasPaid"
+                        name="WhatWasPaidFor"
                         component="select"
                         className={"custom-select"}
                       >
                         <option />
-                        <option value="1">Konto banku X</option>
-                        <option value="2">Karta banku X</option>
-                        <option value="3">Konto banku Y</option>
+                        <option value="1">Konto banku X(firmowe)</option>
+                        <option value="2">Karta banku Y(oszczędnościowe)</option>
+                        <option value="3">Konto banku Z(ogólne)</option>
                       </Field>
                     </div>
                   </div>
@@ -87,39 +91,10 @@ class IncomeAdd extends Component {
                       value=1..."
                     </label>
                   </div>
-                  <div className="form-group row">
+                  <div className={"form-group row"}>
                     <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
-                  </div>
-                  <div className="form-group row">
-                    <label className={"col-2 col-form-label"}>Dzień:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenDay"
-                        component="input"
-                        type="number"
-                        placeholder="Dzień"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Miesiąc:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenMonth"
-                        component="input"
-                        type="number"
-                        placeholder="Miesiąc"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Rok:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenYear"
-                        component="input"
-                        type="number"
-                        placeholder="Rok"
-                        className={"form-control"}
-                      />
+                    <div className={"col-sm-5"}>
+                      <Field name="date" component={RenderDatePicker} />
                     </div>
                   </div>
                   <div className="form-group row">
@@ -151,26 +126,12 @@ class IncomeAdd extends Component {
                     </div>
                   </div>
                   <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>
-                      Załącznik
-                    </label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="attachment"
-                        component="input"
-                        type="text"
-                        placeholder="Załącznik"
-                        className={"form-control"}
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group row">
                     <label
                       style={{ fontSize: "small" }}
                       className={"col-sm-12"}
                     >
-                      Automatycznie odejmi wpisaną kwotę z wybranego typu
-                      oszczędności (pole Czym zapłacono)
+                      Automatycznie dodaj wpisaną kwotę z wybranego typu
+                      oszczędności (pole Na co wpłacono)
                     </label>
                     <div className="form-check">
                       <Field

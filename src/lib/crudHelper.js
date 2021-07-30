@@ -17,8 +17,13 @@ export const sortIds = allRows =>
     return a.id - b.id || a.name.localeCompare(b.name);
   });
 
-export const generateNewId = generateId =>
-  generateId[generateId.length - 1].id + 1;
+export const generateNewId = generateId => {
+  console.log("TEST56 generateId", generateId)
+  console.log("TEST56 generateId.length", generateId.length)
+  var x =  generateId[generateId.length - 1].id + 1;
+  console.log("TEST56 x", x)
+  return x;
+}
 
 export const filterTable = (keys, rows, route, isSort) => {
   if (keys === null || keys === undefined || keys.length === 0) {

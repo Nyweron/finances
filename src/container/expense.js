@@ -11,13 +11,7 @@ import {
   deleteRowExpense,
   editPutExpense,
 } from "../lib/expenseService";
-import {
-  getKeyFromJson,
-  sortIds,
-  generateNewId,
-  //removeRowById,
-} from "../lib/crudHelper";
-import { format } from "date-fns";
+import { getKeyFromJson, sortIds, generateNewId } from "../lib/crudHelper";
 
 import styles from "../App.module.css";
 
@@ -133,14 +127,33 @@ class Expense extends Component {
   editExpense = (editObj) => {
     console.log("expense.js editExpense", editObj);
 
-    var year = editObj.date.substring(0, 4);
-    var month = editObj.date.substring(5, 7);
-    var day = editObj.date.substring(8, 10);
+    const dateFromForm = editObj.date.split("-");
+    const day = dateFromForm[0];
+    const month = dateFromForm[1]; /*from 0 to 11. 0 - january etc...;*/
+    const year = dateFromForm[2];
+
+    const actualDate = new Date();
+    const actualHour = actualDate.getHours(); //Different time on server -2h. Front 19:00 backend 17:00
+    const actualMinutes = actualDate.getMinutes();
+
+    const builtDate = new Date(
+      parseInt(year),
+      parseInt(month) - 1,
+      parseInt(day),
+      parseInt(actualHour),
+      parseInt(actualMinutes)
+    );
+
+    // var year = editObj.date.substring(0, 4);
+    // var month = editObj.date.substring(5, 7);
+    // var day = editObj.date.substring(8, 10);
     //console.log(year)
     //console.log(month)
     //console.log(day)
 
-    var builtDate = new Date(year, month, day);
+    //var builtDate = new Date(year, month, day);
+
+    console.log("TEST111 expense.js builtDate", builtDate);
 
     const expenseFromFront = {
       id: editObj.id,
@@ -164,7 +177,6 @@ class Expense extends Component {
     if (this.state.data === null || this.state.columns === null) {
       return null;
     }
-
 
     return (
       <>

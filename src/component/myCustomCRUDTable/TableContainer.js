@@ -122,16 +122,18 @@ class TableContainer extends Component {
   };
 
   render() {
+    let display = true;
+    let displayTable = undefined;
 
     if (
       this.state.rowsFromDbJson === undefined ||
       this.state.rowsFromDbJson === null ||
       this.state.rowsFromDbJson.length === 0
     ) {
-      return null;
+      display = false;
     }
 
-    const displayTable = filterTable(
+    displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.currentRows,
       this.state.columnName,
@@ -155,30 +157,33 @@ class TableContainer extends Component {
           addRow={this.handleSubmitAddRow}
         />
 
-        <div className="row">
-          <TableListRows
-            rows={displayTable}
-            keys={
-              this.state.keysFromDbJson === null
-                ? null
-                : this.state.keysFromDbJson
-            }
-            classCss="table table-striped table-bordered"
-            sortColumn={this.sortColumn}
-            handleRemove={this.handleRemove}
-            handleEdit={this.handleEdit}
-            EditComponent={this.props.EditComponent}
-          />
-        </div>
-
-        <div className="d-flex flex-row py-4 align-items-center justify-content-center">
-          <Pagination
-            totalRecords={this.state.rowsFromDbJson.length}
-            pageLimit={this.state.pageLimit}
-            pageNeighbours={this.state.pageNeighbours}
-            onPageChanged={this.onPageChanged}
-          />
-        </div>
+        {display && (
+          <>
+            <div className="row">
+              <TableListRows
+                rows={displayTable}
+                keys={
+                  this.state.keysFromDbJson === null
+                    ? null
+                    : this.state.keysFromDbJson
+                }
+                classCss="table table-striped table-bordered"
+                sortColumn={this.sortColumn}
+                handleRemove={this.handleRemove}
+                handleEdit={this.handleEdit}
+                EditComponent={this.props.EditComponent}
+              />
+            </div>
+            <div className="d-flex flex-row py-4 align-items-center justify-content-center">
+              <Pagination
+                totalRecords={this.state.rowsFromDbJson.length}
+                pageLimit={this.state.pageLimit}
+                pageNeighbours={this.state.pageNeighbours}
+                onPageChanged={this.onPageChanged}
+              />
+            </div>
+          </>
+        )}
       </div>
     );
   }
