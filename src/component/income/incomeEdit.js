@@ -139,7 +139,7 @@ class IncomeEdit extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="notes"
+                        name="comment"
                         component="textarea"
                         placeholder="Komentarz"
                         className={"form-control"}

@@ -5,7 +5,7 @@ import IncomeEdit from "../component/income/incomeEdit";
 import IncomeAdd from "../component/income/incomeAdd";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
-import { getAll, createIncome } from "../lib/incomeService";
+import { getAll, createIncome, editPutIncome } from "../lib/incomeService";
 import { getKeyFromJson, sortIds, generateNewId } from "../lib/crudHelper";
 
 import styles from "../App.module.css";
@@ -53,27 +53,25 @@ class Income extends Component {
     console.log("Income.js addIncome", addObj);
 
     const allRows = this.state.data;
-    console.log("TEST56 income allRows ", allRows);
-    const sortedIds = sortIds(allRows);
-    if (sortedIds && sortedIds.length === 0) {
-      sortedIds.push("");
-    }
 
-    console.log("TEST56 income sortedIds ", sortedIds);
-    //TODO FIX generateNewId for empty rows when table is empty
+    const sortedIds = sortIds(allRows);
+
     const newId = generateNewId(sortedIds);
 
-    console.log("TEST56 income newId ", newId);
-
-     //TODO: Check problems with date...
+    //TODO: Check problems with date...
     //TODO: ADD validate...
 
-    let dateFromForm = addObj.date.split("-");
+    const actualDate = new Date();
+
+    let dateFromForm =
+      addObj.date !== null
+        ? addObj.date.split("-")
+        : `${actualDate.getFullYear()}-${actualDate.getMonth()}-${actualDate.getDay()}`.split("-")
+
     const day = dateFromForm[0];
     const month = dateFromForm[1]; /*from 0 to 11. 0 - january etc...;*/
     const year = dateFromForm[2];
 
-    const actualDate = new Date();
     const actualHour = actualDate.getHours(); //Different time on server -2h. Front 19:00 backend 17:00
     const actualMinutes = actualDate.getMinutes();
 
@@ -84,7 +82,7 @@ class Income extends Component {
       parseInt(actualHour),
       parseInt(actualMinutes)
     );
-    console.log("TEST55 addObj.whatWasPaidFor ", addObj.whatWasPaidFor);
+
     const incomeFromFront = {
       id: newId,
       howMuch: parseFloat(addObj.howMuch),
@@ -122,6 +120,40 @@ class Income extends Component {
 
   editIncome = (editObj) => {
     console.log("Income.js editIncome", editObj);
+
+    const dateFromForm = editObj.date.split("-");
+    const day = dateFromForm[0];
+    const month = dateFromForm[1]; /*from 0 to 11. 0 - january etc...;*/
+    const year = dateFromForm[2];
+
+    const actualDate = new Date();
+    const actualHour = actualDate.getHours(); //Different time on server -2h. Front 19:00 backend 17:00
+    const actualMinutes = actualDate.getMinutes();
+
+    const builtDate = new Date(
+      parseInt(year),
+      parseInt(month) - 1,
+      parseInt(day),
+      parseInt(actualHour),
+      parseInt(actualMinutes)
+    );
+
+    const incomeFromFront = {
+      id: editObj.id,
+      howMuch: parseFloat(editObj.howMuch),
+      date: builtDate,
+      comment: editObj.comment,
+      standingOrder: editObj.autoSubtractAmount,
+      attachment: editObj.attachment,
+      userId: parseInt(editObj.who),
+      categorySavingId: parseInt(editObj.whatWasPaidFor),
+      categoryIncomeId: parseInt(editObj.categoryIncomeId),
+    };
+
+    editPutIncome(incomeFromFront).then((res) => {
+      this.setState({ isRowCreated: true });
+      //console.log("res",res)
+    });
   };
 
   render() {

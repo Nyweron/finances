@@ -22,7 +22,7 @@ export const generateNewId = (generateId) => {
   if (
     generateId !== null &&
     generateId !== undefined &&
-    generateId.length === 1
+    generateId.length === 0
   ) {
     return 1;
   }

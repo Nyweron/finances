@@ -69,14 +69,13 @@ class Expense extends Component {
     const allRows = this.state.data;
 
     const sortedIds = sortIds(allRows);
-    if (sortedIds && sortedIds.length === 0) {
-      sortedIds.push("");
-    }
+
     const newId = generateNewId(sortedIds);
 
     //TODO: Check problems with date...
     //TODO: ADD validate...
     console.log("TEST44 ", addObj.date);
+
     let dateFromForm = addObj.date.split("-");
     const day = dateFromForm[0];
     const month = dateFromForm[1]; /*from 0 to 11. 0 - january etc...;*/
