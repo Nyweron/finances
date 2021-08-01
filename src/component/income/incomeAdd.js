@@ -42,7 +42,7 @@ class IncomeAdd extends Component {
                     <label className={"col-sm-2 col-form-label"}>Kwota</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="HowMuch"
+                        name="howMuch"
                         component="input"
                         type="number"
                         placeholder="Kwota"
@@ -59,9 +59,9 @@ class IncomeAdd extends Component {
                         className={"custom-select"}
                       >
                         <option />
-                        <option value="56">Darowizna</option>
-                        <option value="77">Pożyczka</option>
-                        <option value="88">Wynagrodzenie</option>
+                        <option value="1">Darowizna</option>
+                        <option value="2">Nadgodziny</option>
+                        <option value="3">Odsetki</option>
                       </Field>
                     </div>
                   </div>
@@ -71,7 +71,7 @@ class IncomeAdd extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="WhatWasPaidFor"
+                        name="whatWasPaidFor"
                         component="select"
                         className={"custom-select"}
                       >

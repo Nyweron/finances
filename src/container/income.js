@@ -67,7 +67,7 @@ class Income extends Component {
 
      //TODO: Check problems with date...
     //TODO: ADD validate...
-    console.log("TEST55 ", addObj.date);
+
     let dateFromForm = addObj.date.split("-");
     const day = dateFromForm[0];
     const month = dateFromForm[1]; /*from 0 to 11. 0 - january etc...;*/
@@ -84,7 +84,7 @@ class Income extends Component {
       parseInt(actualHour),
       parseInt(actualMinutes)
     );
-
+    console.log("TEST55 addObj.whatWasPaidFor ", addObj.whatWasPaidFor);
     const incomeFromFront = {
       id: newId,
       howMuch: parseFloat(addObj.howMuch),

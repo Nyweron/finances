@@ -3,6 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Form, Field } from "react-final-form";
 
+import RenderDatePicker from "../DateInput/RenderDatePicker";
+
 class IncomeEdit extends Component {
   state = {
     show: false
@@ -31,16 +33,15 @@ class IncomeEdit extends Component {
 
     return (
       <>
-        <p onClick={this.editForm}
-        style={{ color: "red", cursor: "default" }}
-        >
+        <Button variant="success" onClick={this.editForm}>
           edit
-        </p>
+        </Button>
         <Form
           onSubmit={this.onSubmit}
           initialValues={{ ...this.props.row, autoSubtractAmount: true }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <Modal
+              size={"lg"}
               show={this.state.show}
               onHide={() => {
                 this.hideModal();
@@ -70,34 +71,34 @@ class IncomeEdit extends Component {
                     </div>
                   </div>
                   <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>Na co</label>
+                    <label className={"col-sm-2 col-form-label"}>Tytuł przychodu:</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="IdIncomesCategory"
+                        name="categoryIncomeId"
                         component="select"
                         className={"custom-select"}
                       >
                         <option />
-                        <option value="67">Artykuły spożywcze</option>
-                        <option value="77">Lekarz</option>
-                        <option value="88">Samochód</option>
+                        <option value="1">Darowizna</option>
+                        <option value="2">Nadgodziny</option>
+                        <option value="3">Odsetki</option>
                       </Field>
                     </div>
                   </div>
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>
-                      Czym zapłacono
+                    Na co wpłacono
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="whatWasPaid"
+                        name="whatWasPaidFor"
                         component="select"
                         className={"custom-select"}
                       >
                         <option />
-                        <option value="1">Konto banku X</option>
-                        <option value="2">Karta banku X</option>
-                        <option value="3">Konto banku Y</option>
+                        <option value="1">Konto banku X(firmowe)</option>
+                        <option value="2">Karta banku Y(oszczędnościowe)</option>
+                        <option value="3">Konto banku Z(ogólne)</option>
                       </Field>
                     </div>
                   </div>
@@ -110,43 +111,12 @@ class IncomeEdit extends Component {
                       value=1..."
                     </label>
                   </div>
-                  <div className="form-group row">
+                  <div className={"form-group row"}>
                     <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className={"col-2 col-form-label"}>Dzień:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenDay"
-                        component="input"
-                        type="number"
-                        placeholder="Dzień"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Miesiąc:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenMonth"
-                        component="input"
-                        type="number"
-                        placeholder="Miesiąc"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Rok:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenYear"
-                        component="input"
-                        type="number"
-                        placeholder="Rok"
-                        className={"form-control"}
-                      />
+                    <div className={"col-sm-5"}>
+                      <Field name="date" component={RenderDatePicker} />
                     </div>
                   </div>
-
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Kto</label>
                     <div className={"col-sm-10"}>
@@ -169,24 +139,9 @@ class IncomeEdit extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="Comment"
+                        name="notes"
                         component="textarea"
                         placeholder="Komentarz"
-                        className={"form-control"}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>
-                      Załącznik
-                    </label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="attachment"
-                        component="input"
-                        type="text"
-                        placeholder="Załącznik"
                         className={"form-control"}
                       />
                     </div>

@@ -1,5 +1,5 @@
 export const removeRowById = (list, id) => {
-  const index = list.findIndex(x => x.id === id);
+  const index = list.findIndex((x) => x.id === id);
   if (index > -1) {
     list.splice(index, 1);
   }
@@ -7,23 +7,28 @@ export const removeRowById = (list, id) => {
   return list;
 };
 
-export const findById = (list, id) => list.find(x => x.id === id);
+export const findById = (list, id) => list.find((x) => x.id === id);
 
 export const updateByObjectId = (list, updated) =>
-  list.map(row => (row.id === updated.id ? updated : row));
+  list.map((row) => (row.id === updated.id ? updated : row));
 
-export const sortIds = allRows =>
-  allRows.sort(function(a, b) {
+export const sortIds = (allRows) =>
+  allRows.sort(function (a, b) {
     return a.id - b.id || a.name.localeCompare(b.name);
   });
 
-export const generateNewId = generateId => {
-  console.log("TEST56 generateId", generateId)
-  console.log("TEST56 generateId.length", generateId.length)
-  var x =  generateId[generateId.length - 1].id + 1;
-  console.log("TEST56 x", x)
-  return x;
-}
+export const generateNewId = (generateId) => {
+
+  if (
+    generateId !== null &&
+    generateId !== undefined &&
+    generateId.length === 1
+  ) {
+    return 1;
+  }
+
+  return generateId[generateId.length - 1].id + 1;
+};
 
 export const filterTable = (keys, rows, route, isSort) => {
   if (keys === null || keys === undefined || keys.length === 0) {
@@ -33,7 +38,7 @@ export const filterTable = (keys, rows, route, isSort) => {
   const keysLength = keys.length;
   for (let i = 0; i < keysLength; i++) {
     if (keys[i] === route) {
-      return rows.sort(function(current, next) {
+      return rows.sort(function (current, next) {
         let x = current[keys[i]];
         let y = next[keys[i]];
 
@@ -75,7 +80,7 @@ function sortAscending(x, y) {
   }
 }
 
-export const getKeyFromJson = rows => {
+export const getKeyFromJson = (rows) => {
   if (rows !== null && rows.length > 0) {
     return Object.keys(rows[0]);
   }
