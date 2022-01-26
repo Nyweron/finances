@@ -90,8 +90,8 @@ class Income extends Component {
       comment: addObj.comment,
       standingOrder: addObj.autoSubtractAmount,
       attachment: addObj.attachment,
-      userId: parseInt(addObj.who),
-      categorySavingId: parseInt(addObj.whatWasPaidFor),
+      userId: parseInt(addObj.userId),
+      categorySavingId: parseInt(addObj.categorySavingId),
       categoryIncomeId: parseInt(addObj.categoryIncomeId),
     };
 
@@ -145,14 +145,15 @@ class Income extends Component {
       comment: editObj.comment,
       standingOrder: editObj.autoSubtractAmount,
       attachment: editObj.attachment,
-      userId: parseInt(editObj.who),
-      categorySavingId: parseInt(editObj.whatWasPaidFor),
+      userId: parseInt(editObj.userId),
+      categorySavingId: parseInt(editObj.categorySavingId),
       categoryIncomeId: parseInt(editObj.categoryIncomeId),
     };
 
+    console.log("🚀 ~ file: income.js ~ line 154 ~ Income ~ editPutIncome ~ incomeFromFront", incomeFromFront)
     editPutIncome(incomeFromFront).then((res) => {
+      console.log("🚀 ~ file: income.js ~ line 155 ~ Income ~ editPutIncome ~ res", res)
       this.setState({ isRowCreated: true });
-      //console.log("res",res)
     });
   };
 
@@ -169,7 +170,7 @@ class Income extends Component {
               className="btn btn-primary"
               onClick={this.displayFilterSettings}
             >
-              Filter settings
+              Filter settings income
             </button>
             {this.state.isVisibleFilterSettings && <IncomeFilter />}
           </div>

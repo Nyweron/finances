@@ -91,7 +91,7 @@ class ExpenseEdit extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="categorySavingId"
+                        name="whatWasPaidFor"
                         component="select"
                         className={"custom-select"}
                       >

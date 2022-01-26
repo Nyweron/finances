@@ -29,7 +29,7 @@ class IncomeEdit extends Component {
   };
 
   render() {
-    // console.log("IncomeEditProps", this.props);
+    //  console.log("IncomeEditProps", this.props);
 
     return (
       <>
@@ -62,7 +62,7 @@ class IncomeEdit extends Component {
                     <label className={"col-sm-2 col-form-label"}>Kwota</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="HowMuch"
+                        name="howMuch"
                         component="input"
                         type="number"
                         placeholder="Kwota"
@@ -91,7 +91,7 @@ class IncomeEdit extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="whatWasPaidFor"
+                        name="categorySavingId"
                         component="select"
                         className={"custom-select"}
                       >
@@ -114,14 +114,14 @@ class IncomeEdit extends Component {
                   <div className={"form-group row"}>
                     <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
                     <div className={"col-sm-5"}>
-                      <Field name="date" component={RenderDatePicker} />
+                      <Field name="date" editDate={this.props.row.date} component={RenderDatePicker} />
                     </div>
                   </div>
                   <div className="form-group row">
                     <label className={"col-sm-2 col-form-label"}>Kto</label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="IdPerson"
+                        name="userId"
                         component="select"
                         className={"form-control"}
                       >

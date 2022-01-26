@@ -1,6 +1,6 @@
-import {savingUrl} from '../shared/apiUrl';
+import {backendUrl} from '../shared/apiUrl';
 
-export const getAll = () => {
-  return fetch(savingUrl).then(res => res.json());
+export const getAll = (controller) => {
+  return fetch(backendUrl + "" + controller).then((res) => res.json());
 };
 

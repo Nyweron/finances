@@ -13,7 +13,7 @@ class IncomeAdd extends Component {
   };
 
   render() {
-    console.log("IncomeAddProps", this.props);
+    // console.log("IncomeAddProps", this.props);
     return (
       <>
         <Form
@@ -71,7 +71,7 @@ class IncomeAdd extends Component {
                     </label>
                     <div className={"col-sm-10"}>
                       <Field
-                        name="whatWasPaidFor"
+                        name="categorySavingId"
                         component="select"
                         className={"custom-select"}
                       >

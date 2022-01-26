@@ -185,7 +185,7 @@ class Expense extends Component {
               className="btn btn-primary"
               onClick={this.displayFilterSettings}
             >
-              Filter settings
+              Filter settings Expense
             </button>
             {this.state.isVisibleFilterSettings && <ExpenseFilter />}
           </div>

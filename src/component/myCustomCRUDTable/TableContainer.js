@@ -19,11 +19,11 @@ class TableContainer extends Component {
   };
 
   componentDidMount() {
-    console.log("componentDidMount TableContainer.js");
+    // console.log("componentDidMount TableContainer.js");
   }
 
   componentDidUpdate(prevProps) {
-    console.log("componentDidUpdate TableContainer.js");
+    // console.log("componentDidUpdate TableContainer.js");
     if (this.props.data !== prevProps.data) {
       console.log("componentDidUpdate IF TableContainer.js");
       this.setState(

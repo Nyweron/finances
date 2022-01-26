@@ -19,7 +19,8 @@ class Saving extends Component {
   };
 
   componentDidMount(){
-    getAll().then(rows => {
+    getAll("saving").then(rows => {
+      console.log("🚀 ~ file: saving.js ~ line 23 ~ Saving ~ getAll ~ rows", rows)
       this.setState({ data: rows });
       const keys = getKeyFromJson(rows);
       if (keys !== null) {
@@ -100,6 +101,7 @@ class Saving extends Component {
   };
 
   render() {
+    console.log("🚀 ~ file: saving.js ~ line 105 ~ Saving ~ render ~ this.state.data", this.state.data)
     if(this.state.data === null || this.state.columns === null){
       return null;
     }
@@ -112,7 +114,7 @@ class Saving extends Component {
               className="btn btn-primary"
               onClick={this.displayFilterSettings}
             >
-              Filter settings
+              Filter settings savings
             </button>
             {this.state.isVisibleFilterSettings && <SavingFilter />}
           </div>
