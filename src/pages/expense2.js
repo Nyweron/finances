@@ -68,97 +68,122 @@ class expense2 extends Component {
 
     return (
       <>
-        <Table celled selectable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Id</Table.HeaderCell>
-              <Table.HeaderCell>Kwota</Table.HeaderCell>
-              <Table.HeaderCell>Na co</Table.HeaderCell>
-              <Table.HeaderCell>Czym zapłacono</Table.HeaderCell>
-              <Table.HeaderCell>Kiedy</Table.HeaderCell>
-              <Table.HeaderCell>Kto</Table.HeaderCell>
-              <Table.HeaderCell>Komentarz</Table.HeaderCell>
-              <Table.HeaderCell>Załącznik?</Table.HeaderCell>
-              <Table.HeaderCell>Usuń</Table.HeaderCell>
-              <Table.HeaderCell>Edytuj</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+        <div className="ui centered grid">
+          <div className="row"></div>
+          <div className="row">
+            <div className="fourteen wide column">
+              <button className="ui blue button">Dodaj wydatki</button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="fourteen wide column">
+              <Table celled selectable>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Id</Table.HeaderCell>
+                    <Table.HeaderCell>Kwota</Table.HeaderCell>
+                    <Table.HeaderCell>Na co</Table.HeaderCell>
+                    <Table.HeaderCell>Czym zapłacono</Table.HeaderCell>
+                    <Table.HeaderCell>Kiedy</Table.HeaderCell>
+                    <Table.HeaderCell>Kto</Table.HeaderCell>
+                    <Table.HeaderCell>Komentarz</Table.HeaderCell>
+                    <Table.HeaderCell>Załącznik?</Table.HeaderCell>
+                    <Table.HeaderCell>Usuń</Table.HeaderCell>
+                    <Table.HeaderCell>Edytuj</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
 
-          <Table.Body>
-            {this.state.expenseData.map((item, i) => {
-              return (
-                <Table.Row
-                  key={`expenseRow_${i}`}
-                  onClick={() => {
-                    this.handleClickEdit(item);
-                  }}
-                >
-                  <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
-                  <Table.Cell key={`howMuch_${i}`}>{item.howMuch}</Table.Cell>
-                  <Table.Cell key={`categoryExpenseDescription_${i}`}>
-                    {item.categoryExpenseDescription}
-                  </Table.Cell>
-                  <Table.Cell key={`categorySavingDescription_${i}`}>
-                    {item.categorySavingDescription}
-                  </Table.Cell>
-                  <Table.Cell key={`date_${i}`}>{item.date}</Table.Cell>
-                  <Table.Cell key={`userDescription_${i}`}>
-                    {item.userDescription}
-                  </Table.Cell>
-                  <Table.Cell key={`comment_${i}`}>{item.comment}</Table.Cell>
-                  <Table.Cell key={`attachment_${i}`}>
-                    {item.attachment}
-                  </Table.Cell>
-                  <Table.Cell key={`remove_${i}`}>
-                    <button
-                      className="ui red button"
-                      onClick={() => this.handleRemoveExpense(item.id)}
-                    >
-                      Usuń
-                    </button>
-                  </Table.Cell>
-                  <Table.Cell key={`Edit_${i}`}>
-                    <button
-                      className="ui green button"
-                      onClick={() => this.handleEditExpense(item)}
-                    >
-                      Edytuj
-                    </button>
-                  </Table.Cell>
-                </Table.Row>
-              );
-            })}
-          </Table.Body>
+                <Table.Body>
+                  {this.state.expenseData.map((item, i) => {
+                    return (
+                      <Table.Row
+                        key={`expenseRow_${i}`}
+                        onClick={() => {
+                          this.handleClickEdit(item);
+                        }}
+                      >
+                        <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
+                        <Table.Cell key={`howMuch_${i}`}>
+                          {item.howMuch}
+                        </Table.Cell>
+                        <Table.Cell key={`categoryExpenseDescription_${i}`}>
+                          {item.categoryExpenseDescription}
+                        </Table.Cell>
+                        <Table.Cell key={`categorySavingDescription_${i}`}>
+                          {item.categorySavingDescription}
+                        </Table.Cell>
+                        <Table.Cell key={`date_${i}`}>{item.date}</Table.Cell>
+                        <Table.Cell key={`userDescription_${i}`}>
+                          {item.userDescription}
+                        </Table.Cell>
+                        <Table.Cell key={`comment_${i}`}>
+                          {item.comment}
+                        </Table.Cell>
+                        <Table.Cell key={`attachment_${i}`}>
+                          {item.attachment}
+                        </Table.Cell>
+                        <Table.Cell
+                          key={`remove_${i}`}
+                          className="center aligned"
+                        >
+                          <button
+                            className="ui red button"
+                            onClick={() => this.handleRemoveExpense(item.id)}
+                          >
+                            Usuń
+                          </button>
+                        </Table.Cell>
+                        <Table.Cell
+                          key={`Edit_${i}`}
+                          className="center aligned"
+                        >
+                          <button
+                            className="ui green button "
+                            onClick={() => this.handleEditExpense(item)}
+                          >
+                            Edytuj
+                          </button>
+                        </Table.Cell>
+                      </Table.Row>
+                    );
+                  })}
+                </Table.Body>
 
-          <Table.Footer>
-            <Table.Row>
-              <Table.HeaderCell colSpan={10}>
-                <Pagination
-                  ellipsisItem={{
-                    content: <Icon name="ellipsis horizontal" />,
-                    icon: true,
-                  }}
-                  firstItem={{
-                    content: <Icon name="angle double left" />,
-                    icon: true,
-                  }}
-                  lastItem={{
-                    content: <Icon name="angle double right" />,
-                    icon: true,
-                  }}
-                  prevItem={{ content: <Icon name="angle left" />, icon: true }}
-                  nextItem={{
-                    content: <Icon name="angle right" />,
-                    icon: true,
-                  }}
-                  defaultActivePage={1}
-                  totalPages={Math.ceil(this.state.articles.length / 4)}
-                  onPageChange={this.onChangePage}
-                />
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Footer>
-        </Table>
+                <Table.Footer>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan={10}>
+                      <Pagination
+                        ellipsisItem={{
+                          content: <Icon name="ellipsis horizontal" />,
+                          icon: true,
+                        }}
+                        firstItem={{
+                          content: <Icon name="angle double left" />,
+                          icon: true,
+                        }}
+                        lastItem={{
+                          content: <Icon name="angle double right" />,
+                          icon: true,
+                        }}
+                        prevItem={{
+                          content: <Icon name="angle left" />,
+                          icon: true,
+                        }}
+                        nextItem={{
+                          content: <Icon name="angle right" />,
+                          icon: true,
+                        }}
+                        defaultActivePage={1}
+                        totalPages={Math.ceil(this.state.articles.length / 4)}
+                        onPageChange={this.onChangePage}
+                      />
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Footer>
+              </Table>
+            </div>
+          </div>
+        </div>
       </>
     );
   }
