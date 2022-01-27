@@ -3,6 +3,8 @@ import React, { Component } from "react";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+
+
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
 //import { expenses, incomes, savings } from "./shared/constData";
@@ -10,9 +12,11 @@ import Footer from "./component/footer/footer";
 import Index3 from "./pages/index3";
 
 import Expense from "./pages/expense";
+import Expense2 from "./pages/expense2";
 import Income from "./pages/income";
 import Saving from "./pages/saving";
 
+import 'semantic-ui-css/semantic.min.css'
 import styles from "./App.module.css";
 
 class App extends Component {
@@ -35,6 +39,9 @@ class App extends Component {
               <Link to="/expense">
                 <span>Wydatki</span>
               </Link>
+              <Link to="/expense2">
+                <span>Wydatki2</span>
+              </Link>
               <Link to="/income">
                 <span>Przychody</span>
               </Link>
@@ -47,6 +54,9 @@ class App extends Component {
               <Switch>
                 <Route path="/expense">
                   <Expense />
+                </Route>
+                <Route path="/expense2">
+                  <Expense2 />
                 </Route>
                 <Route path="/income">
                   <Income />
