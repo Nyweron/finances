@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { FaCaretDown } from "react-icons/fa";
+//import { FaCaretDown } from "react-icons/fa";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
-import { expenses, incomes, savings } from "./shared/constData";
+//import { expenses, incomes, savings } from "./shared/constData";
 
 import Index3 from "./pages/index3";
 
