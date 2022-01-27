@@ -4,18 +4,17 @@ import { Table, Icon, Pagination } from "semantic-ui-react";
 
 import { getAll } from "../lib/expenseService";
 
+import  {Expense2Add } from "../component/expense2";
+
 class expense2 extends Component {
   constructor(props: {}) {
     super(props);
     this.state = {
       data: [],
       expenseData: [],
-      articles: [],
-      articleDatas: [],
       begin: 0,
       end: 4,
-      activePage: 1,
-      columnHeader: Array.from(Array(4).keys()),
+      showModal: false,
     };
   }
 
@@ -23,8 +22,6 @@ class expense2 extends Component {
     getAll("expense").then((rows) => {
       this.setState({
         data: rows,
-        articles: rows,
-
         expenseData: rows.slice(this.state.begin, this.state.end),
       });
     });
@@ -42,10 +39,6 @@ class expense2 extends Component {
     });
   };
 
-  handleClickEdit = (itemId) => {
-    // console.log("🚀 ~ file: expense2.js ~ line 49 ~ expense2 ~ itemId", itemId);
-  };
-
   handleRemoveExpense = (expenseId) => {
     console.log(
       "🚀 ~ file: expense2.js ~ line 50 ~ expense2  REMOVE ~ expenseId",
@@ -60,19 +53,42 @@ class expense2 extends Component {
     );
   };
 
-  render() {
+  handleAddExpense = (props) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 49 ~ expense2 ~ expenseData",
-      this.state.expenseData
+      "🚀 ~ file: expense2.js ~ line 56 ~ expense2 ADD~ props",
+      props
     );
+    this.setState({ showModal: !this.state.showModal });
+  };
+
+  handleAddExpenseTwo = (props) => {
+    console.log(
+      "🚀 ~ file: expense2.js ~ line 56 ~ handleAddExpenseTwo ADD~ props",
+      props
+    );
+
+  };
+
+  render() {
+    // console.log(
+    //   "🚀 ~ file: expense2.js ~ line 49 ~ expense2 ~ expenseData",
+    //   this.state.expenseData
+    // );
 
     return (
       <>
+
+
         <div className="ui centered grid">
           <div className="row"></div>
           <div className="row">
             <div className="fourteen wide column">
-              <button className="ui blue button">Dodaj wydatki</button>
+              <button
+                className="ui blue button"
+                onClick={() => this.handleAddExpense()}
+              >
+                Dodaj wydatki
+              </button>
             </div>
           </div>
           <div className="row">
@@ -96,12 +112,7 @@ class expense2 extends Component {
                 <Table.Body>
                   {this.state.expenseData.map((item, i) => {
                     return (
-                      <Table.Row
-                        key={`expenseRow_${i}`}
-                        onClick={() => {
-                          this.handleClickEdit(item);
-                        }}
-                      >
+                      <Table.Row key={`expenseRow_${i}`}>
                         <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
                         <Table.Cell key={`howMuch_${i}`}>
                           {item.howMuch}
@@ -174,7 +185,7 @@ class expense2 extends Component {
                           icon: true,
                         }}
                         defaultActivePage={1}
-                        totalPages={Math.ceil(this.state.articles.length / 4)}
+                        totalPages={Math.ceil(this.state.data.length / 4)}
                         onPageChange={this.onChangePage}
                       />
                     </Table.HeaderCell>
@@ -183,6 +194,10 @@ class expense2 extends Component {
               </Table>
             </div>
           </div>
+
+
+          {this.state.showModal && <Expense2Add showModal={this.state.showModal} handleSubmit={this.handleAddExpenseTwo} />}
+
         </div>
       </>
     );
