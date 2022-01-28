@@ -16,7 +16,6 @@ import Expense2 from "./pages/expense2";
 import Income from "./pages/income";
 import Saving from "./pages/saving";
 
-import 'semantic-ui-css/semantic.min.css'
 import styles from "./App.module.css";
 
 class App extends Component {

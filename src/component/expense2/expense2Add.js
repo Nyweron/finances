@@ -1,72 +1,120 @@
 import React, { useState } from "react";
 
-import { Button, Checkbox, Form, Icon, Modal } from "semantic-ui-react";
+import { Button, Checkbox, Form, Icon, Message } from "semantic-ui-react";
+
+import Modal from "react-bootstrap/Modal";
 
 const Expense2Add = (props) => {
-  const [open, setOpen] = useState(props.showModal);
+  const [showModal, setShowModal] = useState(props.showModal);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [formError, setFormError] = useState(false);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const handleSubmit = (data) => {
-    console.log(
-      "🚀 ~ file: expense2Add.js ~ line 10 ~ handleSubmit ~ data",
-      data
-      );
+    let error = false;
 
-      console.log("🚀 ~ file: expense2Add.js ~ line 8 ~ Expense2Add ~ firstName", firstName)
-      console.log("🚀 ~ file: expense2Add.js ~ line 8 ~ Expense2Add ~ lastName", lastName)
-    //props.handleSubmit()
+    if (firstName === "") {
+      setFirstNameError(true);
+      error = true;
+    } else {
+      setFirstNameError(false);
+    }
+
+    if (lastName === "") {
+      setLastNameError(true);
+      error = true;
+    } else {
+      setLastNameError(false);
+    }
+
+    if (error) {
+      setFormError(true);
+      return; //error
+    }
+
+    const expenseFormData = {
+      firstName,
+      lastName,
+    };
+
+    setFormError(false);
+    setShowModal(false);
+    props.handleSubmit(expenseFormData);
   };
 
   return (
-    <div className="ui centered grid">
-      <div className="row">
-        <div className="fourteen wide column">
-          <Modal
-            open={open}
-            onClose={() => setOpen(false)}
-            onOpen={() => setOpen(true)}
-          >
-            <Form onSubmit={(event) => handleSubmit(event)}>
-              <Modal.Header>Profile Picture</Modal.Header>
-              <Modal.Content scrolling>
-                <Modal.Description>
-                  <Form.Field>
-                    <Form.Input
-                      label="FirstName"
-                      placeholder="FirstName"
-                      name="firstName"
-                      value={firstName}
-                      onChange={(event) => setFirstName(event.target.value)}
-                    />
-                  </Form.Field>
+    <Modal
+      size={"lg"}
+      show={showModal}
+      onHide={() => {
+        handleCloseModal();
+      }}
+    >
+      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading Expense Add</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {formError ? (
+            <Message
+              error
+              header="Blad w formularzy"
+              content="Lorem ipsum es dolores"
+            />
+          ) : null}
 
-                  <Form.Field>
-                    <Form.Input
-                      label="LastName"
-                      placeholder="LastName"
-                      name="lastName"
-                      value={lastName}
-                      onChange={(event) => setLastName(event.target.value)}
-                    />
-                  </Form.Field>
+          <Form.Field>
+            <Form.Input
+              label="FirstName"
+              placeholder="FirstName"
+              name="firstName"
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+              error={firstNameError}
+            />
+          </Form.Field>
 
-                  <Form.Field>
-                    <Checkbox label="I agree to the Terms and Conditions" />
-                  </Form.Field>
-                </Modal.Description>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button onClick={() => setOpen(false)} primary>
-                  Proceed <Icon name="chevron right" />
-                </Button>
-                <Button type="submit">Submit</Button>
-              </Modal.Actions>
-            </Form>
-          </Modal>
-        </div>
-      </div>
-    </div>
+          <Form.Field>
+            <Form.Input
+              label="LastName"
+              placeholder="LastName"
+              name="lastName"
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+            />
+          </Form.Field>
+
+          <Form.Field>
+            <Checkbox label="I agree to the Terms and Conditions" />
+          </Form.Field>
+        </Modal.Body>
+        <Modal.Footer>
+          <Form.Group widths="equal">
+            <Form.Button
+              secondary
+              type="reset"
+              onClick={() => handleCloseModal()}
+            >
+              Close
+            </Form.Button>
+            <Form.Button
+              primary
+              color="blue"
+              type="submit"
+              disabled={!lastName}
+            >
+              Submit
+            </Form.Button>
+          </Form.Group>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 };
 export default Expense2Add;

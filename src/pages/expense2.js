@@ -41,21 +41,21 @@ class expense2 extends Component {
 
   handleRemoveExpense = (expenseId) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 50 ~ expense2  REMOVE ~ expenseId",
+      "🚀 ~ file: expense2.js ~ line 43 ~ expense2  REMOVE ~ expenseId",
       expenseId
     );
   };
 
   handleEditExpense = (expense) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 55 ~ expense2 EDIT ~ expense",
+      "🚀 ~ file: expense2.js ~ line 50 ~ expense2 EDIT ~ expense",
       expense
     );
   };
 
   handleAddExpense = (props) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 56 ~ expense2 ADD~ props",
+      "🚀 ~ file: expense2.js ~ line 58 ~ expense2 ADD~ props",
       props
     );
     this.setState({ showModal: !this.state.showModal });
@@ -63,18 +63,20 @@ class expense2 extends Component {
 
   handleAddExpenseTwo = (props) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 56 ~ handleAddExpenseTwo ADD~ props",
+      "🚀 ~ file: expense2.js ~ line 66 ~ handleAddExpenseTwo ADD~ props",
       props
-    );
+      );
+      this.setState({ showModal: !this.state.showModal });
 
-  };
+    };
 
-  render() {
-    // console.log(
-    //   "🚀 ~ file: expense2.js ~ line 49 ~ expense2 ~ expenseData",
-    //   this.state.expenseData
-    // );
+    render() {
+      // console.log(
+        //   "🚀 ~ file: expense2.js ~ line 49 ~ expense2 ~ expenseData",
+        //   this.state.expenseData
+        // );
 
+       // console.log("🚀 ~ file: expense2.js ~ line 79 ~ expense2 ~ render ~ this.state.showModal", this.state.showModal)
     return (
       <>
 
