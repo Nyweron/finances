@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 
-import { Button, Checkbox, Form, Icon, Message } from "semantic-ui-react";
+import {
+  Button,
+  Checkbox,
+  Form,
+  Message,
+  Input,
+} from "semantic-ui-react";
 
 import Modal from "react-bootstrap/Modal";
 
 const Expense2Add = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [firstNameError, setFirstNameError] = useState(false);
+  const [howMuch, setHowMuch] = useState("");
+  const [forWhat, setForWhat] = useState("");
+  const [howMuchError, setHowMuchError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [formError, setFormError] = useState(false);
+
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -19,14 +26,14 @@ const Expense2Add = (props) => {
   const handleSubmit = (data) => {
     let error = false;
 
-    if (firstName === "") {
-      setFirstNameError(true);
+    if (howMuch === "") {
+      setHowMuchError(true);
       error = true;
     } else {
-      setFirstNameError(false);
+      setHowMuchError(false);
     }
 
-    if (lastName === "") {
+    if (forWhat === "") {
       setLastNameError(true);
       error = true;
     } else {
@@ -39,8 +46,8 @@ const Expense2Add = (props) => {
     }
 
     const expenseFormData = {
-      firstName,
-      lastName,
+      howMuch,
+      forWhat,
     };
 
     setFormError(false);
@@ -64,30 +71,43 @@ const Expense2Add = (props) => {
           {formError ? (
             <Message
               error
-              header="Blad w formularzy"
+              header="Blad w formularzu"
               content="Lorem ipsum es dolores"
             />
           ) : null}
 
-          <Form.Field>
-            <Form.Input
-              label="FirstName"
-              placeholder="FirstName"
-              name="firstName"
-              value={firstName}
-              onChange={(event) => setFirstName(event.target.value)}
-              error={firstNameError}
-            />
+          <Form.Field inline>
+            <div className="form-group row">
+              <label className={"col-sm-3 col-form-label"}>
+                Kwota
+              </label>
+              <div className={"col-sm-9"}>
+                <Input
+                  fluid
+                  placeholder="Kwota"
+                  name="howMuch"
+                  type="number"
+                  value={howMuch}
+                  onChange={(event) => setHowMuch(event.target.value)}
+                  error={howMuchError}
+                />
+              </div>
+            </div>
           </Form.Field>
 
-          <Form.Field>
-            <Form.Input
-              label="LastName"
-              placeholder="LastName"
-              name="lastName"
-              value={lastName}
-              onChange={(event) => setLastName(event.target.value)}
-            />
+          <Form.Field inline>
+            <div className="form-group row">
+              <label className={"col-sm-3 col-form-label"}>Na co</label>
+              <div className={"col-sm-9"}>
+                <Input
+                  fluid
+                  placeholder="Na co"
+                  name="forWhat"
+                  value={forWhat}
+                  onChange={(event) => setForWhat(event.target.value)}
+                />
+              </div>
+            </div>
           </Form.Field>
 
           <Form.Field>
@@ -97,18 +117,13 @@ const Expense2Add = (props) => {
         <Modal.Footer>
           <Form.Group widths="equal">
             <Form.Button
-              secondary
+              color='grey'
               type="reset"
               onClick={() => handleCloseModal()}
             >
               Close
             </Form.Button>
-            <Form.Button
-              primary
-              color="blue"
-              type="submit"
-              disabled={!lastName}
-            >
+            <Form.Button primary color="blue" type="submit" disabled={!forWhat}>
               Submit
             </Form.Button>
           </Form.Group>
