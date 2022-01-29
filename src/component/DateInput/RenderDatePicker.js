@@ -1,5 +1,4 @@
 import React from "react";
-import { DateTimePicker } from "react-widgets";
 import DatePicker from "react-widgets/DatePicker";
 import { format, isValid } from "date-fns";
 

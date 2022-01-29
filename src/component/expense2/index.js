@@ -1,7 +1,7 @@
 import Expense2Add from './expense2Add';
-import Modal from './modal';
+import Expense2Edit from './expense2Edit';
 
 export {
   Expense2Add,
-  Modal,
+  Expense2Edit
 }

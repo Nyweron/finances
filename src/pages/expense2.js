@@ -4,18 +4,20 @@ import { Table, Icon, Pagination } from "semantic-ui-react";
 
 import { getAll } from "../lib/expenseService";
 
-import  {Expense2Add } from "../component/expense2";
-import RenderDatePicker from "../component/expense2/RenderDataPicker";
+import  {Expense2Add, Expense2Edit } from "../component/expense2";
+
 
 class expense2 extends Component {
   constructor(props: {}) {
     super(props);
     this.state = {
       data: [],
+      dataEdit: {},
       expenseData: [],
       begin: 0,
       end: 4,
       showModal: false,
+      showModalEdit: false,
     };
   }
 
@@ -47,11 +49,21 @@ class expense2 extends Component {
     );
   };
 
-  handleEditExpense = (expense) => {
-    console.log(
-      "🚀 ~ file: expense2.js ~ line 50 ~ expense2 EDIT ~ expense",
-      expense
-    );
+  handleEditExpense = (expenseEdit) => {
+  console.log("🚀 ~ file: expense2.js ~ line 52 ~ expense2 handleEditExpense ~ expenseEdit", expenseEdit)
+
+
+    this.setState({ showModalEdit: !this.state.showModalEdit });
+    this.setState({ dataEdit: expenseEdit });
+
+
+  };
+
+  handleEditExpenseTwo = (expenseEdit) => {
+  console.log("🚀 ~ file: expense2.js ~ line 61 ~ expense2 handleEditExpenseTwo ~ expenseEdit", expenseEdit)
+
+
+    this.setState({ showModalEdit: !this.state.showModalEdit });
   };
 
   handleAddExpense = (props) => {
@@ -68,22 +80,11 @@ class expense2 extends Component {
       props
       );
       this.setState({ showModal: !this.state.showModal });
-
     };
 
     render() {
-      // console.log(
-        //   "🚀 ~ file: expense2.js ~ line 49 ~ expense2 ~ expenseData",
-        //   this.state.expenseData
-        // );
-
-       // console.log("🚀 ~ file: expense2.js ~ line 79 ~ expense2 ~ render ~ this.state.showModal", this.state.showModal)
-
-
     return (
       <>
-
-
         <div className="ui centered grid">
           <div className="row"></div>
           <div className="row">
@@ -202,6 +203,12 @@ class expense2 extends Component {
 
 
           {this.state.showModal && <Expense2Add showModal={this.state.showModal} handleSubmit={this.handleAddExpenseTwo} />}
+          {this.state.showModalEdit &&
+          <Expense2Edit
+          showModal={this.state.showModalEdit}
+          handleSubmit={this.handleEditExpenseTwo}
+          data={this.state.dataEdit}
+          />}
 
         </div>
       </>

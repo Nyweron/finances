@@ -5,16 +5,17 @@ import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";
 
-const Expense2Add = (props) => {
+const Expense2Edit = (props) => {
+console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", props)
   const [showModal, setShowModal] = useState(props.showModal);
 
-  const [howMuch, setHowMuch] = useState("");
-  const [categoryExpense, setCategoryExpense] = useState("");
-  const [categorySaving, setCategorySaving] = useState("");
-  const [calendarDate, setCalendarDate] = useState(new Date());
-  const [userId, setUserId] = useState("");
-  const [comment, setComment] = useState("");
-  const [attachment, setAttachment] = useState("");
+  const [howMuch, setHowMuch] = useState(props.data.howMuch);
+  const [categoryExpense, setCategoryExpense] = useState(props.data.categoryExpense);
+  const [categorySaving, setCategorySaving] = useState(props.data.categorySaving);
+  const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
+  const [userId, setUserId] = useState(props.data.userId);
+  const [comment, setComment] = useState(props.data.comment);
+  const [attachment, setAttachment] = useState(props.data.attachment);
   const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
 
   const [howMuchError, setHowMuchError] = useState(false);
@@ -32,19 +33,19 @@ const Expense2Add = (props) => {
     let error = false;
 
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ howMuch",
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ howMuch",
       howMuch
     );
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categoryExpense",
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categoryExpense",
       categoryExpense
     );
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categorySaving",
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categorySaving",
       categorySaving
     );
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ userId",
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ userId",
       userId
     );
 
@@ -114,7 +115,7 @@ const Expense2Add = (props) => {
     >
       <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading Expense Add</Modal.Title>
+          <Modal.Title>Modal heading Expense Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {formError ? (
@@ -150,7 +151,7 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Na co"
                   name="categoryExpense"
-                  defaultValue={options[0].value}
+                  defaultValue={categoryExpense}
                   onChange={(e, d) => setCategoryExpense(d.value)}
                   options={options}
                 />
@@ -168,7 +169,7 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Czym zapłacono"
                   name="categorySaving"
-                  defaultValue={options[0].value}
+                  defaultValue={categorySaving}
                   onChange={(e, { value }) => setCategorySaving(value)}
                   options={options}
                 />
@@ -206,6 +207,7 @@ const Expense2Add = (props) => {
                   name="userId"
                   onChange={(e, d) => setUserId(d.value)}
                   options={options}
+                  value={userId}
                 />
               </div>
             </div>
@@ -219,6 +221,7 @@ const Expense2Add = (props) => {
                   placeholder="Komentarz"
                   name="comment"
                   onChange={(e) => setComment(e.target.value)}
+                  value={comment}
                 />
               </div>
             </div>
@@ -234,6 +237,7 @@ const Expense2Add = (props) => {
                   name="attachment"
                   type="string"
                   onChange={(e) => setAttachment(e.target.value)}
+                  value={attachment}
                 />
               </div>
             </div>
@@ -272,4 +276,4 @@ const Expense2Add = (props) => {
   );
 };
 
-export default Expense2Add;
+export default Expense2Edit;
