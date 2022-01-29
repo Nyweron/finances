@@ -5,6 +5,7 @@ import { Table, Icon, Pagination } from "semantic-ui-react";
 import { getAll } from "../lib/expenseService";
 
 import  {Expense2Add } from "../component/expense2";
+import RenderDatePicker from "../component/expense2/RenderDataPicker";
 
 class expense2 extends Component {
   constructor(props: {}) {
@@ -77,6 +78,8 @@ class expense2 extends Component {
         // );
 
        // console.log("🚀 ~ file: expense2.js ~ line 79 ~ expense2 ~ render ~ this.state.showModal", this.state.showModal)
+
+
     return (
       <>
 

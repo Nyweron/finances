@@ -8,7 +8,10 @@ import {
   Input,
   Select,
 } from "semantic-ui-react";
-import { DateInput } from "semantic-ui-calendar-react";
+
+import RenderDatePicker from "./RenderDataPicker";
+
+import DatePicker from "react-widgets/DatePicker";
 
 import Modal from "react-bootstrap/Modal";
 
@@ -18,9 +21,8 @@ const Expense2Add = (props) => {
   const [howMuch, setHowMuch] = useState("");
   const [forWhat, setForWhat] = useState("");
   const [whatWasPaid, setWhatWasPaid] = useState("");
-  const [calendarDate, setCalendarDate] = useState("");
+  const [calendarDate, setCalendarDate] = useState(new Date());
   const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
-
 
   const [howMuchError, setHowMuchError] = useState(false);
   const [forWhatError, setForWhatError] = useState(false);
@@ -71,7 +73,8 @@ const Expense2Add = (props) => {
       "🚀 ~ file: expense2Add.js ~ line 68 ~ HandlesetCalendarDate ~ d",
       d
     );
-    setCalendarDate(d.value);
+
+
   };
 
   const handleSubmit = (data) => {
@@ -112,7 +115,12 @@ const Expense2Add = (props) => {
     { key: "o", text: "Other", value: "other" },
   ];
 
-  console.log("🚀 ~ file: expense2Add.js ~ line 297 ~ Expense2Add ~ autoSubtractAmount", autoSubtractAmount)
+const HandlerTempData=(e,d)=>{
+  console.log("🚀 ~ file: expense2Add.js ~ line 120 ~ HandlerTempData ~ d", d)
+  console.log("🚀 ~ file: expense2Add.js ~ line 120 ~ HandlerTempData ~ e", e)
+
+  setCalendarDate(new Date(e));
+}
 
 
   return (
@@ -203,13 +211,12 @@ const Expense2Add = (props) => {
             <div className="form-group row">
               <label className={"col-sm-3 col-form-label"}>Data</label>
               <div className={"col-sm-9"}>
-                <DateInput
-                  name="date"
-                  placeholder="Date"
-                  value={calendarDate}
-                  iconPosition="left"
-                  onChange={(e, d) => HandlesetCalendarDate(e, d)}
-                />
+                <Form.Input
+                control={DatePicker}
+                 value={calendarDate}
+                name="date"
+                onChange={(e,d)=>HandlerTempData(e,d)}  />
+
               </div>
             </div>
           </Form.Field>
@@ -269,7 +276,7 @@ const Expense2Add = (props) => {
                   label="Automatycznie odejmi wpisaną kwotę z wybranego typu oszczędności (pole Czym zapłacono)"
                   name="autoSubtractAmount"
                   checked={autoSubtractAmount}
-                  onChange={()=>setAutoSubtractAmount(!autoSubtractAmount)}
+                  onChange={() => setAutoSubtractAmount(!autoSubtractAmount)}
                 />
               </div>
             </div>
