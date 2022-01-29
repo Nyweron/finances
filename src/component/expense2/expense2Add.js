@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";
 
+import { getAll } from "../../lib/genericService";
+import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
+
+
 const Expense2Add = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
 
   const [howMuch, setHowMuch] = useState("");
-  const [categoryExpense, setCategoryExpense] = useState("");
-  const [categorySaving, setCategorySaving] = useState("");
+  const [categoryExpenseId, setCategoryExpense] = useState("");
+  const [categorySavingId, setCategorySaving] = useState("");
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [userId, setUserId] = useState("");
   const [comment, setComment] = useState("");
@@ -24,6 +28,18 @@ const Expense2Add = (props) => {
 
   const [formError, setFormError] = useState(false);
 
+  const [categoryExpenseList, setCategoryExpenseList] = useState([]);
+
+  useEffect(() => {
+    GetCategoryExpensesForSelect().then((rows) => {
+      setCategoryExpenseList(rows);
+    });
+
+
+  }, [setCategoryExpenseList]);
+
+
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -36,12 +52,12 @@ const Expense2Add = (props) => {
       howMuch
     );
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categoryExpense",
-      categoryExpense
+      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categoryExpenseId",
+      categoryExpenseId
     );
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categorySaving",
-      categorySaving
+      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categorySavingId",
+      categorySavingId
     );
     console.log(
       "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ userId",
@@ -55,14 +71,14 @@ const Expense2Add = (props) => {
       setHowMuchError(false);
     }
 
-    // if (categoryExpense === "") {
+    // if (categoryExpenseId === "") {
     //   setCategoryExpenseError(true);
     //   error = true;
     // } else {
     //   setCategoryExpenseError(false);
     // }
 
-    // if (categorySaving === "") {
+    // if (categorySavingId === "") {
     //   setCategorySavingError(true);
     //   error = true;
     // } else {
@@ -83,8 +99,8 @@ const Expense2Add = (props) => {
 
     const expenseFormData = {
       howMuch,
-      categoryExpense,
-      categorySaving,
+      categoryExpenseId,
+      categorySavingId,
       calendarDate,
       userId,
       comment,
@@ -149,10 +165,15 @@ const Expense2Add = (props) => {
                 <Form.Select
                   fluid
                   placeholder="Na co"
-                  name="categoryExpense"
-                  defaultValue={options[0].value}
-                  onChange={(e, d) => setCategoryExpense(d.value)}
-                  options={options}
+                  name="categoryExpenseId"
+                 // defaultValue={}
+                  onChange={(e, d) => {
+                    console.log("🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ e", e)
+                    console.log("🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ d", d)
+
+                   return setCategoryExpense(d.value)
+                  }}
+                  options={categoryExpenseList}
                 />
               </div>
             </div>
@@ -167,7 +188,7 @@ const Expense2Add = (props) => {
                 <Form.Select
                   fluid
                   placeholder="Czym zapłacono"
-                  name="categorySaving"
+                  name="categorySavingId"
                   defaultValue={options[0].value}
                   onChange={(e, { value }) => setCategorySaving(value)}
                   options={options}

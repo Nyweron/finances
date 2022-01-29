@@ -83,6 +83,7 @@ class expense2 extends Component {
     };
 
     render() {
+
     return (
       <>
         <div className="ui centered grid">
@@ -214,5 +215,6 @@ class expense2 extends Component {
       </>
     );
   }
+
 }
 export default expense2;
