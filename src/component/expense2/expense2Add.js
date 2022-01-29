@@ -7,14 +7,15 @@ import Modal from "react-bootstrap/Modal";
 
 import { getAll } from "../../lib/genericService";
 import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
+import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 
 
 const Expense2Add = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
 
   const [howMuch, setHowMuch] = useState("");
-  const [categoryExpenseId, setCategoryExpense] = useState("");
-  const [categorySavingId, setCategorySaving] = useState("");
+  const [categoryExpenseId, setCategoryExpenseId] = useState("");
+  const [categorySavingId, setCategorySavingId] = useState("");
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [userId, setUserId] = useState("");
   const [comment, setComment] = useState("");
@@ -29,14 +30,19 @@ const Expense2Add = (props) => {
   const [formError, setFormError] = useState(false);
 
   const [categoryExpenseList, setCategoryExpenseList] = useState([]);
+  const [categorySavingList, setCategorySavingList] = useState([]);
 
   useEffect(() => {
     GetCategoryExpensesForSelect().then((rows) => {
       setCategoryExpenseList(rows);
     });
 
+    GetCategorySavingsForSelect().then((rows) => {
+      setCategorySavingList(rows);
+    });
 
-  }, [setCategoryExpenseList]);
+
+  }, [setCategoryExpenseList, setCategorySavingList]);
 
 
 
@@ -171,7 +177,7 @@ const Expense2Add = (props) => {
                     console.log("🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ e", e)
                     console.log("🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ d", d)
 
-                   return setCategoryExpense(d.value)
+                   return setCategoryExpenseId(d.value)
                   }}
                   options={categoryExpenseList}
                 />
@@ -189,9 +195,9 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Czym zapłacono"
                   name="categorySavingId"
-                  defaultValue={options[0].value}
-                  onChange={(e, { value }) => setCategorySaving(value)}
-                  options={options}
+                  //defaultValue={options[0].value}
+                  onChange={(e, { value }) => setCategorySavingId(value)}
+                  options={categorySavingList}
                 />
               </div>
             </div>
