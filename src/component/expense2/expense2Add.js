@@ -12,7 +12,6 @@ import { DateInput } from "semantic-ui-calendar-react";
 
 import Modal from "react-bootstrap/Modal";
 
-
 const Expense2Add = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
 
@@ -20,6 +19,8 @@ const Expense2Add = (props) => {
   const [forWhat, setForWhat] = useState("");
   const [whatWasPaid, setWhatWasPaid] = useState("");
   const [calendarDate, setCalendarDate] = useState("");
+  const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
+
 
   const [howMuchError, setHowMuchError] = useState(false);
   const [forWhatError, setForWhatError] = useState(false);
@@ -110,6 +111,10 @@ const Expense2Add = (props) => {
     { key: "f2", text: "Female2", value: "female2" },
     { key: "o", text: "Other", value: "other" },
   ];
+
+  console.log("🚀 ~ file: expense2Add.js ~ line 297 ~ Expense2Add ~ autoSubtractAmount", autoSubtractAmount)
+
+
   return (
     <Modal
       size={"lg"}
@@ -235,10 +240,8 @@ const Expense2Add = (props) => {
               <label className={"col-sm-3 col-form-label"}>Komentarz</label>
               <div className={"col-sm-9"}>
                 <Form.TextArea
-                  fluid
                   placeholder="Komentarz"
                   name="comment"
-
                   //onChange={(e, d) => handleSelectWhatWasPaid(e, d)}
                 />
               </div>
@@ -259,21 +262,18 @@ const Expense2Add = (props) => {
             </div>
           </Form.Field>
 
-
-          <div className="form-group row">
-            <label style={{ fontSize: "small" }} className={"col-sm-12"}>
-            Automatycznie odejmi wpisaną kwotę z wybranego typu oszczędności (pole Czym zapłacono)
-            </label>
-          </div>
-
-
-
-          <Form.Field>
-            <Checkbox label="" />
+          <Form.Field inline>
+            <div className="form-group row">
+              <div className={"col-sm-12 col-form-label"}>
+                <Checkbox
+                  label="Automatycznie odejmi wpisaną kwotę z wybranego typu oszczędności (pole Czym zapłacono)"
+                  name="autoSubtractAmount"
+                  checked={autoSubtractAmount}
+                  onChange={()=>setAutoSubtractAmount(!autoSubtractAmount)}
+                />
+              </div>
+            </div>
           </Form.Field>
-
-
-
         </Modal.Body>
         <Modal.Footer>
           <Form.Group widths="equal">
@@ -293,4 +293,5 @@ const Expense2Add = (props) => {
     </Modal>
   );
 };
+
 export default Expense2Add;
