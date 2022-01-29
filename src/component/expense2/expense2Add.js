@@ -1,32 +1,31 @@
 import React, { useState } from "react";
 
 import {
-  Button,
   Checkbox,
   Form,
   Message,
   Input,
-  Select,
 } from "semantic-ui-react";
 
-import RenderDatePicker from "./RenderDataPicker";
-
 import DatePicker from "react-widgets/DatePicker";
-
 import Modal from "react-bootstrap/Modal";
 
 const Expense2Add = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
 
   const [howMuch, setHowMuch] = useState("");
-  const [forWhat, setForWhat] = useState("");
-  const [whatWasPaid, setWhatWasPaid] = useState("");
+  const [categoryExpense, setCategoryExpense] = useState("");
+  const [categorySaving, setCategorySaving] = useState("");
   const [calendarDate, setCalendarDate] = useState(new Date());
+  const [userId, setUserId] = useState("");
+  const [comment, setComment] = useState("");
+  const [attachment, setAttachment] = useState("");
   const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
 
   const [howMuchError, setHowMuchError] = useState(false);
-  const [forWhatError, setForWhatError] = useState(false);
-  const [whatWasPaidError, setWhatWasPaidError] = useState(false);
+  const [categoryExpenseError, setCategoryExpenseError] = useState(false);
+  const [categorySavingError, setCategorySavingError] = useState(false);
+  const [userIdError, setUserIdError] = useState(false);
 
   const [formError, setFormError] = useState(false);
 
@@ -34,51 +33,25 @@ const Expense2Add = (props) => {
     setShowModal(false);
   };
 
-  const handleSelectWhatWasPaid = (e, d) => {
-    console.log(
-      "🚀 ~ file: expense2Add.js ~ line 34 ~ handleSelectWhatWasPaid ~ e",
-      e
-    );
-    console.log(
-      "🚀 ~ file: expense2Add.js ~ line 35 ~ handleSelectWhatWasPaid ~ d",
-      d
-    );
-    console.log(
-      "🚀 ~ file: expense2Add.js ~ line 35 ~ handleSelectWhatWasPaid ~ d.value",
-      d.value
-    );
-  };
-
-  const handleSelectForWhat = (e, d) => {
-    console.log(
-      "🚀 ~ file: expense2Add.js ~ line 34 ~ handleSelectWhatWasPaid ~ e",
-      e
-    );
-    console.log(
-      "🚀 ~ file: expense2Add.js ~ line 35 ~ handleSelectWhatWasPaid ~ d",
-      d
-    );
-    console.log(
-      "🚀 ~ file: expense2Add.js ~ line 35 ~ handleSelectWhatWasPaid ~ d.value",
-      d.value
-    );
-  };
-
-  const HandlesetCalendarDate = (e, d) => {
-    console.log(
-      "🚀 ~ file: expense2Add.js ~ line 67 ~ HandlesetCalendarDate ~ e",
-      e
-    );
-    console.log(
-      "🚀 ~ file: expense2Add.js ~ line 68 ~ HandlesetCalendarDate ~ d",
-      d
-    );
-
-
-  };
-
   const handleSubmit = (data) => {
     let error = false;
+
+    console.log(
+      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ howMuch",
+      howMuch
+    );
+    console.log(
+      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categoryExpense",
+      categoryExpense
+    );
+    console.log(
+      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categorySaving",
+      categorySaving
+    );
+    console.log(
+      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ userId",
+      userId
+    );
 
     if (howMuch === "") {
       setHowMuchError(true);
@@ -87,11 +60,25 @@ const Expense2Add = (props) => {
       setHowMuchError(false);
     }
 
-    if (forWhat === "") {
-      setForWhatError(true);
+    if (categoryExpense === "") {
+      setCategoryExpenseError(true);
       error = true;
     } else {
-      setForWhatError(false);
+      setCategoryExpenseError(false);
+    }
+
+    if (categorySaving === "") {
+      setCategorySavingError(true);
+      error = true;
+    } else {
+      setCategorySavingError(false);
+    }
+
+    if (userId === "") {
+      setUserIdError(true);
+      error = true;
+    } else {
+      setUserIdError(false);
     }
 
     if (error) {
@@ -101,27 +88,26 @@ const Expense2Add = (props) => {
 
     const expenseFormData = {
       howMuch,
-      forWhat,
+      categoryExpense,
+      categorySaving,
+      calendarDate,
+      userId,
+      comment,
+      attachment,
+      autoSubtractAmount,
     };
 
     setFormError(false);
     setShowModal(false);
     props.handleSubmit(expenseFormData);
   };
+
   const options = [
     { key: "m", text: "Male", value: "male" },
     { key: "f", text: "Female", value: "female" },
     { key: "f2", text: "Female2", value: "female2" },
     { key: "o", text: "Other", value: "other" },
   ];
-
-const HandlerTempData=(e,d)=>{
-  console.log("🚀 ~ file: expense2Add.js ~ line 120 ~ HandlerTempData ~ d", d)
-  console.log("🚀 ~ file: expense2Add.js ~ line 120 ~ HandlerTempData ~ e", e)
-
-  setCalendarDate(new Date(e));
-}
-
 
   return (
     <Modal
@@ -168,9 +154,9 @@ const HandlerTempData=(e,d)=>{
                 <Form.Select
                   fluid
                   placeholder="Na co"
-                  name="forWhat"
+                  name="categoryExpense"
                   defaultValue={options[0].value}
-                  onChange={(e, d) => handleSelectForWhat(e, d)}
+                  onChange={(e, d) => setCategoryExpense(d.value)}
                   options={options}
                 />
               </div>
@@ -186,15 +172,9 @@ const HandlerTempData=(e,d)=>{
                 <Form.Select
                   fluid
                   placeholder="Czym zapłacono"
-                  name="whatWasPaid"
+                  name="categorySaving"
                   defaultValue={options[0].value}
-                  onChange={(e, d) => handleSelectWhatWasPaid(e, d)}
-                  // onChange={(e:any, {value}) => {
-                  //   console.log("🚀 ~ file: expense2Add.js ~ line 144 ~ Expense2Add ~ e", e)
-
-                  //   console.log("🚀 ~ file: expense2Add.js ~ line 140 ~ Expense2Add ~ value", value?.toString())
-                  // }}
-
+                  onChange={(e, {value}) => setCategorySaving(value)}
                   options={options}
                 />
               </div>
@@ -212,11 +192,11 @@ const HandlerTempData=(e,d)=>{
               <label className={"col-sm-3 col-form-label"}>Data</label>
               <div className={"col-sm-9"}>
                 <Form.Input
-                control={DatePicker}
-                 value={calendarDate}
-                name="date"
-                onChange={(e,d)=>HandlerTempData(e,d)}  />
-
+                  control={DatePicker}
+                  value={calendarDate}
+                  name="date"
+                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                />
               </div>
             </div>
           </Form.Field>
@@ -229,13 +209,7 @@ const HandlerTempData=(e,d)=>{
                   fluid
                   placeholder="Kto"
                   name="userId"
-                  //onChange={(e, d) => handleSelectWhatWasPaid(e, d)}
-                  // onChange={(e:any, {value}) => {
-                  //   console.log("🚀 ~ file: expense2Add.js ~ line 144 ~ Expense2Add ~ e", e)
-
-                  //   console.log("🚀 ~ file: expense2Add.js ~ line 140 ~ Expense2Add ~ value", value?.toString())
-                  // }}
-
+                  onChange={(e, d) => setUserId(d.value)}
                   options={options}
                 />
               </div>
@@ -249,7 +223,7 @@ const HandlerTempData=(e,d)=>{
                 <Form.TextArea
                   placeholder="Komentarz"
                   name="comment"
-                  //onChange={(e, d) => handleSelectWhatWasPaid(e, d)}
+                  onChange={(e) => setComment(e.target.value)}
                 />
               </div>
             </div>
@@ -264,6 +238,7 @@ const HandlerTempData=(e,d)=>{
                   placeholder="Załącznik"
                   name="attachment"
                   type="string"
+                  onChange={(e) => setAttachment(e.target.value)}
                 />
               </div>
             </div>
@@ -291,7 +266,7 @@ const HandlerTempData=(e,d)=>{
             >
               Close
             </Form.Button>
-            <Form.Button primary color="blue" type="submit" disabled={!forWhat}>
+            <Form.Button primary color="blue" type="submit" disabled={!categoryExpense}>
               Submit
             </Form.Button>
           </Form.Group>
