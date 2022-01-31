@@ -2,32 +2,55 @@ import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
-import { getAll } from "../lib/expenseService";
+import { getAll, createExpense, editPutExpense } from "../lib/expenseService";
 
-import  {Expense2Add, Expense2Edit } from "../component/expense2";
+import { Expense2Add, Expense2Edit } from "../component/expense2";
+
+import { sortIds, generateNewId } from "../lib/crudHelper";
+
 
 
 class expense2 extends Component {
   constructor(props: {}) {
     super(props);
     this.state = {
-      data: [],
+      allData: [],
       dataEdit: {},
-      expenseData: [],
+      expenseDataOnPage: [],
       begin: 0,
       end: 4,
-      showModal: false,
+      showModalAdd: false,
       showModalEdit: false,
+      isCreated: false,
+      isEdited: false,
     };
   }
 
   componentDidMount() {
     getAll("expense").then((rows) => {
       this.setState({
-        data: rows,
-        expenseData: rows.slice(this.state.begin, this.state.end),
+        allData: rows,
+        expenseDataOnPage: rows.slice(this.state.begin, this.state.end),
       });
     });
+  }
+
+  componentDidUpdate() {
+    if (this.state.isCreated) {
+      getAll("expense")
+        .then((rows) => {
+          this.setState({
+            allData: rows,
+            expenseDataOnPage: rows.slice(this.state.begin, this.state.end),
+            isCreated: false,
+          });
+        })
+        .catch((error) => {
+          this.setState({
+            isCreated: false,
+          });
+        });
+    }
   }
 
   onChangePage = async (event: React.MouseEvent<HTMLAnchorElement>, data) => {
@@ -38,7 +61,7 @@ class expense2 extends Component {
     });
 
     this.setState({
-      expenseData: this.state.data.slice(this.state.begin, this.state.end),
+      expenseDataOnPage: this.state.allData.slice(this.state.begin, this.state.end),
     });
   };
 
@@ -50,20 +73,47 @@ class expense2 extends Component {
   };
 
   handleEditExpense = (expenseEdit) => {
-  console.log("🚀 ~ file: expense2.js ~ line 52 ~ expense2 handleEditExpense ~ expenseEdit", expenseEdit)
-
+    console.log(
+      "🚀 ~ file: expense2.js ~ line 52 ~ expense2 handleEditExpense ~ expenseEdit",
+      expenseEdit
+    );
 
     this.setState({ showModalEdit: !this.state.showModalEdit });
     this.setState({ dataEdit: expenseEdit });
-
-
   };
 
   handleEditExpenseTwo = (expenseEdit) => {
-  console.log("🚀 ~ file: expense2.js ~ line 61 ~ expense2 handleEditExpenseTwo ~ expenseEdit", expenseEdit)
-
+    console.log(
+      "🚀 ~ file: expense2.js ~ line 61 ~ expense2 handleEditExpenseTwo ~ expenseEdit",
+      expenseEdit
+    );
 
     this.setState({ showModalEdit: !this.state.showModalEdit });
+
+    const expenseObj = {
+      id: expenseEdit.id,
+      howMuch: parseFloat(expenseEdit.howMuch),
+      date: new Date(expenseEdit.calendarDate),
+      comment: expenseEdit.comment,
+      attachment: expenseEdit.attachment,
+      standingOrder: expenseEdit.autoSubtractAmount,
+      userId: parseInt(expenseEdit.userId),
+      categorySavingId: parseInt(expenseEdit.categorySavingId),
+      categoryExpenseId: parseInt(expenseEdit.categoryExpenseId),
+    };
+    console.log("🚀 ~ file: expense2.js ~ line 102 ~  EDIT expense2 ~ expenseObj", expenseObj)
+
+
+    editPutExpense(expenseObj).then((res) => {
+      console.log(
+        "🚀 ~ file: expense2.js ~ line 109 ~ expense2 ~ createExpense ~ res",
+        res
+      );
+      this.setState({ isCreated: true });
+    });
+
+
+
   };
 
   handleAddExpense = (props) => {
@@ -71,19 +121,42 @@ class expense2 extends Component {
       "🚀 ~ file: expense2.js ~ line 58 ~ expense2 ADD~ props",
       props
     );
-    this.setState({ showModal: !this.state.showModal });
+    this.setState({ showModalAdd: !this.state.showModalAdd });
   };
 
   handleAddExpenseTwo = (props) => {
-    console.log(
-      "🚀 ~ file: expense2.js ~ line 66 ~ handleAddExpenseTwo ADD~ props",
-      props
-      );
-      this.setState({ showModal: !this.state.showModal });
+    // console.log(
+    //   "🚀 ~ file: expense2.js ~ line 66 ~ handleAddExpenseTwo ADD~ props",
+    //   props
+    //   );
+
+    this.setState({ showModalAdd: !this.state.showModalAdd });
+
+    const expenseObj = {
+      howMuch: parseFloat(props.howMuch),
+      date: new Date(props.calendarDate),
+      comment: props.comment,
+      attachment: props.attachment,
+      standingOrder: props.autoSubtractAmount,
+      userId: parseInt(props.userId),
+      categorySavingId: parseInt(props.categorySavingId),
+      categoryExpenseId: parseInt(props.categoryExpenseId),
     };
+    console.log(
+      "🚀 ~ file: expense2.js ~ line 96 ~ expense2 ~ expenseObj",
+      expenseObj
+    );
 
-    render() {
+    createExpense(expenseObj).then((res) => {
+      console.log(
+        "🚀 ~ file: expense2.js ~ line 109 ~ expense2 ~ createExpense ~ res",
+        res
+      );
+      this.setState({ isCreated: true });
+    });
+  };
 
+  render() {
     return (
       <>
         <div className="ui centered grid">
@@ -117,7 +190,7 @@ class expense2 extends Component {
                 </Table.Header>
 
                 <Table.Body>
-                  {this.state.expenseData.map((item, i) => {
+                  {this.state.expenseDataOnPage.map((item, i) => {
                     return (
                       <Table.Row key={`expenseRow_${i}`}>
                         <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
@@ -192,7 +265,7 @@ class expense2 extends Component {
                           icon: true,
                         }}
                         defaultActivePage={1}
-                        totalPages={Math.ceil(this.state.data.length / 4)}
+                        totalPages={Math.ceil(this.state.allData.length / 4)}
                         onPageChange={this.onChangePage}
                       />
                     </Table.HeaderCell>
@@ -202,19 +275,22 @@ class expense2 extends Component {
             </div>
           </div>
 
-
-          {this.state.showModal && <Expense2Add showModal={this.state.showModal} handleSubmit={this.handleAddExpenseTwo} />}
-          {this.state.showModalEdit &&
-          <Expense2Edit
-          showModal={this.state.showModalEdit}
-          handleSubmit={this.handleEditExpenseTwo}
-          data={this.state.dataEdit}
-          />}
-
+          {this.state.showModalAdd && (
+            <Expense2Add
+              showModal={this.state.showModalAdd}
+              handleSubmit={this.handleAddExpenseTwo}
+            />
+          )}
+          {this.state.showModalEdit && (
+            <Expense2Edit
+              showModal={this.state.showModalEdit}
+              handleSubmit={this.handleEditExpenseTwo}
+              data={this.state.dataEdit}
+            />
+          )}
         </div>
       </>
     );
   }
-
 }
 export default expense2;

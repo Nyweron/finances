@@ -112,6 +112,7 @@ const Expense2Edit = (props) => {
     }
 
     const expenseFormData = {
+      id: props.data.id,
       howMuch,
       categoryExpenseId,
       categorySavingId,
@@ -122,6 +123,7 @@ const Expense2Edit = (props) => {
       autoSubtractAmount,
     };
 
+    console.log("🚀 ~ file: expense2Edit.js ~ line 129 ~ handleSubmit ~ expenseFormData", expenseFormData)
     setFormError(false);
     setShowModal(false);
     props.handleSubmit(expenseFormData);
