@@ -32,7 +32,6 @@ const Expense2Add = (props) => {
   const [categorySavingList, setCategorySavingList] = useState([]);
   const [userList, setUserList] = useState([]);
 
-
   useEffect(() => {
     GetCategoryExpensesForSelect().then((rows) => {
       setCategoryExpenseList(rows);
@@ -120,16 +119,6 @@ const Expense2Add = (props) => {
     props.handleSubmit(expenseFormData);
   };
 
-  const options = [
-    { key: "m", text: "Male", value: "male" },
-    { key: "f", text: "Female", value: "female" },
-    { key: "f2", text: "Female2", value: "female2" },
-    { key: "o", text: "Other", value: "other" },
-  ];
-
-  console.log("🚀 ~ file: expense2Add.js ~ line 34 ~ Expense2Add ~ userList", userList)
-
-
   return (
     <Modal
       size={"lg"}
@@ -176,19 +165,7 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Na co"
                   name="categoryExpenseId"
-                  // defaultValue={}
-                  onChange={(e, d) => {
-                    console.log(
-                      "🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ e",
-                      e
-                    );
-                    console.log(
-                      "🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ d",
-                      d
-                    );
-
-                    return setCategoryExpenseId(d.value);
-                  }}
+                  onChange={(e, d) => setCategoryExpenseId(d.value)}
                   options={categoryExpenseList}
                 />
               </div>
@@ -205,7 +182,6 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Czym zapłacono"
                   name="categorySavingId"
-                  //defaultValue={options[0].value}
                   onChange={(e, { value }) => setCategorySavingId(value)}
                   options={categorySavingList}
                 />
