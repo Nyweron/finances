@@ -6,6 +6,6 @@ export const getAll = (controller) => {
 
 export const GetCategoryExpensesForSelect = () => {
   return fetch(
-    backendUrl + "categoryExpense" + "/" + "GetCategoryExpensesForSelect"
+    backendUrl + "categoryExpense/GetCategoryExpensesForSelect"
   ).then((res) => res.json());
 };

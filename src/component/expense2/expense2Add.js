@@ -5,10 +5,9 @@ import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";
 
-import { getAll } from "../../lib/genericService";
 import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
-
+import { GetUsersForSelect } from "../../lib/userService";
 
 const Expense2Add = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
@@ -31,6 +30,8 @@ const Expense2Add = (props) => {
 
   const [categoryExpenseList, setCategoryExpenseList] = useState([]);
   const [categorySavingList, setCategorySavingList] = useState([]);
+  const [userList, setUserList] = useState([]);
+
 
   useEffect(() => {
     GetCategoryExpensesForSelect().then((rows) => {
@@ -41,10 +42,10 @@ const Expense2Add = (props) => {
       setCategorySavingList(rows);
     });
 
-
-  }, [setCategoryExpenseList, setCategorySavingList]);
-
-
+    GetUsersForSelect().then((rows) => {
+      setUserList(rows);
+    });
+  }, [setCategoryExpenseList, setCategorySavingList, setUserList]);
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -126,6 +127,9 @@ const Expense2Add = (props) => {
     { key: "o", text: "Other", value: "other" },
   ];
 
+  console.log("🚀 ~ file: expense2Add.js ~ line 34 ~ Expense2Add ~ userList", userList)
+
+
   return (
     <Modal
       size={"lg"}
@@ -172,12 +176,18 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Na co"
                   name="categoryExpenseId"
-                 // defaultValue={}
+                  // defaultValue={}
                   onChange={(e, d) => {
-                    console.log("🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ e", e)
-                    console.log("🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ d", d)
+                    console.log(
+                      "🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ e",
+                      e
+                    );
+                    console.log(
+                      "🚀 ~ file: expense2Add.js ~ line 174 ~ Expense2Add ~ d",
+                      d
+                    );
 
-                   return setCategoryExpenseId(d.value)
+                    return setCategoryExpenseId(d.value);
                   }}
                   options={categoryExpenseList}
                 />
@@ -232,7 +242,7 @@ const Expense2Add = (props) => {
                   placeholder="Kto"
                   name="userId"
                   onChange={(e, d) => setUserId(d.value)}
-                  options={options}
+                  options={userList}
                 />
               </div>
             </div>
@@ -278,7 +288,6 @@ const Expense2Add = (props) => {
               </div>
             </div>
           </Form.Field>
-
         </Modal.Body>
         <Modal.Footer>
           <Form.Group widths="equal">
