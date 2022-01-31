@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";
 
+import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
+import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
+import { GetUsersForSelect } from "../../lib/userService";
+
 const Expense2Edit = (props) => {
-console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", props)
+  console.log(
+    "🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props",
+    props
+  );
   const [showModal, setShowModal] = useState(props.showModal);
 
   const [howMuch, setHowMuch] = useState(props.data.howMuch);
-  const [categoryExpense, setCategoryExpense] = useState(props.data.categoryExpense);
-  const [categorySaving, setCategorySaving] = useState(props.data.categorySaving);
+  const [categoryExpenseId, setCategoryExpenseId] = useState(
+    props.data.categoryExpenseId
+  );
+  const [categorySavingId, setCategorySavingId] = useState(
+    props.data.categorySavingId
+  );
   const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
   const [userId, setUserId] = useState(props.data.userId);
   const [comment, setComment] = useState(props.data.comment);
@@ -25,6 +36,24 @@ console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", prop
 
   const [formError, setFormError] = useState(false);
 
+  const [categoryExpenseList, setCategoryExpenseList] = useState([]);
+  const [categorySavingList, setCategorySavingList] = useState([]);
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    GetCategoryExpensesForSelect().then((rows) => {
+      setCategoryExpenseList(rows);
+    });
+
+    GetCategorySavingsForSelect().then((rows) => {
+      setCategorySavingList(rows);
+    });
+
+    GetUsersForSelect().then((rows) => {
+      setUserList(rows);
+    });
+  }, [setCategoryExpenseList, setCategorySavingList, setUserList]);
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
@@ -37,12 +66,12 @@ console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", prop
       howMuch
     );
     console.log(
-      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categoryExpense",
-      categoryExpense
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categoryExpenseId",
+      categoryExpenseId
     );
     console.log(
-      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categorySaving",
-      categorySaving
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categorySavingId",
+      categorySavingId
     );
     console.log(
       "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ userId",
@@ -56,14 +85,14 @@ console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", prop
       setHowMuchError(false);
     }
 
-    // if (categoryExpense === "") {
+    // if (categoryExpenseId === "") {
     //   setCategoryExpenseError(true);
     //   error = true;
     // } else {
     //   setCategoryExpenseError(false);
     // }
 
-    // if (categorySaving === "") {
+    // if (categorySavingId === "") {
     //   setCategorySavingError(true);
     //   error = true;
     // } else {
@@ -84,8 +113,8 @@ console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", prop
 
     const expenseFormData = {
       howMuch,
-      categoryExpense,
-      categorySaving,
+      categoryExpenseId,
+      categorySavingId,
       calendarDate,
       userId,
       comment,
@@ -150,10 +179,10 @@ console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", prop
                 <Form.Select
                   fluid
                   placeholder="Na co"
-                  name="categoryExpense"
-                  defaultValue={categoryExpense}
-                  onChange={(e, d) => setCategoryExpense(d.value)}
-                  options={options}
+                  name="categoryExpenseId"
+                  defaultValue={categoryExpenseId.toString()}
+                  onChange={(e, d) => setCategoryExpenseId(d.value)}
+                  options={categoryExpenseList}
                 />
               </div>
             </div>
@@ -168,10 +197,10 @@ console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", prop
                 <Form.Select
                   fluid
                   placeholder="Czym zapłacono"
-                  name="categorySaving"
-                  defaultValue={categorySaving}
-                  onChange={(e, { value }) => setCategorySaving(value)}
-                  options={options}
+                  name="categorySavingId"
+                  defaultValue={categorySavingId.toString()}
+                  onChange={(e, { value }) => setCategorySavingId(value)}
+                  options={categorySavingList}
                 />
               </div>
             </div>
@@ -206,8 +235,8 @@ console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", prop
                   placeholder="Kto"
                   name="userId"
                   onChange={(e, d) => setUserId(d.value)}
-                  options={options}
-                  value={userId}
+                  defaultValue={userId.toString()}
+                  options={userList}
                 />
               </div>
             </div>
@@ -255,7 +284,6 @@ console.log("🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props", prop
               </div>
             </div>
           </Form.Field>
-
         </Modal.Body>
         <Modal.Footer>
           <Form.Group widths="equal">
