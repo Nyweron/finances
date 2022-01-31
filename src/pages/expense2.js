@@ -2,13 +2,15 @@ import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
-import { getAll, createExpense, editPutExpense } from "../lib/expenseService";
+import { getAll, createExpense, editPutExpense, deleteRowExpense } from "../lib/expenseService";
 
-import { Expense2Add, Expense2Edit } from "../component/expense2";
+import {
+  Expense2Add,
+  Expense2Edit,
+  Expense2Remove,
+} from "../component/expense2";
 
 import { sortIds, generateNewId } from "../lib/crudHelper";
-
-
 
 class expense2 extends Component {
   constructor(props: {}) {
@@ -16,13 +18,16 @@ class expense2 extends Component {
     this.state = {
       allData: [],
       dataEdit: {},
+      dataRemove: {},
       expenseDataOnPage: [],
       begin: 0,
       end: 4,
       showModalAdd: false,
       showModalEdit: false,
+      showModalRemove: false,
       isCreated: false,
       isEdited: false,
+      ieRemoved: false,
     };
   }
 
@@ -36,18 +41,22 @@ class expense2 extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.isCreated) {
+    if (this.state.isCreated || this.state.isEdited || this.state.ieRemoved) {
       getAll("expense")
         .then((rows) => {
           this.setState({
             allData: rows,
             expenseDataOnPage: rows.slice(this.state.begin, this.state.end),
             isCreated: false,
+            isEdited: false,
+            ieRemoved: false,
           });
         })
         .catch((error) => {
           this.setState({
             isCreated: false,
+            isEdited: false,
+            ieRemoved: false,
           });
         });
     }
@@ -61,15 +70,35 @@ class expense2 extends Component {
     });
 
     this.setState({
-      expenseDataOnPage: this.state.allData.slice(this.state.begin, this.state.end),
+      expenseDataOnPage: this.state.allData.slice(
+        this.state.begin,
+        this.state.end
+      ),
     });
   };
 
-  handleRemoveExpense = (expenseId) => {
+  handleRemoveExpense = (expenseRemove) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 43 ~ expense2  REMOVE ~ expenseId",
-      expenseId
+      "🚀 ~ file: expense2.js ~ line 43 ~ expense2 handleRemoveExpense ~ expenseRemove",
+      expenseRemove
     );
+
+    this.setState({ showModalRemove: !this.state.showModalRemove });
+    this.setState({ dataRemove: expenseRemove });
+  };
+
+  handleRemoveExpenseTwo = (expenseRemove) => {
+    console.log(
+      "🚀 ~ file: expense2.js ~ line 81 ~ expense2 ~ handleRemoveExpenseTwo expenseRemove",
+      expenseRemove
+    );
+
+    this.setState({ showModalRemove: !this.state.showModalRemove });
+    deleteRowExpense(expenseRemove.id).then((res) => {
+    console.log("🚀 ~ file: expense2.js ~ line 98 ~ expense2 ~ deleteRowExpense ~ res", res)
+
+      this.setState({ isRemoved: true });
+    });
   };
 
   handleEditExpense = (expenseEdit) => {
@@ -101,8 +130,10 @@ class expense2 extends Component {
       categorySavingId: parseInt(expenseEdit.categorySavingId),
       categoryExpenseId: parseInt(expenseEdit.categoryExpenseId),
     };
-    console.log("🚀 ~ file: expense2.js ~ line 102 ~  EDIT expense2 ~ expenseObj", expenseObj)
-
+    console.log(
+      "🚀 ~ file: expense2.js ~ line 102 ~  EDIT expense2 ~ expenseObj",
+      expenseObj
+    );
 
     editPutExpense(expenseObj).then((res) => {
       console.log(
@@ -111,9 +142,6 @@ class expense2 extends Component {
       );
       this.setState({ isCreated: true });
     });
-
-
-
   };
 
   handleAddExpense = (props) => {
@@ -219,7 +247,7 @@ class expense2 extends Component {
                         >
                           <button
                             className="ui red button"
-                            onClick={() => this.handleRemoveExpense(item.id)}
+                            onClick={() => this.handleRemoveExpense(item)}
                           >
                             Usuń
                           </button>
@@ -286,6 +314,13 @@ class expense2 extends Component {
               showModal={this.state.showModalEdit}
               handleSubmit={this.handleEditExpenseTwo}
               data={this.state.dataEdit}
+            />
+          )}
+          {this.state.showModalRemove && (
+            <Expense2Remove
+              showModal={this.state.showModalRemove}
+              handleSubmit={this.handleRemoveExpenseTwo}
+              data={this.state.dataRemove}
             />
           )}
         </div>

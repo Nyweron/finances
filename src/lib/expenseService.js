@@ -56,8 +56,8 @@ export const editPutExpense = async (temp) => {
     .catch((error) => console.log(error));
 };
 
-export const deleteRowExpense = (id) => {
-  fetch(backendUrl + "expense/" + id, {
+export const deleteRowExpense = async (id) => {
+  return await fetch(backendUrl + "expense/" + id, {
     method: "DELETE",
   })
     .then((res) => {
