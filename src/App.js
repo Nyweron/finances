@@ -35,9 +35,9 @@ class App extends Component {
         <Router>
           <div>
             <div className={styles.topnav}>
-              <Link to="/expense">
+              {/* <Link to="/expense">
                 <span>Wydatki</span>
-              </Link>
+              </Link> */}
               <Link to="/expense2">
                 <span>Wydatki2</span>
               </Link>
