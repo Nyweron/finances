@@ -1,195 +1,206 @@
 import React, { Component } from "react";
 
-import IncomeFilter from "../component/income/incomeFilter";
-import IncomeEdit from "../component/income/incomeEdit";
-import IncomeAdd from "../component/income/incomeAdd";
-import TableContainer from "../component/myCustomCRUDTable/TableContainer";
+import { Table, Icon, Pagination } from "semantic-ui-react";
 
 import { getAll, createIncome, editPutIncome } from "../lib/incomeService";
+
+import {
+  IncomeAdd,
+  IncomeEdit,
+  IncomeRemove,
+} from "../component/income";
+
 import { getKeyFromJson, sortIds, generateNewId } from "../lib/crudHelper";
 
 import styles from "../App.module.css";
 
 class Income extends Component {
-  state = {
-    isVisibleFilterSettings: false,
-    data: null,
-    columns: null,
-    isRowCreated: false,
-  };
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      allData: [],
+      dataEdit: {},
+      dataRemove: {},
+      incomeDataOnPage: [],
+      begin: 0,
+      end: 4,
+      showModalAdd: false,
+      showModalEdit: false,
+      showModalRemove: false,
+      isCreated: false,
+      isEdited: false,
+      isRemoved: false,
+    };
+  }
 
   componentDidMount() {
-    console.log("componentDidMount - income.js");
     getAll("income").then((rows) => {
-      this.setState({ data: rows });
-      const keys = getKeyFromJson(rows);
-      if (keys !== null) {
-        this.setState({ columns: keys });
-      }
+      console.log("🚀 ~ file: income.js ~ line 38 ~ Income ~ getAll ~ rows", rows)
+      this.setState({
+        allData: rows,
+        incomeDataOnPage: rows.slice(this.state.begin, this.state.end),
+      });
     });
   }
 
   componentDidUpdate() {
-    console.log("componentDidUpdate - income.js");
-    if (this.state.isRowCreated === true) {
-      console.log("componentDidUpdate IF - income.js");
-      getAll("income").then((rows) => {
-        this.setState({ data: rows, isRowCreated: false });
-        const keys = getKeyFromJson(rows);
-        if (keys !== null) {
-          this.setState({ columns: keys });
-        }
-      });
+    if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
+      getAll("income")
+        .then((rows) => {
+          this.setState({
+            allData: rows,
+            incomeDataOnPage: rows.slice(this.state.begin, this.state.end),
+            isCreated: false,
+            isEdited: false,
+            isRemoved: false,
+          });
+        })
+        .catch((error) => {
+          this.setState({
+            isCreated: false,
+            isEdited: false,
+            isRemoved: false,
+          });
+        });
     }
   }
 
-  displayFilterSettings = () => {
-    this.setState({
-      isVisibleFilterSettings: !this.state.isVisibleFilterSettings,
-    });
-  };
-
-  addIncome = (addObj) => {
-    console.log("Income.js addIncome", addObj);
-
-    const allRows = this.state.data;
-
-    const sortedIds = sortIds(allRows);
-
-    const newId = generateNewId(sortedIds);
-
-    //TODO: Check problems with date...
-    //TODO: ADD validate...
-
-    const actualDate = new Date();
-
-    let dateFromForm =
-      addObj.date !== null
-        ? addObj.date.split("-")
-        : `${actualDate.getFullYear()}-${actualDate.getMonth()}-${actualDate.getDay()}`.split("-")
-
-    const day = dateFromForm[0];
-    const month = dateFromForm[1]; /*from 0 to 11. 0 - january etc...;*/
-    const year = dateFromForm[2];
-
-    const actualHour = actualDate.getHours(); //Different time on server -2h. Front 19:00 backend 17:00
-    const actualMinutes = actualDate.getMinutes();
-
-    const builtDate = new Date(
-      parseInt(year),
-      parseInt(month) - 1,
-      parseInt(day),
-      parseInt(actualHour),
-      parseInt(actualMinutes)
-    );
-
-    const incomeFromFront = {
-      id: newId,
-      howMuch: parseFloat(addObj.howMuch),
-      date: builtDate,
-      comment: addObj.comment,
-      standingOrder: addObj.autoSubtractAmount,
-      attachment: addObj.attachment,
-      userId: parseInt(addObj.userId),
-      categorySavingId: parseInt(addObj.categorySavingId),
-      categoryIncomeId: parseInt(addObj.categoryIncomeId),
-    };
-
-    createIncome(incomeFromFront).then((res) => {
-      this.setState({ isRowCreated: true });
-    });
-
-    for (let key in addObj) {
-      delete addObj[key];
-    }
-  };
-
-  removeIncome = (id) => {
-    console.log("Income.js removeIncome", id);
-
-    // let listOfRows = this.state.rowsFromDbJson;
-    // const newListWithoutRemovedItem = removeRowById(listOfRows, id);
-
-    // deleteRow(id).then(
-    //   () => this.showTempMessage("row deleted"),
-    //   this.setState({ rowsFromDbJson: newListWithoutRemovedItem }, () => {
-    //     this.invokePaginationOnPageChanged();
-    //   })
-    // );
-  };
-
-  editIncome = (editObj) => {
-    console.log("Income.js editIncome", editObj);
-
-    const dateFromForm = editObj.date.split("-");
-    const day = dateFromForm[0];
-    const month = dateFromForm[1]; /*from 0 to 11. 0 - january etc...;*/
-    const year = dateFromForm[2];
-
-    const actualDate = new Date();
-    const actualHour = actualDate.getHours(); //Different time on server -2h. Front 19:00 backend 17:00
-    const actualMinutes = actualDate.getMinutes();
-
-    const builtDate = new Date(
-      parseInt(year),
-      parseInt(month) - 1,
-      parseInt(day),
-      parseInt(actualHour),
-      parseInt(actualMinutes)
-    );
-
-    const incomeFromFront = {
-      id: editObj.id,
-      howMuch: parseFloat(editObj.howMuch),
-      date: builtDate,
-      comment: editObj.comment,
-      standingOrder: editObj.autoSubtractAmount,
-      attachment: editObj.attachment,
-      userId: parseInt(editObj.userId),
-      categorySavingId: parseInt(editObj.categorySavingId),
-      categoryIncomeId: parseInt(editObj.categoryIncomeId),
-    };
-
-    console.log("🚀 ~ file: income.js ~ line 154 ~ Income ~ editPutIncome ~ incomeFromFront", incomeFromFront)
-    editPutIncome(incomeFromFront).then((res) => {
-      console.log("🚀 ~ file: income.js ~ line 155 ~ Income ~ editPutIncome ~ res", res)
-      this.setState({ isRowCreated: true });
-    });
-  };
 
   render() {
-    if (this.state.data === null || this.state.columns === null) {
-      return null;
-    }
-
     return (
       <>
-        <div className={styles.row}>
-          <div className={styles.card}>
-            <button
-              className="btn btn-primary"
-              onClick={this.displayFilterSettings}
-            >
-              Filter settings income
-            </button>
-            {this.state.isVisibleFilterSettings && <IncomeFilter />}
-          </div>
-          <div className={styles.centerColumn}>
-            <div className={styles.card}>
-              <TableContainer
-                columns={this.state.columns}
-                data={this.state.data}
-                addRow={this.addIncome}
-                removeRow={this.removeIncome}
-                editRow={this.editIncome}
-                EditComponent={IncomeEdit}
-                AddComponent={IncomeAdd}
-              />
-            </div>
-            <div className={styles.card}>
-              <span>PAGINATION</span>
+        <div className="ui centered grid">
+          <div className="row"></div>
+          <div className="row">
+            <div className="fourteen wide column">
+              <button
+                className="ui blue button"
+                onClick={() => this.handleAddIncome()}
+              >
+                Dodaj przychód
+              </button>
             </div>
           </div>
+          <div className="row">
+            <div className="fourteen wide column">
+              <Table celled selectable>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Id</Table.HeaderCell>
+                    <Table.HeaderCell>Kwota</Table.HeaderCell>
+                    <Table.HeaderCell>Tytuł przychodu</Table.HeaderCell>
+                    <Table.HeaderCell>Wpłacono na</Table.HeaderCell>
+                    <Table.HeaderCell>Kiedy</Table.HeaderCell>
+                    <Table.HeaderCell>Kto</Table.HeaderCell>
+                    <Table.HeaderCell>Komentarz</Table.HeaderCell>
+                    <Table.HeaderCell>Usuń</Table.HeaderCell>
+                    <Table.HeaderCell>Edytuj</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+
+                <Table.Body>
+                  {this.state.incomeDataOnPage.map((item, i) => {
+                    return (
+                      <Table.Row key={`incomeRow_${i}`}>
+                        <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
+                        <Table.Cell key={`howMuch_${i}`}>
+                          {item.howMuch}
+                        </Table.Cell>
+                        <Table.Cell key={`categoryIncomeDescription_${i}`}>
+                          {item.categoryIncomeDescription}
+                        </Table.Cell>
+                        <Table.Cell key={`categorySavingDescription_${i}`}>
+                          {item.categorySavingDescription}
+                        </Table.Cell>
+                        <Table.Cell key={`date_${i}`}>{item.date}</Table.Cell>
+                        <Table.Cell key={`userDescription_${i}`}>
+                          {item.userDescription}
+                        </Table.Cell>
+                        <Table.Cell key={`comment_${i}`}>
+                          {item.comment}
+                        </Table.Cell>
+                        <Table.Cell
+                          key={`remove_${i}`}
+                          className="center aligned"
+                        >
+                          <button
+                            className="ui red button"
+                            onClick={() => this.handleRemoveIncome(item)}
+                          >
+                            Usuń
+                          </button>
+                        </Table.Cell>
+                        <Table.Cell
+                          key={`Edit_${i}`}
+                          className="center aligned"
+                        >
+                          <button
+                            className="ui green button "
+                            onClick={() => this.handleEditIncome(item)}
+                          >
+                            Edytuj
+                          </button>
+                        </Table.Cell>
+                      </Table.Row>
+                    );
+                  })}
+                </Table.Body>
+
+                <Table.Footer>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan={10}>
+                      <Pagination
+                        ellipsisItem={{
+                          content: <Icon name="ellipsis horizontal" />,
+                          icon: true,
+                        }}
+                        firstItem={{
+                          content: <Icon name="angle double left" />,
+                          icon: true,
+                        }}
+                        lastItem={{
+                          content: <Icon name="angle double right" />,
+                          icon: true,
+                        }}
+                        prevItem={{
+                          content: <Icon name="angle left" />,
+                          icon: true,
+                        }}
+                        nextItem={{
+                          content: <Icon name="angle right" />,
+                          icon: true,
+                        }}
+                        defaultActivePage={1}
+                        totalPages={Math.ceil(this.state.allData.length / 4)}
+                        onPageChange={this.onChangePage}
+                      />
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Footer>
+              </Table>
+            </div>
+          </div>
+
+          {this.state.showModalAdd && (
+            <IncomeAdd
+              showModal={this.state.showModalAdd}
+              handleSubmit={this.handleAddIncomeTwo}
+            />
+          )}
+          {this.state.showModalEdit && (
+            <IncomeEdit
+              showModal={this.state.showModalEdit}
+              handleSubmit={this.handleEditIncomeTwo}
+              data={this.state.dataEdit}
+            />
+          )}
+          {this.state.showModalRemove && (
+            <IncomeRemove
+              showModal={this.state.showModalRemove}
+              handleSubmit={this.handleRemoveIncomeTwo}
+              data={this.state.dataRemove}
+            />
+          )}
         </div>
       </>
     );
