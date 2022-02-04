@@ -58,6 +58,19 @@ const Expense2Edit = (props) => {
     setShowModal(false);
   };
 
+  const handleSetHowMuch = (value) => {
+    if (value.includes(".") || value.includes(",")) {
+      const splitedDecimal = value.split("." || ",");
+      if (splitedDecimal[1].length > 2) {
+        const decimalPartValueAfterDot = splitedDecimal[1].substring(0, 2);
+        value = splitedDecimal[0] + "." + decimalPartValueAfterDot;
+        setHowMuch(value);
+        return;
+      }
+    }
+    setHowMuch(value);
+  };
+
   const handleSubmit = (data) => {
     let error = false;
 
@@ -129,13 +142,6 @@ const Expense2Edit = (props) => {
     props.handleSubmit(expenseFormData);
   };
 
-  const options = [
-    { key: "m", text: "Male", value: "male" },
-    { key: "f", text: "Female", value: "female" },
-    { key: "f2", text: "Female2", value: "female2" },
-    { key: "o", text: "Other", value: "other" },
-  ];
-
   return (
     <Modal
       size={"lg"}
@@ -167,7 +173,7 @@ const Expense2Edit = (props) => {
                   name="howMuch"
                   type="number"
                   value={howMuch}
-                  onChange={(event) => setHowMuch(event.target.value)}
+                  onChange={(event) => handleSetHowMuch(event.target.value)}
                   error={howMuchError}
                 />
               </div>

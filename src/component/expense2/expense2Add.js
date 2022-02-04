@@ -119,6 +119,19 @@ const Expense2Add = (props) => {
     props.handleSubmit(expenseFormData);
   };
 
+  const handleSetHowMuch = (value) => {
+    if (value.includes(".") || value.includes(",")) {
+      const splitedDecimal = value.split("." || ",");
+      if (splitedDecimal[1].length > 2) {
+        const decimalPartValueAfterDot = splitedDecimal[1].substring(0, 2);
+        value = splitedDecimal[0] + "." + decimalPartValueAfterDot;
+        setHowMuch(value);
+        return;
+      }
+    }
+    setHowMuch(value);
+  };
+
   return (
     <Modal
       size={"lg"}
@@ -150,7 +163,7 @@ const Expense2Add = (props) => {
                   name="howMuch"
                   type="number"
                   value={howMuch}
-                  onChange={(event) => setHowMuch(event.target.value)}
+                  onChange={(event) => handleSetHowMuch(event.target.value)}
                   error={howMuchError}
                 />
               </div>

@@ -13,7 +13,7 @@ const Expense2Add = (props) => {
 
   const handleSubmit = (data) => {
   console.log("🚀 ~ file: expense2Remove.js ~ line 15 ~ handleSubmit ~ data", data)
-    let error = false;
+    //let error = false;
 
     setShowModal(false);
     props.handleSubmit(props.data);

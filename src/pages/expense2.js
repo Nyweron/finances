@@ -10,8 +10,6 @@ import {
   Expense2Remove,
 } from "../component/expense2";
 
-import { sortIds, generateNewId } from "../lib/crudHelper";
-
 class expense2 extends Component {
   constructor(props: {}) {
     super(props);
@@ -27,7 +25,7 @@ class expense2 extends Component {
       showModalRemove: false,
       isCreated: false,
       isEdited: false,
-      ieRemoved: false,
+      isRemoved: false,
     };
   }
 
@@ -41,7 +39,7 @@ class expense2 extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.isCreated || this.state.isEdited || this.state.ieRemoved) {
+    if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
       getAll("expense")
         .then((rows) => {
           this.setState({
@@ -49,14 +47,14 @@ class expense2 extends Component {
             expenseDataOnPage: rows.slice(this.state.begin, this.state.end),
             isCreated: false,
             isEdited: false,
-            ieRemoved: false,
+            isRemoved: false,
           });
         })
         .catch((error) => {
           this.setState({
             isCreated: false,
             isEdited: false,
-            ieRemoved: false,
+            isRemoved: false,
           });
         });
     }
@@ -77,9 +75,9 @@ class expense2 extends Component {
     });
   };
 
-  handleRemoveExpense = (expenseRemove) => {
+  handleOpenModalRemoveExpense = (expenseRemove) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 43 ~ expense2 handleRemoveExpense ~ expenseRemove",
+      "🚀 ~ file: expense2.js ~ line 43 ~ expense2 handleOpenModalRemoveExpense ~ expenseRemove",
       expenseRemove
     );
 
@@ -87,23 +85,23 @@ class expense2 extends Component {
     this.setState({ dataRemove: expenseRemove });
   };
 
-  handleRemoveExpenseTwo = (expenseRemove) => {
+  handleRemoveExpense = (expenseRemove) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 81 ~ expense2 ~ handleRemoveExpenseTwo expenseRemove",
+      "🚀 ~ file: expense2.js ~ line 81 ~ expense2 ~ handleRemoveExpense expenseRemove",
       expenseRemove
     );
 
     this.setState({ showModalRemove: !this.state.showModalRemove });
     deleteRowExpense(expenseRemove.id).then((res) => {
-    console.log("🚀 ~ file: expense2.js ~ line 98 ~ expense2 ~ deleteRowExpense ~ res", res)
+      console.log("🚀 ~ file: expense2.js ~ line 98 ~ expense2 ~ deleteRowExpense ~ res", res)
 
       this.setState({ isRemoved: true });
     });
   };
 
-  handleEditExpense = (expenseEdit) => {
+  handleOpenModalEditExpense = (expenseEdit) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 52 ~ expense2 handleEditExpense ~ expenseEdit",
+      "🚀 ~ file: expense2.js ~ line 52 ~ expense2 handleOpenModalEditExpense ~ expenseEdit",
       expenseEdit
     );
 
@@ -111,9 +109,9 @@ class expense2 extends Component {
     this.setState({ dataEdit: expenseEdit });
   };
 
-  handleEditExpenseTwo = (expenseEdit) => {
+  handleEditExpense = (expenseEdit) => {
     console.log(
-      "🚀 ~ file: expense2.js ~ line 61 ~ expense2 handleEditExpenseTwo ~ expenseEdit",
+      "🚀 ~ file: expense2.js ~ line 61 ~ expense2 handleEditExpense ~ expenseEdit",
       expenseEdit
     );
 
@@ -144,7 +142,7 @@ class expense2 extends Component {
     });
   };
 
-  handleAddExpense = (props) => {
+  handleOpenModalAddExpense = (props) => {
     console.log(
       "🚀 ~ file: expense2.js ~ line 58 ~ expense2 ADD~ props",
       props
@@ -152,9 +150,9 @@ class expense2 extends Component {
     this.setState({ showModalAdd: !this.state.showModalAdd });
   };
 
-  handleAddExpenseTwo = (props) => {
+  handleAddExpense = (props) => {
     // console.log(
-    //   "🚀 ~ file: expense2.js ~ line 66 ~ handleAddExpenseTwo ADD~ props",
+    //   "🚀 ~ file: expense2.js ~ line 66 ~ handleAddExpense ADD~ props",
     //   props
     //   );
 
@@ -193,7 +191,7 @@ class expense2 extends Component {
             <div className="fourteen wide column">
               <button
                 className="ui blue button"
-                onClick={() => this.handleAddExpense()}
+                onClick={() => this.handleOpenModalAddExpense()}
               >
                 Dodaj wydatki
               </button>
@@ -247,7 +245,7 @@ class expense2 extends Component {
                         >
                           <button
                             className="ui red button"
-                            onClick={() => this.handleRemoveExpense(item)}
+                            onClick={() => this.handleOpenModalRemoveExpense(item)}
                           >
                             Usuń
                           </button>
@@ -258,7 +256,7 @@ class expense2 extends Component {
                         >
                           <button
                             className="ui green button "
-                            onClick={() => this.handleEditExpense(item)}
+                            onClick={() => this.handleOpenModalEditExpense(item)}
                           >
                             Edytuj
                           </button>
@@ -306,20 +304,20 @@ class expense2 extends Component {
           {this.state.showModalAdd && (
             <Expense2Add
               showModal={this.state.showModalAdd}
-              handleSubmit={this.handleAddExpenseTwo}
+              handleSubmit={this.handleAddExpense}
             />
           )}
           {this.state.showModalEdit && (
             <Expense2Edit
               showModal={this.state.showModalEdit}
-              handleSubmit={this.handleEditExpenseTwo}
+              handleSubmit={this.handleEditExpense}
               data={this.state.dataEdit}
             />
           )}
           {this.state.showModalRemove && (
             <Expense2Remove
               showModal={this.state.showModalRemove}
-              handleSubmit={this.handleRemoveExpenseTwo}
+              handleSubmit={this.handleRemoveExpense}
               data={this.state.dataRemove}
             />
           )}
