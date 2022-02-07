@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
-import { getAll, createIncome, editPutIncome } from "../lib/incomeService";
+import { getAll } from "../lib/incomeService";
 
 import {
   IncomeAdd,
@@ -10,9 +10,7 @@ import {
   IncomeRemove,
 } from "../component/income";
 
-import { getKeyFromJson, sortIds, generateNewId } from "../lib/crudHelper";
-
-import styles from "../App.module.css";
+//import styles from "../App.module.css";
 
 class Income extends Component {
   constructor(props: {}) {
@@ -23,7 +21,7 @@ class Income extends Component {
       dataRemove: {},
       incomeDataOnPage: [],
       begin: 0,
-      end: 4,
+      rowPerPage: 4,
       showModalAdd: false,
       showModalEdit: false,
       showModalRemove: false,
@@ -38,7 +36,7 @@ class Income extends Component {
       console.log("🚀 ~ file: income.js ~ line 38 ~ Income ~ getAll ~ rows", rows)
       this.setState({
         allData: rows,
-        incomeDataOnPage: rows.slice(this.state.begin, this.state.end),
+        incomeDataOnPage: rows.slice(this.state.begin, this.state.rowPerPage),
       });
     });
   }
@@ -49,7 +47,7 @@ class Income extends Component {
         .then((rows) => {
           this.setState({
             allData: rows,
-            incomeDataOnPage: rows.slice(this.state.begin, this.state.end),
+            incomeDataOnPage: rows.slice(this.state.begin, this.state.rowPerPage),
             isCreated: false,
             isEdited: false,
             isRemoved: false,
@@ -65,6 +63,20 @@ class Income extends Component {
     }
   }
 
+  onChangePage = async (event: React.MouseEvent<HTMLAnchorElement>, data) => {
+    await this.setState({
+      activePage: data.activePage,
+      begin: data.activePage * 4 - 4,
+      rowPerPage: data.activePage * 4,
+    });
+
+    this.setState({
+      incomeDataOnPage: this.state.allData.slice(
+        this.state.begin,
+        this.state.rowPerPage
+      ),
+    });
+  };
 
   render() {
     return (
