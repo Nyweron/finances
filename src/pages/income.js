@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
-import { getAll } from "../lib/incomeService";
+import { getAll, createIncome } from "../lib/incomeService";
 
 import {
   IncomeAdd,
@@ -78,6 +78,32 @@ class Income extends Component {
     });
   };
 
+
+  handleOpenModalAddIncome = (props) => {
+  console.log("🚀 ~ file: income.js ~ line 83 ~ Income ~ props", props)
+    this.setState({ showModalAdd: !this.state.showModalAdd });
+  };
+
+  handleAddIncome = (props) => {
+  console.log("🚀 ~ file: income.js ~ line 88 ~ Income ~ props", props)
+    this.setState({ showModalAdd: !this.state.showModalAdd });
+
+    const incomeObj = {
+      howMuch: parseFloat(props.howMuch),
+      categoryIncomeId: parseInt(props.categoryIncomeId),
+      categorySavingId: parseInt(props.categorySavingId),
+      date: new Date(props.calendarDate),
+      userId: parseInt(props.userId),
+      comment: props.comment,
+    };
+
+    createIncome(incomeObj).then((res) => {
+    console.log("🚀 ~ file: income.js ~ line 111 ~ Income ~ createIncome ~ res", res)
+
+      this.setState({ isCreated: true });
+    });
+  };
+
   render() {
     return (
       <>
@@ -87,7 +113,7 @@ class Income extends Component {
             <div className="fourteen wide column">
               <button
                 className="ui blue button"
-                onClick={() => this.handleAddIncome()}
+                onClick={() => this.handleOpenModalAddIncome()}
               >
                 Dodaj przychód
               </button>
@@ -196,7 +222,7 @@ class Income extends Component {
           {this.state.showModalAdd && (
             <IncomeAdd
               showModal={this.state.showModalAdd}
-              handleSubmit={this.handleAddIncomeTwo}
+              handleSubmit={this.handleAddIncome}
             />
           )}
           {this.state.showModalEdit && (
