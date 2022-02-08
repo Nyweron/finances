@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Checkbox, Form, Message, Input } from "semantic-ui-react";
+import { Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";

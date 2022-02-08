@@ -94,6 +94,7 @@ class Saving extends Component {
       date: new Date(props.calendarDate),
       comment: props.comment,
       categorySavingId: parseInt(props.categorySavingId),
+      savingType: 1,
     };
 
     create(savingObj, 'saving').then((res) => {
