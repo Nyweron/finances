@@ -49,6 +49,7 @@ const IncomeEdit = (props) => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    props.handleCloseModal(false);
   };
 
   const handleSetHowMuch = (value) => {

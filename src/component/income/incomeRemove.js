@@ -9,6 +9,7 @@ const IncomeRemove = (props) => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    props.handleCloseModal(false);
   };
 
   const handleSubmit = (data) => {

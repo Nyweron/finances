@@ -276,12 +276,14 @@ class Income extends Component {
             <IncomeAdd
               showModal={this.state.showModalAdd}
               handleSubmit={this.handleAddIncome}
+              handleCloseModal={()=>this.setState({ showModalAdd: !this.state.showModalAdd })}
             />
           )}
           {this.state.showModalEdit && (
             <IncomeEdit
               showModal={this.state.showModalEdit}
               handleSubmit={this.handleEditIncome}
+              handleCloseModal={()=>this.setState({ showModalEdit: !this.state.showModalEdit })}
               data={this.state.dataEdit}
             />
           )}
@@ -289,6 +291,7 @@ class Income extends Component {
             <IncomeRemove
               showModal={this.state.showModalRemove}
               handleSubmit={this.handleRemoveIncome}
+              handleCloseModal={()=>this.setState({ showModalRemove: !this.state.showModalRemove })}
               data={this.state.dataRemove}
             />
           )}
