@@ -48,6 +48,7 @@ const Expense2Add = (props) => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    props.handleCloseModal(false);
   };
 
   const handleSubmit = (data) => {

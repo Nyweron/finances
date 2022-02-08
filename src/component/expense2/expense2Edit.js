@@ -56,6 +56,7 @@ const Expense2Edit = (props) => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    props.handleCloseModal(false);
   };
 
   const handleSetHowMuch = (value) => {
