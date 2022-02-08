@@ -4,7 +4,7 @@ export const getAll = (controller) => {
   return fetch(backendUrl + "" + controller).then((res) => res.json());
 };
 
-export const GetCategoryIncomeForSelect = () => {
+export const GetCategoryIncomesForSelect = () => {
   return fetch(
     backendUrl + "categoryIncome/GetCategoryIncomesForSelect"
   ).then((res) => res.json());

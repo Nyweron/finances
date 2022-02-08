@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { Form, Message, Input } from "semantic-ui-react";
+import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";
 
-import { GetCategoryIncomeForSelect } from "../../lib/categoryIncomeService";
+import { GetCategoryIncomesForSelect } from "../../lib/categoryIncomeService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
 
@@ -18,6 +18,7 @@ const IncomeAdd = (props) => {
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [userId, setUserId] = useState("");
   const [comment, setComment] = useState("");
+  const [standingOrder, setStandingOrder] = useState(true);
 
   const [howMuchError, setHowMuchError] = useState(false);
 
@@ -27,8 +28,9 @@ const IncomeAdd = (props) => {
   const [categorySavingList, setCategorySavingList] = useState([]);
   const [userList, setUserList] = useState([]);
 
+
   useEffect(() => {
-    GetCategoryIncomeForSelect().then((rows) => {
+    GetCategoryIncomesForSelect().then((rows) => {
       setCategoryIncomeList(rows);
     });
 
@@ -101,6 +103,7 @@ const IncomeAdd = (props) => {
       calendarDate,
       userId,
       comment,
+      standingOrder,
     };
 
     setFormError(false);
@@ -199,6 +202,7 @@ const IncomeAdd = (props) => {
                   placeholder="Kto"
                   name="userId"
                   onChange={(e, d) => setUserId(d.value)}
+                  defaultValue={userId.toString()}
                   options={userList}
                 />
               </div>
@@ -213,6 +217,19 @@ const IncomeAdd = (props) => {
                   placeholder="Komentarz"
                   name="comment"
                   onChange={(e) => setComment(e.target.value)}
+                />
+              </div>
+            </div>
+          </Form.Field>
+
+          <Form.Field inline>
+            <div className="form-group row">
+              <div className={"col-sm-12 col-form-label"}>
+                <Checkbox
+                  label="Automatycznie dodaj wpisaną kwotę do wybranego typu oszczędności (pole Na co wpłacono)"
+                  name="standingOrder"
+                  checked={standingOrder}
+                  onChange={() => setStandingOrder(!standingOrder)}
                 />
               </div>
             </div>

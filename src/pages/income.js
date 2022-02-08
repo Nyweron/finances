@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
-import { getAll, createIncome } from "../lib/incomeService";
+import { getAll, createIncome, editPutIncome, deleteRowIncome } from "../lib/incomeService";
 
 import {
   IncomeAdd,
@@ -80,14 +80,13 @@ class Income extends Component {
 
 
   handleOpenModalAddIncome = (props) => {
-  console.log("🚀 ~ file: income.js ~ line 83 ~ Income ~ props", props)
     this.setState({ showModalAdd: !this.state.showModalAdd });
   };
 
   handleAddIncome = (props) => {
-  console.log("🚀 ~ file: income.js ~ line 88 ~ Income ~ props", props)
     this.setState({ showModalAdd: !this.state.showModalAdd });
 
+    //TODO standingOrder develop logic for add howMuch to savings...
     const incomeObj = {
       howMuch: parseFloat(props.howMuch),
       categoryIncomeId: parseInt(props.categoryIncomeId),
@@ -95,12 +94,66 @@ class Income extends Component {
       date: new Date(props.calendarDate),
       userId: parseInt(props.userId),
       comment: props.comment,
+      standingOrder: props.standingOrder,
     };
 
     createIncome(incomeObj).then((res) => {
-    console.log("🚀 ~ file: income.js ~ line 111 ~ Income ~ createIncome ~ res", res)
-
       this.setState({ isCreated: true });
+    });
+  };
+
+  handleOpenModalEditIncome = (incomeEdit) => {
+    console.log(
+      "🚀 ~ file: income.js ~ line 52 ~ income handleOpenModalEditIncome ~ incomeEdit",
+      incomeEdit
+    );
+
+    this.setState({ showModalEdit: !this.state.showModalEdit });
+    this.setState({ dataEdit: incomeEdit });
+  };
+
+  handleEditIncome = (incomeEdit) => {
+    console.log(
+      "🚀 ~ file: income.js ~ line 61 ~ income handleEditIncome ~ incomeEdit",
+      incomeEdit
+    );
+
+    this.setState({ showModalEdit: !this.state.showModalEdit });
+
+    const incomeObj = {
+      id: incomeEdit.id,
+      howMuch: parseFloat(incomeEdit.howMuch),
+      categoryIncomeId: parseInt(incomeEdit.categoryIncomeId),
+      categorySavingId: parseInt(incomeEdit.categorySavingId),
+      date: new Date(incomeEdit.calendarDate),
+      userId: parseInt(incomeEdit.userId),
+      comment: incomeEdit.comment,
+      standingOrder: incomeEdit.standingOrder,
+    };
+
+    console.log(
+      "🚀 ~ file: income.js ~ line 102 ~  EDIT income ~ incomeObj",
+      incomeObj
+    );
+
+    editPutIncome(incomeObj).then((res) => {
+      console.log(
+        "🚀 ~ file: income.js ~ line 109 ~ income ~ createIncome ~ res",
+        res
+      );
+      this.setState({ isCreated: true });
+    });
+  };
+
+  handleOpenModalRemoveIncome = (incomeRemove) => {
+    this.setState({ showModalRemove: !this.state.showModalRemove });
+    this.setState({ dataRemove: incomeRemove });
+  };
+
+  handleRemoveIncome = (incomeRemove) => {
+    this.setState({ showModalRemove: !this.state.showModalRemove });
+    deleteRowIncome(incomeRemove.id).then((res) => {
+      this.setState({ isRemoved: true });
     });
   };
 
@@ -163,7 +216,7 @@ class Income extends Component {
                         >
                           <button
                             className="ui red button"
-                            onClick={() => this.handleRemoveIncome(item)}
+                            onClick={() => this.handleOpenModalRemoveIncome(item)}
                           >
                             Usuń
                           </button>
@@ -174,7 +227,7 @@ class Income extends Component {
                         >
                           <button
                             className="ui green button "
-                            onClick={() => this.handleEditIncome(item)}
+                            onClick={() => this.handleOpenModalEditIncome(item)}
                           >
                             Edytuj
                           </button>
@@ -228,14 +281,14 @@ class Income extends Component {
           {this.state.showModalEdit && (
             <IncomeEdit
               showModal={this.state.showModalEdit}
-              handleSubmit={this.handleEditIncomeTwo}
+              handleSubmit={this.handleEditIncome}
               data={this.state.dataEdit}
             />
           )}
           {this.state.showModalRemove && (
             <IncomeRemove
               showModal={this.state.showModalRemove}
-              handleSubmit={this.handleRemoveIncomeTwo}
+              handleSubmit={this.handleRemoveIncome}
               data={this.state.dataRemove}
             />
           )}

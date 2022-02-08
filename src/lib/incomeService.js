@@ -48,3 +48,16 @@ export const editPutIncome = async (temp) => {
     })
     .catch((error) => console.log(error));
 };
+
+export const deleteRowIncome = async (id) => {
+  return await fetch(backendUrl + "income/" + id, {
+    method: "DELETE",
+  })
+    .then((res) => {
+      if (!res.ok) throw Error(res.statusText);
+      return res.status;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
