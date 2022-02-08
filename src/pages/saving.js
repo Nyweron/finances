@@ -4,10 +4,10 @@ import { Table, Icon, Pagination } from "semantic-ui-react";
 
 import {
   getAll,
-  createSaving,
-  editPutSaving,
-  deleteRowSaving,
-} from "../lib/savingService";
+  create,
+  edit,
+  remove,
+} from "../lib/genericService";
 
 import {
   SavingAdd,
@@ -81,9 +81,30 @@ class Saving extends Component {
     });
   };
 
+  handleOpenModalAddSaving = (props) => {
+    this.setState({ showModalAdd: !this.state.showModalAdd });
+  };
+
+  handleAddSaving = (props) => {
+  console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props)
+    this.setState({ showModalAdd: !this.state.showModalAdd });
+
+    const savingObj = {
+      howMuch: parseFloat(props.howMuch),
+      date: new Date(props.calendarDate),
+      comment: props.comment,
+      categorySavingId: parseInt(props.categorySavingId),
+    };
+
+    create(savingObj, 'saving').then((res) => {
+      this.setState({ isCreated: true });
+    });
+  };
+
+
+
+
   render() {
-
-
     return (
       <>
         <div className="ui centered grid">
@@ -92,7 +113,7 @@ class Saving extends Component {
             <div className="fourteen wide column">
               <button
                 className="ui blue button"
-                onClick={() => this.handleOpenModalAddExpense()}
+                onClick={() => this.handleOpenModalAddSaving()}
               >
                 Dodaj oszczędności
               </button>
@@ -200,7 +221,7 @@ class Saving extends Component {
             <SavingAdd
               showModal={this.state.showModalAdd}
               handleCloseModal={()=>this.setState({ showModalAdd: !this.state.showModalAdd })}
-              handleSubmit={this.handleAddExpense}
+              handleSubmit={this.handleAddSaving}
             />
           )}
           {this.state.showModalEdit && (
