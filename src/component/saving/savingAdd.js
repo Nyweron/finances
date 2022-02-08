@@ -55,7 +55,6 @@ const SavingAdd = (props) => {
       categorySavingId,
       calendarDate,
       comment,
-      autoSubtractAmount,
     };
 
     setFormError(false);
