@@ -8,6 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 
 const SavingAdd = (props) => {
+  console.log("🚀 ~ file: savingAdd.js ~ line 11 ~ SavingAdd ~ props", props)
   const [showModal, setShowModal] = useState(props.showModal);
 
   const [howMuch, setHowMuch] = useState("");
