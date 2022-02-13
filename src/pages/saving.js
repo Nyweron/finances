@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { connect } from 'react-redux'
+
 import {  Icon } from "semantic-ui-react";
 
 import { getAll, create, edit, remove } from "../lib/genericService";
@@ -113,7 +115,13 @@ class Saving extends Component {
     });
   };
 
+
+
   render() {
+
+
+
+
     return (
       <>
         <div className="ui centered grid">
@@ -128,7 +136,7 @@ class Saving extends Component {
               </button>
               <button
                 className="ui blue button"
-                onClick={() => this.handleOpenModalAddSaving()}
+                onClick={() => this.props.increment()}
               >
                 <Icon link name="plus circle" />
                 Dodaj oszczędności
@@ -161,4 +169,18 @@ class Saving extends Component {
   }
 }
 
-export default Saving;
+function mapStateToProps(state) {
+  console.log("🚀 ~ file: saving.js ~ line 174 ~ mapStateToProps ~ state", state)
+  return {
+    modalAdd: state
+   };
+  }
+
+function mapDispatchToProps(dispatch) {
+    return {
+     increment: () => dispatch({type: 'OPEN_MODAL_ADD'}),
+     decrement: () => dispatch({type: 'CLOSE_MODAL_ADD'})
+    };
+   }
+
+export default connect(mapStateToProps, mapDispatchToProps) (Saving);

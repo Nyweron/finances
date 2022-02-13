@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
 import { SavingAdd, SavingEdit, SavingRemove } from "./index";
@@ -35,14 +37,13 @@ class SavingList extends Component {
   }
 
   componentDidUpdate(previous, current) {
-
-    console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ previous", previous.showModalAdd)
-    console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ current", current.showModalAdd)
-  // if(current.showModalAdd === false){
-  //   console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ current", current)
-  //   console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ previous", previous)
-  //   this.setState({showModalAdd: !this.state.showModalAdd})
-  // }
+    /// console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ previous", previous.showModalAdd)
+    // console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ current", current.showModalAdd)
+    // if(current.showModalAdd === false){
+    //   console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ current", current)
+    //   console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ previous", previous)
+    //   this.setState({showModalAdd: !this.state.showModalAdd})
+    // }
 
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
       getAll("saving")
@@ -85,7 +86,7 @@ class SavingList extends Component {
   };
 
   handleAddSaving = (props) => {
-    console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
+    // console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
     this.setState({ showModalAdd: !this.state.showModalAdd });
 
     const savingObj = {
@@ -137,7 +138,7 @@ class SavingList extends Component {
   };
 
   handleSavingList = () => {
-    console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
+    //console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
 
     getAll("saving").then((rows) => {
       this.setState({
@@ -150,7 +151,7 @@ class SavingList extends Component {
   };
 
   handleCategorySavingList = () => {
-    console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
+    // console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
 
     getAll("saving").then((rows) => {
       this.setState({
@@ -163,15 +164,15 @@ class SavingList extends Component {
   };
 
   render() {
-    console.log(
-      "🚀 ~ file: savingList.js ~ line 8 ~ SavingList ~ this.props",
-      this.props.showModalAdd
-    );
+    // console.log(
+    //   "🚀 ~ file: savingList.js ~ line 8 ~ SavingList ~ this.props",
+    //   this.props.showModalAdd
+    // );
 
-    console.log(
-      "🚀 ~ file: savingList.js ~ line 8 ~ SavingList ~ this.state",
-      this.state.showModalAdd
-    );
+    // console.log(
+    //   "🚀 ~ file: savingList.js ~ line 8 ~ SavingList ~ this.state",
+    //   this.state.showModalAdd
+    // );
 
     return (
       <>
@@ -263,14 +264,14 @@ class SavingList extends Component {
             </Table>
           </div>
         </div>
-        {this.props.showModalAdd && (
-            <SavingAdd
-              showModal={this.props.showModalAdd}
-              handleCloseModal={() =>
-                this.setState({ showModalAdd: !this.state.showModalAdd })
-              }
-              handleSubmit={this.handleAddSaving}
-            />
+        {this.props.modalAdd && (
+          <SavingAdd
+            showModal={this.props.modalAdd}
+            handleCloseModal={() =>
+              this.setState({ showModalAdd: !this.state.showModalAdd })
+            }
+            handleSubmit={this.handleAddSaving}
+          />
         )}
         {this.state.showModalEdit && (
           <SavingEdit
@@ -297,4 +298,15 @@ class SavingList extends Component {
   }
 }
 
-export default SavingList;
+function mapStateToProps(state) {
+  console.log(
+    "🚀 ~ file: savingList.js ~ line 303 ~ mapStateToProps ~ state",
+    state
+  );
+
+  return {
+    modalAdd: state,
+  };
+}
+
+export default connect(mapStateToProps)(SavingList);
