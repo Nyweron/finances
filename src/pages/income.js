@@ -141,7 +141,7 @@ class Income extends Component {
         "🚀 ~ file: income.js ~ line 109 ~ income ~ createIncome ~ res",
         res
       );
-      this.setState({ isCreated: true });
+      this.setState({ isEdited: true });
     });
   };
 

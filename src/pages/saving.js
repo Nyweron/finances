@@ -2,19 +2,9 @@ import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
-import {
-  getAll,
-  create,
-  edit,
-  remove,
-} from "../lib/genericService";
+import { getAll, create, edit, remove } from "../lib/genericService";
 
-import {
-  SavingAdd,
-  SavingEdit,
-  SavingRemove,
-} from "../component/saving";
-
+import { SavingAdd, SavingEdit, SavingRemove } from "../component/saving";
 
 class Saving extends Component {
   constructor(props: {}) {
@@ -86,7 +76,7 @@ class Saving extends Component {
   };
 
   handleAddSaving = (props) => {
-  console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props)
+    console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
     this.setState({ showModalAdd: !this.state.showModalAdd });
 
     const savingObj = {
@@ -97,13 +87,45 @@ class Saving extends Component {
       savingType: 1,
     };
 
-    create(savingObj, 'saving').then((res) => {
+    create(savingObj, "saving").then((res) => {
       this.setState({ isCreated: true });
     });
   };
 
+  handleOpenModalRemoveSaving = (savingRemove) => {
+    this.setState({ showModalRemove: !this.state.showModalRemove });
+    this.setState({ dataRemove: savingRemove });
+  };
 
+  handleRemoveSaving = (savingRemove) => {
+    this.setState({ showModalRemove: !this.state.showModalRemove });
 
+    remove(savingRemove.id, "saving").then((res) => {
+      this.setState({ isRemoved: true });
+    });
+  };
+
+  handleOpenModalEditSaving = (savingEdit) => {
+    this.setState({ showModalEdit: !this.state.showModalEdit });
+    this.setState({ dataEdit: savingEdit });
+  };
+
+  handleEditSaving = (savingEdit) => {
+    this.setState({ showModalEdit: !this.state.showModalEdit });
+
+    const savingObj = {
+      id: savingEdit.id,
+      howMuch: parseFloat(savingEdit.howMuch),
+      date: new Date(savingEdit.calendarDate),
+      comment: savingEdit.comment,
+      categorySavingId: parseInt(savingEdit.categorySavingId),
+      savingType: 1,
+    };
+
+    edit(savingObj, "saving").then((res) => {
+      this.setState({ isEdited: true });
+    });
+  };
 
   render() {
     return (
@@ -146,9 +168,7 @@ class Saving extends Component {
                         <Table.Cell key={`howMuch${i}`}>
                           {item.howMuch}
                         </Table.Cell>
-                        <Table.Cell key={`date_${i}`}>
-                          {item.date}
-                        </Table.Cell>
+                        <Table.Cell key={`date_${i}`}>{item.date}</Table.Cell>
                         <Table.Cell key={`comment_${i}`}>
                           {item.comment}
                         </Table.Cell>
@@ -159,7 +179,7 @@ class Saving extends Component {
                           <button
                             className="ui red button"
                             onClick={() =>
-                              this.handleOpenModalRemoveExpense(item)
+                              this.handleOpenModalRemoveSaving(item)
                             }
                           >
                             Usuń
@@ -172,7 +192,7 @@ class Saving extends Component {
                           <button
                             className="ui green button "
                             onClick={() =>
-                              this.handleOpenModalEditExpense(item)
+                              this.handleOpenModalEditSaving(item)
                             }
                           >
                             Edytuj
@@ -221,23 +241,29 @@ class Saving extends Component {
           {this.state.showModalAdd && (
             <SavingAdd
               showModal={this.state.showModalAdd}
-              handleCloseModal={()=>this.setState({ showModalAdd: !this.state.showModalAdd })}
+              handleCloseModal={() =>
+                this.setState({ showModalAdd: !this.state.showModalAdd })
+              }
               handleSubmit={this.handleAddSaving}
             />
           )}
           {this.state.showModalEdit && (
             <SavingEdit
               showModal={this.state.showModalEdit}
-              handleCloseModal={()=>this.setState({ showModalEdit: !this.state.showModalEdit })}
-              handleSubmit={this.handleEditExpense}
+              handleCloseModal={() =>
+                this.setState({ showModalEdit: !this.state.showModalEdit })
+              }
+              handleSubmit={this.handleEditSaving}
               data={this.state.dataEdit}
             />
           )}
           {this.state.showModalRemove && (
             <SavingRemove
               showModal={this.state.showModalRemove}
-              handleCloseModal={()=>this.setState({ showModalRemove: !this.state.showModalRemove })}
-              handleSubmit={this.handleRemoveExpense}
+              handleCloseModal={() =>
+                this.setState({ showModalRemove: !this.state.showModalRemove })
+              }
+              handleSubmit={this.handleRemoveSaving}
               data={this.state.dataRemove}
             />
           )}

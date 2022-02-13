@@ -114,7 +114,7 @@ class expense2 extends Component {
     };
 
     editPutExpense(expenseObj).then((res) => {
-      this.setState({ isCreated: true });
+      this.setState({ isEdited: true });
     });
   };
 

@@ -1,242 +1,220 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+
+import { Checkbox, Form, Message, Input } from "semantic-ui-react";
+
+import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import { Form, Field } from "react-final-form";
 
-class SavingEdit extends Component {
-  state = {
-    show: false
+import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
+import { GetUsersForSelect } from "../../lib/userService";
+
+const SavingEdit = (props) => {
+  const [showModal, setShowModal] = useState(props.showModal);
+
+
+  const [howMuch, setHowMuch] = useState(props.data.howMuch);
+  const [categorySavingId, setCategorySavingId] = useState(
+    props.data.categorySavingId
+  );
+  const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
+  const [userId, setUserId] = useState(props.data.userId);
+  const [comment, setComment] = useState(props.data.comment);
+  const [savingType, setSavingType] = useState(props.savingType);
+
+  const [howMuchError, setHowMuchError] = useState(false);
+  const [formError, setFormError] = useState(false);
+
+  const [categorySavingList, setCategorySavingList] = useState([]);
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    GetCategorySavingsForSelect().then((rows) => {
+      setCategorySavingList(rows);
+    });
+
+    GetUsersForSelect().then((rows) => {
+      setUserList(rows);
+    });
+  }, [setCategorySavingList, setUserList]);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    props.handleCloseModal(false);
   };
 
-  onSubmit = temp => {
-    console.log("SavingEdit.onSubmit", temp);
-    this.hideModal();
-    this.props.handleEdit(temp);
+  const handleSetHowMuch = (value) => {
+    if (value.includes(".") || value.includes(",")) {
+      const splitedDecimal = value.split("." || ",");
+      if (splitedDecimal[1].length > 2) {
+        const decimalPartValueAfterDot = splitedDecimal[1].substring(0, 2);
+        value = splitedDecimal[0] + "." + decimalPartValueAfterDot;
+        setHowMuch(value);
+        return;
+      }
+    }
+    setHowMuch(value);
   };
 
-  showModal = () => {
-    this.setState({ show: true });
+  const handleSubmit = (data) => {
+    let error = false;
+
+    if (howMuch === "") {
+      setHowMuchError(true);
+      error = true;
+    } else {
+      setHowMuchError(false);
+    }
+
+    // if (categoryExpenseId === "") {
+    //   setCategoryExpenseError(true);
+    //   error = true;
+    // } else {
+    //   setCategoryExpenseError(false);
+    // }
+
+    // if (categorySavingId === "") {
+    //   setCategorySavingError(true);
+    //   error = true;
+    // } else {
+    //   setCategorySavingError(false);
+    // }
+
+    // if (userId === "") {
+    //   setUserIdError(true);
+    //   error = true;
+    // } else {
+    //   setUserIdError(false);
+    // }
+
+    if (error) {
+      setFormError(true);
+      return; //error
+    }
+
+
+    const savingFormData = {
+      id: props.data.id,
+      howMuch,
+      calendarDate,
+      comment,
+      categorySavingId,
+      savingType: 1,
+    };
+
+    console.log("🚀 ~ file: saving2Edit.js ~ line 129 ~ handleSubmit ~ savingFormData", savingFormData)
+    setFormError(false);
+    setShowModal(false);
+    props.handleSubmit(savingFormData);
   };
 
-  hideModal = () => {
-    this.setState({ show: false });
-  };
+  return (
+    <Modal
+      size={"lg"}
+      show={showModal}
+      onHide={() => {
+        handleCloseModal();
+      }}
+    >
+      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading Saving Add</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {formError ? (
+            <Message
+              error
+              header="Blad w formularzu"
+              content="Lorem ipsum es dolores"
+            />
+          ) : null}
 
-  editForm = () => {
-    this.showModal();
-  };
+          <Form.Field inline>
+            <div className="form-group row">
+              <label className={"col-sm-3 col-form-label"}>
+                Rodzaj oszczędności
+              </label>
+              <div className={"col-sm-9"}>
+                <Form.Select
+                  fluid
+                  placeholder="Rodzaj oszczędności"
+                  name="categorySavingId"
+                  defaultValue={categorySavingId.toString()}
+                  onChange={(e, d) => setCategorySavingId(d.value)}
+                  options={categorySavingList}
+                />
+              </div>
+            </div>
+          </Form.Field>
 
-  render() {
-    // console.log("SavingEditProps", this.props);
+          {/*
+          ...
+           Typ oszcednosci
+           ...
+           */}
 
-    return (
-      <>
-        <p onClick={this.editForm}
-        style={{ color: "red", cursor: "default" }}
-        >
-          edit
-        </p>
-        <Form
-          onSubmit={this.onSubmit}
-          initialValues={{ ...this.props.row, autoSubtractAmount: true }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
-            <Modal
-              show={this.state.show}
-              onHide={() => {
-                this.hideModal();
-                form.reset();
-              }}
+          <Form.Field inline>
+            <div className="form-group row">
+              <label className={"col-sm-3 col-form-label"}>Kwota</label>
+              <div className={"col-sm-9"}>
+                <Input
+                  fluid
+                  placeholder="Kwota"
+                  name="howMuch"
+                  type="number"
+                  value={howMuch}
+                  onChange={(event) => handleSetHowMuch(event.target.value)}
+                  error={howMuchError}
+                />
+              </div>
+            </div>
+          </Form.Field>
+
+          <Form.Field inline>
+            <div className="form-group row">
+              <label className={"col-sm-3 col-form-label"}>Data</label>
+              <div className={"col-sm-9"}>
+                <Form.Input
+                  control={DatePicker}
+                  value={calendarDate}
+                  name="date"
+                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                />
+              </div>
+            </div>
+          </Form.Field>
+
+          <Form.Field inline>
+            <div className="form-group row">
+              <label className={"col-sm-3 col-form-label"}>Komentarz</label>
+              <div className={"col-sm-9"}>
+                <Form.TextArea
+                  placeholder="Komentarz"
+                  name="comment"
+                  onChange={(e) => setComment(e.target.value)}
+                  value={comment}
+                />
+              </div>
+            </div>
+          </Form.Field>
+        </Modal.Body>
+        <Modal.Footer>
+          <Form.Group widths="equal">
+            <Form.Button
+              color="grey"
+              type="reset"
+              onClick={() => handleCloseModal()}
             >
-              <form
-                onSubmit={async event => {
-                  await handleSubmit(event);
-                  form.reset();
-                }}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Modal heading Income Edit</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <div className={"form-group row"}>
-                    <label className={"col-sm-2 col-form-label"}>Kwota</label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="HowMuch"
-                        component="input"
-                        type="number"
-                        placeholder="Kwota"
-                        className={"form-control"}
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>Na co</label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="IdIncomesCategory"
-                        component="select"
-                        className={"custom-select"}
-                      >
-                        <option />
-                        <option value="67">Artykuły spożywcze</option>
-                        <option value="77">Lekarz</option>
-                        <option value="88">Samochód</option>
-                      </Field>
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>
-                      Czym zapłacono
-                    </label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="whatWasPaid"
-                        component="select"
-                        className={"custom-select"}
-                      >
-                        <option />
-                        <option value="1">Konto banku X</option>
-                        <option value="2">Karta banku X</option>
-                        <option value="3">Konto banku Y</option>
-                      </Field>
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label
-                      style={{ fontSize: "small" }}
-                      className={"col-sm-12"}
-                    >
-                      Aktualny stan wybranych oszczędności: "Konto banku X
-                      value=1..."
-                    </label>
-                  </div>
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>Kiedy:</label>
-                  </div>
+              Close
+            </Form.Button>
+            <Form.Button primary color="blue" type="submit" disabled={!howMuch}>
+              Submit
+            </Form.Button>
+          </Form.Group>
+        </Modal.Footer>
+      </Form>
+    </Modal>
+  );
 
-                  <div className="form-group row">
-                    <label className={"col-2 col-form-label"}>Dzień:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenDay"
-                        component="input"
-                        type="number"
-                        placeholder="Dzień"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Miesiąc:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenMonth"
-                        component="input"
-                        type="number"
-                        placeholder="Miesiąc"
-                        className={"form-control"}
-                      />
-                    </div>
-                    <label className={"col-2 col-form-label"}>Rok:</label>
-                    <div className={"col-4"}>
-                      <Field
-                        name="whenYear"
-                        component="input"
-                        type="number"
-                        placeholder="Rok"
-                        className={"form-control"}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>Kto</label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="IdPerson"
-                        component="select"
-                        className={"form-control"}
-                      >
-                        <option />
-                        <option value="1">Ja</option>
-                        <option value="2">Brat</option>
-                        <option value="3">Siostra</option>
-                      </Field>
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>
-                      Komentarz
-                    </label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="Comment"
-                        component="textarea"
-                        placeholder="Komentarz"
-                        className={"form-control"}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className={"col-sm-2 col-form-label"}>
-                      Załącznik
-                    </label>
-                    <div className={"col-sm-10"}>
-                      <Field
-                        name="attachment"
-                        component="input"
-                        type="text"
-                        placeholder="Załącznik"
-                        className={"form-control"}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label
-                      style={{ fontSize: "small" }}
-                      className={"col-sm-12"}
-                    >
-                      Automatycznie odejmi wpisaną kwotę z wybranego typu
-                      oszczędności (pole Czym zapłacono)
-                    </label>
-                    <div className="form-check">
-                      <Field
-                        name="autoSubtractAmount"
-                        component="input"
-                        type="checkbox"
-                      />
-                    </div>
-                  </div>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    type="button"
-                    onClick={() => {
-                      form.reset();
-                      this.hideModal();
-                    }}
-                  >
-                    Close
-                  </Button>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    disabled={submitting || pristine}
-                  >
-                    Save Changes
-                  </Button>
-
-                  <pre>{JSON.stringify(values, 0, 2)}</pre>
-                </Modal.Footer>
-              </form>
-            </Modal>
-          )}
-        />
-      </>
-    );
-  }
 }
 
 export default SavingEdit;
