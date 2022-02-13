@@ -2,9 +2,8 @@ import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
-import { SavingAdd, SavingEdit, SavingRemove } from "./index";
 
-import { getAll, create, edit, remove } from "../../lib/genericService";
+import { getAll} from "../../lib/genericService";
 
 class CategorySavingList extends Component {
   constructor(props: {}) {

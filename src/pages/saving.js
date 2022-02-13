@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 
-import { Table, Icon, Pagination } from "semantic-ui-react";
+import {  Icon } from "semantic-ui-react";
 
 import { getAll, create, edit, remove } from "../lib/genericService";
 
 import {
-  SavingAdd,
-  SavingEdit,
-  SavingRemove,
-  SavingList,
+  SavingList
 } from "../component/saving";
 
 import { CategorySavingList } from "../component/categorySaving";
@@ -33,52 +30,6 @@ class Saving extends Component {
       isDisplayCategorySavingList: false,
     };
   }
-
-  // componentDidMount() {
-  //   getAll("saving").then((rows) => {
-  //     this.setState({
-  //       allData: rows,
-  //       savingDataOnPage: rows.slice(this.state.begin, this.state.end),
-  //     });
-  //   });
-  // }
-
-  // componentDidUpdate() {
-  //   if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
-  //     getAll("saving")
-  //       .then((rows) => {
-  //         this.setState({
-  //           allData: rows,
-  //           savingDataOnPage: rows.slice(this.state.begin, this.state.end),
-  //           isCreated: false,
-  //           isEdited: false,
-  //           isRemoved: false,
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         this.setState({
-  //           isCreated: false,
-  //           isEdited: false,
-  //           isRemoved: false,
-  //         });
-  //       });
-  //   }
-  // }
-
-  // onChangePage = async (event: React.MouseEvent<HTMLAnchorElement>, data) => {
-  //   await this.setState({
-  //     activePage: data.activePage,
-  //     begin: data.activePage * 4 - 4,
-  //     end: data.activePage * 4,
-  //   });
-
-  //   this.setState({
-  //     savingDataOnPage: this.state.allData.slice(
-  //       this.state.begin,
-  //       this.state.end
-  //     ),
-  //   });
-  // };
 
   handleOpenModalAddSaving = (props) => {
     this.setState({ showModalAdd: !this.state.showModalAdd });
