@@ -133,7 +133,7 @@ class Saving extends Component {
         <div className="ui centered grid">
           <div className="row"></div>
           <div className="row">
-            <div className="fourteen wide column">
+            <div className="seven wide column" floated="left">
               <button
                 className="ui blue button"
                 onClick={() => this.handleOpenModalAddSaving()}
@@ -141,6 +141,15 @@ class Saving extends Component {
                 Dodaj oszczędności
               </button>
             </div>
+            <div className="seven wide column" floated="right">
+              <button className="ui orange button">Kategorie</button>
+              <button className="ui blue button">
+                <Icon link name="plus circle" />
+                Dodaj kategorię
+              </button>
+              <button className="ui green button">Edytuj kategorię</button>
+            </div>
+
           </div>
           <div className="row">
             <div className="fourteen wide column">
@@ -191,9 +200,7 @@ class Saving extends Component {
                         >
                           <button
                             className="ui green button "
-                            onClick={() =>
-                              this.handleOpenModalEditSaving(item)
-                            }
+                            onClick={() => this.handleOpenModalEditSaving(item)}
                           >
                             Edytuj
                           </button>

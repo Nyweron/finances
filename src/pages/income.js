@@ -33,7 +33,6 @@ class Income extends Component {
 
   componentDidMount() {
     getAll("income").then((rows) => {
-      console.log("🚀 ~ file: income.js ~ line 38 ~ Income ~ getAll ~ rows", rows)
       this.setState({
         allData: rows,
         incomeDataOnPage: rows.slice(this.state.begin, this.state.rowPerPage),
