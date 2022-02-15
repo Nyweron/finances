@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { connect } from "react-redux";
+
 import {  Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
@@ -30,7 +32,7 @@ const SavingEdit = (props) => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalEdit();
   };
 
   const handleSetHowMuch = (value) => {
@@ -202,4 +204,16 @@ const SavingEdit = (props) => {
 
 }
 
-export default SavingEdit;
+function mapStateToProps(state) {
+  return {
+    showModal: state.modalEdit,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+   handleCloseModalEdit: () => dispatch({type: 'CLOSE_MODAL_EDIT'})
+  };
+ }
+
+export default connect (mapStateToProps, mapDispatchToProps) (SavingEdit);

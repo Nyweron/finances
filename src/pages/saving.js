@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { Icon } from "semantic-ui-react";
 
-import { getAll, create, edit, remove } from "../lib/genericService";
+import { getAll } from "../lib/genericService";
 
 import { SavingList } from "../component/saving";
 
@@ -15,72 +15,13 @@ class Saving extends Component {
     super(props);
     this.state = {
       allData: [],
-      dataEdit: {},
-      dataRemove: {},
       savingDataOnPage: [],
       begin: 0,
       end: 4,
-      showModalEdit: false,
-      showModalRemove: false,
-      isCreated: false,
-      isEdited: false,
-      isRemoved: false,
       isDisplaySavingList: true,
       isDisplayCategorySavingList: false,
     };
   }
-
-  handleAddSaving = (props) => {
-    console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
-    props.handleCloseModalAdd();
-
-    const savingObj = {
-      howMuch: parseFloat(props.howMuch),
-      date: new Date(props.calendarDate),
-      comment: props.comment,
-      categorySavingId: parseInt(props.categorySavingId),
-      savingType: 1,
-    };
-
-    create(savingObj, "saving").then((res) => {
-      this.setState({ isCreated: true });
-    });
-  };
-
-  handleOpenModalRemoveSaving = (savingRemove) => {
-    this.setState({ showModalRemove: !this.state.showModalRemove });
-    this.setState({ dataRemove: savingRemove });
-  };
-
-  handleRemoveSaving = (savingRemove) => {
-    this.setState({ showModalRemove: !this.state.showModalRemove });
-
-    remove(savingRemove.id, "saving").then((res) => {
-      this.setState({ isRemoved: true });
-    });
-  };
-
-  handleOpenModalEditSaving = (savingEdit) => {
-    this.setState({ showModalEdit: !this.state.showModalEdit });
-    this.setState({ dataEdit: savingEdit });
-  };
-
-  handleEditSaving = (savingEdit) => {
-    this.setState({ showModalEdit: !this.state.showModalEdit });
-
-    const savingObj = {
-      id: savingEdit.id,
-      howMuch: parseFloat(savingEdit.howMuch),
-      date: new Date(savingEdit.calendarDate),
-      comment: savingEdit.comment,
-      categorySavingId: parseInt(savingEdit.categorySavingId),
-      savingType: 1,
-    };
-
-    edit(savingObj, "saving").then((res) => {
-      this.setState({ isEdited: true });
-    });
-  };
 
   handleSavingList = () => {
     console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
@@ -154,18 +95,11 @@ class Saving extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  console.log("🚀 ~ file: saving.js ~ line 158 ~ mapStateToProps ~ state", state)
-  return {
-    modalAdd: state.modalAdd,
-  };
-}
 
 function mapDispatchToProps(dispatch) {
   return {
     handleOpenModalAdd: () => dispatch({ type: "OPEN_MODAL_ADD" }),
-    handleCloseModalAdd: () => dispatch({ type: "CLOSE_MODAL_ADD" }),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Saving);
+export default connect(null, mapDispatchToProps)(Saving);

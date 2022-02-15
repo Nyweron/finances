@@ -18,7 +18,6 @@ class SavingList extends Component {
       savingDataOnPage: [],
       begin: 0,
       end: 4,
-      showModalEdit: false,
       showModalRemove: false,
       isCreated: false,
       isEdited: false,
@@ -114,12 +113,12 @@ class SavingList extends Component {
   };
 
   handleOpenModalEditSaving = (savingEdit) => {
-    this.setState({ showModalEdit: !this.state.showModalEdit });
+    this.props.handleOpenModalEdit();
     this.setState({ dataEdit: savingEdit });
   };
 
   handleEditSaving = (savingEdit) => {
-    this.setState({ showModalEdit: !this.state.showModalEdit });
+    this.props.handleCloseModalEdit();
 
     const savingObj = {
       id: savingEdit.id,
@@ -259,12 +258,8 @@ class SavingList extends Component {
             handleSubmit={this.handleAddSaving}
           />
         )}
-        {this.state.showModalEdit && (
+        {this.props.modalEdit && (
           <SavingEdit
-            showModal={this.state.showModalEdit}
-            handleCloseModal={() =>
-              this.setState({ showModalEdit: !this.state.showModalEdit })
-            }
             handleSubmit={this.handleEditSaving}
             data={this.state.dataEdit}
           />
@@ -287,7 +282,15 @@ class SavingList extends Component {
 function mapStateToProps(state) {
   return {
     modalAdd: state.modalAdd,
+    modalEdit: state.modalEdit,
   };
 }
 
-export default connect(mapStateToProps)(SavingList);
+function mapDispatchToProps(dispatch) {
+  return {
+    handleOpenModalEdit: () => dispatch({ type: "OPEN_MODAL_EDIT" }),
+    handleCloseModalEdit: () => dispatch({ type: "CLOSE_MODAL_EDIT" }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SavingList);

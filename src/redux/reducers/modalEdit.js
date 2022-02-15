@@ -1,4 +1,5 @@
 const modalEdit = (state = false, action) => {
+console.log("🚀 ~ file: modalEdit.js ~ line 2 ~ modalEdit ~ action", action)
   switch(action.type) {
      case 'OPEN_MODAL_EDIT':
        return true;

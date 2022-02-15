@@ -12,7 +12,7 @@ import "react-widgets/styles.css";
 import DateFnsLocalizer from "react-widgets-date-fns";
 import pl from "date-fns/locale/pl";
 import App from "./App";
-import reducer from './reducers/index'
+import reducer from './redux/reducers/index'
 
 
 new DateFnsLocalizer({ locales: { pl: pl } });
