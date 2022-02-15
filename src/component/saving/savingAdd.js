@@ -36,7 +36,7 @@ const SavingAdd = (props) => {
   const handleCloseModal = () => {
     setShowModal(false);
     props.handleCloseModal(false);
-    props.decrement();
+    props.handleCloseModalAdd();
   };
 
   const handleSubmit = (data) => {
@@ -63,6 +63,7 @@ const SavingAdd = (props) => {
 
     setFormError(false);
     setShowModal(false);
+    props.handleCloseModalAdd();
     props.handleSubmit(savingFormData);
   };
 
@@ -187,17 +188,14 @@ const SavingAdd = (props) => {
 };
 
 function mapStateToProps(state) {
-console.log("🚀 ~ file: savingAdd.js ~ line 189 ~ mapStateToProps ~ state", state)
-
-
   return {
-    modalAdd: state,
+    modalAdd: state.modalAdd,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-   decrement: () => dispatch({type: 'CLOSE_MODAL_ADD'})
+   handleCloseModalAdd: () => dispatch({type: 'CLOSE_MODAL_ADD'})
   };
  }
 

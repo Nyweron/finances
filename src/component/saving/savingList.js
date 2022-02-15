@@ -299,13 +299,8 @@ class SavingList extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(
-    "🚀 ~ file: savingList.js ~ line 303 ~ mapStateToProps ~ state",
-    state
-  );
-
   return {
-    modalAdd: state,
+    modalAdd: state.modalAdd,
   };
 }
 

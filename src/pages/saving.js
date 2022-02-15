@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 
-import {  Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 import { getAll, create, edit, remove } from "../lib/genericService";
 
-import {
-  SavingList
-} from "../component/saving";
+import { SavingList } from "../component/saving";
 
 import { CategorySavingList } from "../component/categorySaving";
 
@@ -22,7 +20,6 @@ class Saving extends Component {
       savingDataOnPage: [],
       begin: 0,
       end: 4,
-      showModalAdd: false,
       showModalEdit: false,
       showModalRemove: false,
       isCreated: false,
@@ -33,13 +30,9 @@ class Saving extends Component {
     };
   }
 
-  handleOpenModalAddSaving = (props) => {
-    this.setState({ showModalAdd: !this.state.showModalAdd });
-  };
-
   handleAddSaving = (props) => {
     console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
-    this.setState({ showModalAdd: !this.state.showModalAdd });
+    props.handleCloseModalAdd();
 
     const savingObj = {
       howMuch: parseFloat(props.howMuch),
@@ -115,13 +108,7 @@ class Saving extends Component {
     });
   };
 
-
-
   render() {
-
-
-
-
     return (
       <>
         <div className="ui centered grid">
@@ -136,7 +123,7 @@ class Saving extends Component {
               </button>
               <button
                 className="ui blue button"
-                onClick={() => this.props.increment()}
+                onClick={() => this.props.handleOpenModalAdd()}
               >
                 <Icon link name="plus circle" />
                 Dodaj oszczędności
@@ -161,8 +148,6 @@ class Saving extends Component {
           {this.state.isDisplayCategorySavingList && (
             <CategorySavingList {...this.state} />
           )}
-
-
         </div>
       </>
     );
@@ -170,17 +155,17 @@ class Saving extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log("🚀 ~ file: saving.js ~ line 174 ~ mapStateToProps ~ state", state)
+  console.log("🚀 ~ file: saving.js ~ line 158 ~ mapStateToProps ~ state", state)
   return {
-    modalAdd: state
-   };
-  }
+    modalAdd: state.modalAdd,
+  };
+}
 
 function mapDispatchToProps(dispatch) {
-    return {
-     increment: () => dispatch({type: 'OPEN_MODAL_ADD'}),
-     decrement: () => dispatch({type: 'CLOSE_MODAL_ADD'})
-    };
-   }
+  return {
+    handleOpenModalAdd: () => dispatch({ type: "OPEN_MODAL_ADD" }),
+    handleCloseModalAdd: () => dispatch({ type: "CLOSE_MODAL_ADD" }),
+  };
+}
 
-export default connect(mapStateToProps, mapDispatchToProps) (Saving);
+export default connect(mapStateToProps, mapDispatchToProps)(Saving);
