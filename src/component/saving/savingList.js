@@ -8,7 +8,7 @@ import { SavingAdd, SavingEdit, SavingRemove } from "./index";
 
 import { getAll, create, edit, remove } from "../../lib/genericService";
 
-import { OPEN_MODAL_EDIT, CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
+import { OPEN_MODAL_EDIT, OPEN_MODAL_REMOVE } from "../../redux/actions/actions";
 
 class SavingList extends Component {
   constructor(props: {}) {
@@ -20,7 +20,6 @@ class SavingList extends Component {
       savingDataOnPage: [],
       begin: 0,
       end: 4,
-      showModalRemove: false,
       isCreated: false,
       isEdited: false,
       isRemoved: false,
@@ -51,11 +50,7 @@ class SavingList extends Component {
           });
         })
         .catch((error) => {
-          this.setState({
-            isCreated: false,
-            isEdited: false,
-            isRemoved: false,
-          });
+
         })
         .finally(()=>{
           this.setState({
@@ -102,12 +97,11 @@ class SavingList extends Component {
   };
 
   handleOpenModalRemoveSaving = (savingRemove) => {
-    this.setState({ showModalRemove: !this.state.showModalRemove });
+    this.props.handleOpenModalRemove();
     this.setState({ dataRemove: savingRemove });
   };
 
   handleRemoveSaving = (savingRemove) => {
-    this.setState({ showModalRemove: !this.state.showModalRemove });
 
     remove(savingRemove.id, "saving").then((res) => {
       this.setState({ isRemoved: true });
@@ -120,7 +114,6 @@ class SavingList extends Component {
   };
 
   handleEditSaving = (savingEdit) => {
-    this.props.handleCloseModalEdit();
 
     const savingObj = {
       id: savingEdit.id,
@@ -266,12 +259,8 @@ class SavingList extends Component {
             data={this.state.dataEdit}
           />
         )}
-        {this.state.showModalRemove && (
+        {this.props.modalRemove && (
           <SavingRemove
-            showModal={this.state.showModalRemove}
-            handleCloseModal={() =>
-              this.setState({ showModalRemove: !this.state.showModalRemove })
-            }
             handleSubmit={this.handleRemoveSaving}
             data={this.state.dataRemove}
           />
@@ -285,13 +274,14 @@ function mapStateToProps(state) {
   return {
     modalAdd: state.modalAdd,
     modalEdit: state.modalEdit,
+    modalRemove: state.modalRemove
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     handleOpenModalEdit: () => dispatch({ type: OPEN_MODAL_EDIT }),
-    handleCloseModalEdit: () => dispatch({ type: CLOSE_MODAL_EDIT }),
+    handleOpenModalRemove: () => dispatch({ type: OPEN_MODAL_REMOVE }),
   };
 }
 

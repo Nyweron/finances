@@ -12,8 +12,6 @@ import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
 
 const SavingEdit = (props) => {
-  const [showModal, setShowModal] = useState(props.showModal);
-
   const [howMuch, setHowMuch] = useState(props.data.howMuch);
   const [categorySavingId, setCategorySavingId] = useState(
     props.data.categorySavingId
@@ -33,7 +31,6 @@ const SavingEdit = (props) => {
   }, [setCategorySavingList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
     props.handleCloseModalEdit();
   };
 
@@ -92,14 +89,14 @@ const SavingEdit = (props) => {
 
     console.log("🚀 ~ file: saving2Edit.js ~ line 129 ~ handleSubmit ~ savingFormData", savingFormData)
     setFormError(false);
-    setShowModal(false);
+    this.props.handleCloseModalEdit();
     props.handleSubmit(savingFormData);
   };
 
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
