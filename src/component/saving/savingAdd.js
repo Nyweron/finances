@@ -11,8 +11,6 @@ import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 
 const SavingAdd = (props) => {
   //console.log("🚀 ~ file: savingAdd.js ~ line 11 ~ SavingAdd ~ props", props)
-  const [showModal, setShowModal] = useState(props.showModal);
-
   const [howMuch, setHowMuch] = useState("");
   const [categorySavingId, setCategorySavingId] = useState("");
   const [calendarDate, setCalendarDate] = useState(new Date());
@@ -34,8 +32,6 @@ const SavingAdd = (props) => {
   }, [setCategorySavingList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
     props.handleCloseModalAdd();
   };
 
@@ -62,7 +58,6 @@ const SavingAdd = (props) => {
     };
 
     setFormError(false);
-    setShowModal(false);
     props.handleCloseModalAdd();
     props.handleSubmit(savingFormData);
   };
@@ -83,7 +78,7 @@ const SavingAdd = (props) => {
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
@@ -189,7 +184,7 @@ const SavingAdd = (props) => {
 
 function mapStateToProps(state) {
   return {
-    modalAdd: state.modalAdd,
+    showModal: state.modalAdd,
   };
 }
 

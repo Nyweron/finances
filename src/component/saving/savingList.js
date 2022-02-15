@@ -18,7 +18,6 @@ class SavingList extends Component {
       savingDataOnPage: [],
       begin: 0,
       end: 4,
-      showModalAdd: props.showModalAdd,
       showModalEdit: false,
       showModalRemove: false,
       isCreated: false,
@@ -37,13 +36,7 @@ class SavingList extends Component {
   }
 
   componentDidUpdate(previous, current) {
-    /// console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ previous", previous.showModalAdd)
-    // console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ current", current.showModalAdd)
-    // if(current.showModalAdd === false){
-    //   console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ current", current)
-    //   console.log("🚀 ~ file: savingList.js ~ line 38 ~ SavingList ~ componentDidUpdate ~ previous", previous)
-    //   this.setState({showModalAdd: !this.state.showModalAdd})
-    // }
+
 
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
       getAll("saving")
@@ -57,6 +50,13 @@ class SavingList extends Component {
           });
         })
         .catch((error) => {
+          this.setState({
+            isCreated: false,
+            isEdited: false,
+            isRemoved: false,
+          });
+        })
+        .finally(()=>{
           this.setState({
             isCreated: false,
             isEdited: false,
@@ -81,13 +81,11 @@ class SavingList extends Component {
     });
   };
 
-  handleOpenModalAddSaving = (props) => {
-    this.setState({ showModalAdd: !this.state.showModalAdd });
-  };
+
 
   handleAddSaving = (props) => {
     // console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
-    this.setState({ showModalAdd: !this.state.showModalAdd });
+
 
     const savingObj = {
       howMuch: parseFloat(props.howMuch),
@@ -164,15 +162,7 @@ class SavingList extends Component {
   };
 
   render() {
-    // console.log(
-    //   "🚀 ~ file: savingList.js ~ line 8 ~ SavingList ~ this.props",
-    //   this.props.showModalAdd
-    // );
 
-    // console.log(
-    //   "🚀 ~ file: savingList.js ~ line 8 ~ SavingList ~ this.state",
-    //   this.state.showModalAdd
-    // );
 
     return (
       <>
@@ -266,10 +256,6 @@ class SavingList extends Component {
         </div>
         {this.props.modalAdd && (
           <SavingAdd
-            showModal={this.props.modalAdd}
-            handleCloseModal={() =>
-              this.setState({ showModalAdd: !this.state.showModalAdd })
-            }
             handleSubmit={this.handleAddSaving}
           />
         )}
