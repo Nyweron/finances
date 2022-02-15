@@ -10,6 +10,8 @@ import { SavingList } from "../component/saving";
 
 import { CategorySavingList } from "../component/categorySaving";
 
+import { OPEN_MODAL_ADD } from "../redux/actions/actions";
+
 class Saving extends Component {
   constructor(props: {}) {
     super(props);
@@ -95,10 +97,9 @@ class Saving extends Component {
   }
 }
 
-
 function mapDispatchToProps(dispatch) {
   return {
-    handleOpenModalAdd: () => dispatch({ type: "OPEN_MODAL_ADD" }),
+    handleOpenModalAdd: () => dispatch({ type: OPEN_MODAL_ADD }),
   };
 }
 

@@ -9,6 +9,8 @@ import Modal from "react-bootstrap/Modal";
 
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 
+import { CLOSE_MODAL_ADD } from "../../redux/actions/actions";
+
 const SavingAdd = (props) => {
   //console.log("🚀 ~ file: savingAdd.js ~ line 11 ~ SavingAdd ~ props", props)
   const [howMuch, setHowMuch] = useState("");
@@ -190,7 +192,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-   handleCloseModalAdd: () => dispatch({type: 'CLOSE_MODAL_ADD'})
+   handleCloseModalAdd: () => dispatch({type: CLOSE_MODAL_ADD})
   };
  }
 

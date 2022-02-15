@@ -9,6 +9,8 @@ import Modal from "react-bootstrap/Modal";
 
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 
+import { CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
+
 const SavingEdit = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
 
@@ -212,7 +214,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-   handleCloseModalEdit: () => dispatch({type: 'CLOSE_MODAL_EDIT'})
+   handleCloseModalEdit: () => dispatch({type: CLOSE_MODAL_EDIT})
   };
  }
 

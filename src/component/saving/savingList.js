@@ -8,6 +8,8 @@ import { SavingAdd, SavingEdit, SavingRemove } from "./index";
 
 import { getAll, create, edit, remove } from "../../lib/genericService";
 
+import { OPEN_MODAL_EDIT, CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
+
 class SavingList extends Component {
   constructor(props: {}) {
     super(props);
@@ -288,8 +290,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleOpenModalEdit: () => dispatch({ type: "OPEN_MODAL_EDIT" }),
-    handleCloseModalEdit: () => dispatch({ type: "CLOSE_MODAL_EDIT" }),
+    handleOpenModalEdit: () => dispatch({ type: OPEN_MODAL_EDIT }),
+    handleCloseModalEdit: () => dispatch({ type: CLOSE_MODAL_EDIT }),
   };
 }
 
