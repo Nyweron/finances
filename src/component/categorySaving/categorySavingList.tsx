@@ -2,21 +2,26 @@ import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
+import { getAll } from "../../lib/genericService";
 
-import { getAll} from "../../lib/genericService";
+type MyProps = {
+  // using `interface` is also ok
+  message: string;
+};
+type MyState = {
+  allData: [];
+  savingDataOnPage: [];
+  begin: number;
+  end: number;
+};
 
-class CategorySavingList extends Component {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
+class CategorySavingList extends Component<MyProps, MyState> {
+  state: MyState = {
     allData: [],
-
     savingDataOnPage: [],
     begin: 0,
-
     end: 4,
-    }
-  }
+  };
 
   componentDidMount() {
     getAll("categorySaving").then((rows) => {
@@ -42,12 +47,15 @@ class CategorySavingList extends Component {
     });
   };
 
-
   render() {
-
-    console.log("🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.props", this.props)
-    console.log("🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.state", this.state)
-
+    console.log(
+      "🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.props",
+      this.props
+    );
+    console.log(
+      "🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.state",
+      this.state
+    );
 
     return (
       <>
@@ -68,17 +76,29 @@ class CategorySavingList extends Component {
 
               <Table.Body>
                 {this.state.savingDataOnPage.map((item, i) => {
-                  console.log("🚀 ~ file: categorySavingList.js ~ line 72 ~ CategorySavingList ~ {this.state.savingDataOnPage.map ~ item", item)
+                  console.log(
+                    "🚀 ~ file: categorySavingList.js ~ line 72 ~ CategorySavingList ~ {this.state.savingDataOnPage.map ~ item",
+                    item
+                  );
                   return (
                     <Table.Row key={`categorySavingRow_${i}`}>
                       <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
                       <Table.Cell key={`description_${i}`}>
                         {item.description}
                       </Table.Cell>
-                      <Table.Cell key={`isDeleted${i}`}>{item.isDeleted === false ? "false" : "true"}</Table.Cell>
-                      <Table.Cell key={`canPay_${i}`}>{item.canPay=== false ? "false" : "true"}</Table.Cell>
-                      <Table.Cell key={`dept${i}`}>{item.dept=== false ? "false" : "true"}</Table.Cell>
-                      <Table.Cell key={`remove_${i}`} className="center aligned">
+                      <Table.Cell key={`isDeleted${i}`}>
+                        {item.isDeleted === false ? "false" : "true"}
+                      </Table.Cell>
+                      <Table.Cell key={`canPay_${i}`}>
+                        {item.canPay === false ? "false" : "true"}
+                      </Table.Cell>
+                      <Table.Cell key={`dept${i}`}>
+                        {item.dept === false ? "false" : "true"}
+                      </Table.Cell>
+                      <Table.Cell
+                        key={`remove_${i}`}
+                        className="center aligned"
+                      >
                         <button
                           className="ui red button"
                           onClick={() => this.handleOpenModalRemoveSaving(item)}
@@ -133,11 +153,9 @@ class CategorySavingList extends Component {
             </Table>
           </div>
         </div>
-
-
       </>
     );
   }
-};
+}
 
 export default CategorySavingList;
