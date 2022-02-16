@@ -19,11 +19,6 @@ import Saving from "./pages/saving";
 import styles from "./App.module.css";
 
 class App extends Component {
-  state = {
-    isVisibleCollapseMenu: false,
-    isVisibleModalAddIncome: false,
-    collapseMenuClicked: -1,
-  };
 
   render() {
 

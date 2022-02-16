@@ -1,45 +1,37 @@
 import React, { useState, useEffect } from "react";
 
-import { Checkbox, Form, Message, Input } from "semantic-ui-react";
+import { connect } from "react-redux";
+
+import {  Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";
 
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
-import { GetUsersForSelect } from "../../lib/userService";
+
+import { CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
 
 const SavingEdit = (props) => {
-  const [showModal, setShowModal] = useState(props.showModal);
-
-
   const [howMuch, setHowMuch] = useState(props.data.howMuch);
   const [categorySavingId, setCategorySavingId] = useState(
     props.data.categorySavingId
   );
   const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
-  const [userId, setUserId] = useState(props.data.userId);
   const [comment, setComment] = useState(props.data.comment);
-  const [savingType, setSavingType] = useState(props.savingType);
 
   const [howMuchError, setHowMuchError] = useState(false);
   const [formError, setFormError] = useState(false);
 
   const [categorySavingList, setCategorySavingList] = useState([]);
-  const [userList, setUserList] = useState([]);
 
   useEffect(() => {
     GetCategorySavingsForSelect().then((rows) => {
       setCategorySavingList(rows);
     });
-
-    GetUsersForSelect().then((rows) => {
-      setUserList(rows);
-    });
-  }, [setCategorySavingList, setUserList]);
+  }, [setCategorySavingList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalEdit();
   };
 
   const handleSetHowMuch = (value) => {
@@ -79,12 +71,6 @@ const SavingEdit = (props) => {
     //   setCategorySavingError(false);
     // }
 
-    // if (userId === "") {
-    //   setUserIdError(true);
-    //   error = true;
-    // } else {
-    //   setUserIdError(false);
-    // }
 
     if (error) {
       setFormError(true);
@@ -103,14 +89,14 @@ const SavingEdit = (props) => {
 
     console.log("🚀 ~ file: saving2Edit.js ~ line 129 ~ handleSubmit ~ savingFormData", savingFormData)
     setFormError(false);
-    setShowModal(false);
+    this.props.handleCloseModalEdit();
     props.handleSubmit(savingFormData);
   };
 
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
@@ -217,4 +203,16 @@ const SavingEdit = (props) => {
 
 }
 
-export default SavingEdit;
+function mapStateToProps(state) {
+  return {
+    showModal: state.modalEdit,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+   handleCloseModalEdit: () => dispatch({type: CLOSE_MODAL_EDIT})
+  };
+ }
+
+export default connect (mapStateToProps, mapDispatchToProps) (SavingEdit);

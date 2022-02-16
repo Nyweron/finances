@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { connect } from 'react-redux'
+
 import { Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
@@ -7,9 +9,10 @@ import Modal from "react-bootstrap/Modal";
 
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 
-const SavingAdd = (props) => {
-  const [showModal, setShowModal] = useState(props.showModal);
+import { CLOSE_MODAL_ADD } from "../../redux/actions/actions";
 
+const SavingAdd = (props) => {
+  //console.log("🚀 ~ file: savingAdd.js ~ line 11 ~ SavingAdd ~ props", props)
   const [howMuch, setHowMuch] = useState("");
   const [categorySavingId, setCategorySavingId] = useState("");
   const [calendarDate, setCalendarDate] = useState(new Date());
@@ -31,8 +34,7 @@ const SavingAdd = (props) => {
   }, [setCategorySavingList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalAdd();
   };
 
   const handleSubmit = (data) => {
@@ -58,7 +60,7 @@ const SavingAdd = (props) => {
     };
 
     setFormError(false);
-    setShowModal(false);
+    props.handleCloseModalAdd();
     props.handleSubmit(savingFormData);
   };
 
@@ -78,7 +80,7 @@ const SavingAdd = (props) => {
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
@@ -182,4 +184,16 @@ const SavingAdd = (props) => {
   );
 };
 
-export default SavingAdd;
+function mapStateToProps(state) {
+  return {
+    showModal: state.modalAdd,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+   handleCloseModalAdd: () => dispatch({type: CLOSE_MODAL_ADD})
+  };
+ }
+
+export default connect (mapStateToProps, mapDispatchToProps) (SavingAdd);
