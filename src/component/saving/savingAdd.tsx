@@ -108,9 +108,9 @@ const SavingAdd: React.FC<any> = (props) => {
                   fluid
                   placeholder="Rodzaj oszczędności"
                   name="categorySavingId"
-                  onChange={(e, d) =>
-                    setCategorySavingId((e.target as HTMLTextAreaElement).value)
-                  }
+                  onChange={(e, d) => {
+                    return setCategorySavingId(d.value as string);
+                  }}
                   options={categorySavingList}
                 />
               </div>
@@ -148,7 +148,7 @@ const SavingAdd: React.FC<any> = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e.target.value))}
+                  onChange={(e: any, d) => setCalendarDate(new Date(e))}
                 />
               </div>
             </div>

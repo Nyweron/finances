@@ -87,7 +87,7 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
   };
 
   handleAddSaving = (props: any) => {
-    // console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
+    console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
 
     const savingObj = {
       howMuch: parseFloat(props.howMuch),
