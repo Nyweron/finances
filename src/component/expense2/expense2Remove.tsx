@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { Form } from "semantic-ui-react";
 
 import Modal from "react-bootstrap/Modal";
+import { ExpenseModelProps } from "../../constants";
 
-const Expense2Add = (props) => {
+const Expense2Remove: React.FC<ExpenseModelProps> = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
 
   const handleCloseModal = () => {
@@ -12,12 +13,15 @@ const Expense2Add = (props) => {
     props.handleCloseModal(false);
   };
 
-  const handleSubmit = (data) => {
-  console.log("🚀 ~ file: expense2Remove.js ~ line 15 ~ handleSubmit ~ data", data)
+  const handleSubmit = (data: React.FormEvent<HTMLFormElement>) => {
+    console.log(
+      "🚀 ~ file: expense2Remove.js ~ line 15 ~ handleSubmit ~ data",
+      data
+    );
     //let error = false;
 
     setShowModal(false);
-    props.handleSubmit(props.data);
+    props.handleSubmit(data);
   };
 
   return (
@@ -39,13 +43,20 @@ const Expense2Add = (props) => {
             </label>
             <br />
             <div className={"col-sm-12"}>
-              <code>id: {props.data.id}</code><br/>
-              <code>Kwota: {props.data.howMuch}</code><br/>
-              <code>Czym zapłacono: {props.data.categorySavingDescription}</code><br/>
-              <code>Kiedy: {props.data.date}</code><br/>
-              <code>Kto: {props.data.userDescription}</code><br/>
-              <code>Komentarz: {props.data.comment}</code><br/>
-              <code>Załącznik: {props.data.attachment}</code><br/>
+              <code>id: {props.id}</code>
+              <br />
+              <code>Kwota: {props.howMuch}</code>
+              <br />
+              <code>Czym zapłacono: {props.categorySavingDescription}</code>
+              <br />
+              <code>Kiedy: {props.date}</code>
+              <br />
+              <code>Kto: {props.userDescription}</code>
+              <br />
+              <code>Komentarz: {props.comment}</code>
+              <br />
+              <code>Załącznik: {props.attachment}</code>
+              <br />
             </div>
           </div>
         </Modal.Body>
@@ -68,4 +79,4 @@ const Expense2Add = (props) => {
   );
 };
 
-export default Expense2Add;
+export default Expense2Remove;

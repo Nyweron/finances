@@ -1,26 +1,34 @@
 import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
+import { CategorySavingModel } from "../../constants";
 
 import { getAll } from "../../lib/genericService";
 
-type MyProps = {
-  // using `interface` is also ok
-  message: string;
-};
-type MyState = {
-  allData: [];
-  savingDataOnPage: [];
-  begin: number;
-  end: number;
-};
+// type MyProps = {
+//   // using `interface` is also ok
+//   message: string;
+// };
+// type MyState = {
+//   allData: CategorySavingModel[];
+//   savingDataOnPage: CategorySavingModel[];
+//   begin: number;
+//   end: number;
+//   activePage: number;
+// };
 
-class CategorySavingList extends Component<MyProps, MyState> {
-  state: MyState = {
+// type PaginationCustom = {
+//   activePage: number;
+// };
+
+// class CategorySavingList extends Component<MyProps, MyState> {
+class CategorySavingList extends Component {
+  state = {
     allData: [],
     savingDataOnPage: [],
     begin: 0,
     end: 4,
+    activePage: 0,
   };
 
   componentDidMount() {
@@ -32,7 +40,10 @@ class CategorySavingList extends Component<MyProps, MyState> {
     });
   }
 
-  onChangePage = async (event: React.MouseEvent<HTMLAnchorElement>, data) => {
+  onChangePage = async (
+    event,
+    data
+  ) => {
     await this.setState({
       activePage: data.activePage,
       begin: data.activePage * 4 - 4,
@@ -92,8 +103,8 @@ class CategorySavingList extends Component<MyProps, MyState> {
                       <Table.Cell key={`canPay_${i}`}>
                         {item.canPay === false ? "false" : "true"}
                       </Table.Cell>
-                      <Table.Cell key={`dept${i}`}>
-                        {item.dept === false ? "false" : "true"}
+                      <Table.Cell key={`debt${i}`}>
+                        {item.debt === false ? "false" : "true"}
                       </Table.Cell>
                       <Table.Cell
                         key={`remove_${i}`}
@@ -101,7 +112,7 @@ class CategorySavingList extends Component<MyProps, MyState> {
                       >
                         <button
                           className="ui red button"
-                          onClick={() => this.handleOpenModalRemoveSaving(item)}
+                          // onClick={() => this.handleOpenModalRemoveSaving(item)}
                         >
                           Usuń
                         </button>
@@ -109,7 +120,7 @@ class CategorySavingList extends Component<MyProps, MyState> {
                       <Table.Cell key={`edit_${i}`} className="center aligned">
                         <button
                           className="ui green button "
-                          onClick={() => this.handleOpenModalEditSaving(item)}
+                          // onClick={() => this.handleOpenModalEditSaving(item)}
                         >
                           Edytuj
                         </button>
@@ -145,7 +156,7 @@ class CategorySavingList extends Component<MyProps, MyState> {
                       }}
                       defaultActivePage={1}
                       totalPages={Math.ceil(this.state.allData.length / 4)}
-                      onPageChange={this.onChangePage}
+                      onPageChange={(e) => this.onChangePage}
                     />
                   </Table.HeaderCell>
                 </Table.Row>

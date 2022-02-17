@@ -8,23 +8,36 @@ import { SavingAdd, SavingEdit, SavingRemove } from "./index";
 
 import { getAll, create, edit, remove } from "../../lib/genericService";
 
-import { OPEN_MODAL_EDIT, OPEN_MODAL_REMOVE } from "../../redux/actions/actions";
+import {
+  OPEN_MODAL_EDIT,
+  OPEN_MODAL_REMOVE,
+} from "../../redux/actions/actions";
 
-class SavingList extends Component {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      allData: [],
-      dataEdit: {},
-      dataRemove: {},
-      savingDataOnPage: [],
-      begin: 0,
-      end: 4,
-      isCreated: false,
-      isEdited: false,
-      isRemoved: false,
-    };
-  }
+import { SavingModelList } from "../../constants";
+
+interface IRecipeProps {
+  handleOpenModalRemove: any;
+  handleOpenModalEdit: any;
+  savingDataOnPage: SavingModelList[];
+  modalAdd: boolean;
+  modalEdit: boolean;
+  modalRemove: boolean;
+}
+
+interface IRecipeState {}
+
+class SavingList extends Component<IRecipeProps, IRecipeState> {
+  state = {
+    allData: [],
+    dataEdit: {},
+    dataRemove: {},
+    savingDataOnPage: [],
+    begin: 0,
+    end: 4,
+    isCreated: false,
+    isEdited: false,
+    isRemoved: false,
+  };
 
   componentDidMount() {
     getAll("saving").then((rows) => {
@@ -35,9 +48,7 @@ class SavingList extends Component {
     });
   }
 
-  componentDidUpdate(previous, current) {
-
-
+  componentDidUpdate(previous: any, current: any) {
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
       getAll("saving")
         .then((rows) => {
@@ -49,10 +60,8 @@ class SavingList extends Component {
             isRemoved: false,
           });
         })
-        .catch((error) => {
-
-        })
-        .finally(()=>{
+        .catch((error) => {})
+        .finally(() => {
           this.setState({
             isCreated: false,
             isEdited: false,
@@ -62,7 +71,7 @@ class SavingList extends Component {
     }
   }
 
-  onChangePage = async (event: React.MouseEvent<HTMLAnchorElement>, data) => {
+  onChangePage = async (event: any, data: any) => {
     await this.setState({
       activePage: data.activePage,
       begin: data.activePage * 4 - 4,
@@ -77,11 +86,8 @@ class SavingList extends Component {
     });
   };
 
-
-
-  handleAddSaving = (props) => {
+  handleAddSaving = (props: any) => {
     // console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
-
 
     const savingObj = {
       howMuch: parseFloat(props.howMuch),
@@ -96,25 +102,23 @@ class SavingList extends Component {
     });
   };
 
-  handleOpenModalRemoveSaving = (savingRemove) => {
+  handleOpenModalRemoveSaving = (savingRemove: any) => {
     this.props.handleOpenModalRemove();
     this.setState({ dataRemove: savingRemove });
   };
 
-  handleRemoveSaving = (savingRemove) => {
-
+  handleRemoveSaving = (savingRemove: any) => {
     remove(savingRemove.id, "saving").then((res) => {
       this.setState({ isRemoved: true });
     });
   };
 
-  handleOpenModalEditSaving = (savingEdit) => {
+  handleOpenModalEditSaving = (savingEdit: any) => {
     this.props.handleOpenModalEdit();
     this.setState({ dataEdit: savingEdit });
   };
 
-  handleEditSaving = (savingEdit) => {
-
+  handleEditSaving = (savingEdit: any) => {
     const savingObj = {
       id: savingEdit.id,
       howMuch: parseFloat(savingEdit.howMuch),
@@ -156,8 +160,6 @@ class SavingList extends Component {
   };
 
   render() {
-
-
     return (
       <>
         <div className="row">
@@ -176,7 +178,7 @@ class SavingList extends Component {
               </Table.Header>
 
               <Table.Body>
-                {this.state.savingDataOnPage.map((item, i) => {
+                {this.state.savingDataOnPage.map((item: SavingModelList, i) => {
                   return (
                     <Table.Row key={`savingRow_${i}`}>
                       <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
@@ -249,9 +251,7 @@ class SavingList extends Component {
           </div>
         </div>
         {this.props.modalAdd && (
-          <SavingAdd
-            handleSubmit={this.handleAddSaving}
-          />
+          <SavingAdd handleSubmit={this.handleAddSaving} />
         )}
         {this.props.modalEdit && (
           <SavingEdit
@@ -270,15 +270,15 @@ class SavingList extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   return {
     modalAdd: state.modalAdd,
     modalEdit: state.modalEdit,
-    modalRemove: state.modalRemove
+    modalRemove: state.modalRemove,
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
   return {
     handleOpenModalEdit: () => dispatch({ type: OPEN_MODAL_EDIT }),
     handleOpenModalRemove: () => dispatch({ type: OPEN_MODAL_REMOVE }),

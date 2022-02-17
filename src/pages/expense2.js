@@ -2,26 +2,29 @@ import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
-import { getAll, createIncome, editPutIncome, deleteRowIncome } from "../lib/incomeService";
+import {
+  getAll,
+  createExpense,
+  editPutExpense,
+  deleteRowExpense,
+} from "../lib/expenseService";
 
 import {
-  IncomeAdd,
-  IncomeEdit,
-  IncomeRemove,
-} from "../component/income";
+  Expense2Add,
+  Expense2Edit,
+  Expense2Remove,
+} from "../component/expense2";
 
-//import styles from "../App.module.css";
-
-class Income extends Component {
-  constructor(props: {}) {
+class expense2 extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       allData: [],
       dataEdit: {},
       dataRemove: {},
-      incomeDataOnPage: [],
+      expenseDataOnPage: [],
       begin: 0,
-      rowPerPage: 4,
+      end: 4,
       showModalAdd: false,
       showModalEdit: false,
       showModalRemove: false,
@@ -32,21 +35,21 @@ class Income extends Component {
   }
 
   componentDidMount() {
-    getAll("income").then((rows) => {
+    getAll("expense").then((rows) => {
       this.setState({
         allData: rows,
-        incomeDataOnPage: rows.slice(this.state.begin, this.state.rowPerPage),
+        expenseDataOnPage: rows.slice(this.state.begin, this.state.end),
       });
     });
   }
 
   componentDidUpdate() {
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
-      getAll("income")
+      getAll("expense")
         .then((rows) => {
           this.setState({
             allData: rows,
-            incomeDataOnPage: rows.slice(this.state.begin, this.state.rowPerPage),
+            expenseDataOnPage: rows.slice(this.state.begin, this.state.end),
             isCreated: false,
             isEdited: false,
             isRemoved: false,
@@ -62,97 +65,84 @@ class Income extends Component {
     }
   }
 
-  onChangePage = async (event: React.MouseEvent<HTMLAnchorElement>, data) => {
+  onChangePage = async (event, data) => {
     await this.setState({
       activePage: data.activePage,
       begin: data.activePage * 4 - 4,
-      rowPerPage: data.activePage * 4,
+      end: data.activePage * 4,
     });
 
     this.setState({
-      incomeDataOnPage: this.state.allData.slice(
+      expenseDataOnPage: this.state.allData.slice(
         this.state.begin,
-        this.state.rowPerPage
+        this.state.end
       ),
     });
   };
 
-
-  handleOpenModalAddIncome = (props) => {
-    this.setState({ showModalAdd: !this.state.showModalAdd });
+  handleOpenModalRemoveExpense = (expenseRemove) => {
+    this.setState({ showModalRemove: !this.state.showModalRemove });
+    this.setState({ dataRemove: expenseRemove });
   };
 
-  handleAddIncome = (props) => {
-    this.setState({ showModalAdd: !this.state.showModalAdd });
+  handleRemoveExpense = (expenseRemove) => {
+    this.setState({ showModalRemove: !this.state.showModalRemove });
 
-    //TODO standingOrder develop logic for add howMuch to savings...
-    const incomeObj = {
-      howMuch: parseFloat(props.howMuch),
-      categoryIncomeId: parseInt(props.categoryIncomeId),
-      categorySavingId: parseInt(props.categorySavingId),
-      date: new Date(props.calendarDate),
-      userId: parseInt(props.userId),
-      comment: props.comment,
-      standingOrder: props.standingOrder,
-    };
-
-    createIncome(incomeObj).then((res) => {
-      this.setState({ isCreated: true });
+    deleteRowExpense(expenseRemove.id).then((res) => {
+      this.setState({ isRemoved: true });
     });
   };
 
-  handleOpenModalEditIncome = (incomeEdit) => {
-    console.log(
-      "🚀 ~ file: income.js ~ line 52 ~ income handleOpenModalEditIncome ~ incomeEdit",
-      incomeEdit
-    );
-
+  handleOpenModalEditExpense = (expenseEdit) => {
     this.setState({ showModalEdit: !this.state.showModalEdit });
-    this.setState({ dataEdit: incomeEdit });
+    this.setState({ dataEdit: expenseEdit });
   };
 
-  handleEditIncome = (incomeEdit) => {
-    console.log(
-      "🚀 ~ file: income.js ~ line 61 ~ income handleEditIncome ~ incomeEdit",
-      incomeEdit
-    );
-
+  handleEditExpense = (expenseEdit) => {
     this.setState({ showModalEdit: !this.state.showModalEdit });
 
-    const incomeObj = {
-      id: incomeEdit.id,
-      howMuch: parseFloat(incomeEdit.howMuch),
-      categoryIncomeId: parseInt(incomeEdit.categoryIncomeId),
-      categorySavingId: parseInt(incomeEdit.categorySavingId),
-      date: new Date(incomeEdit.calendarDate),
-      userId: parseInt(incomeEdit.userId),
-      comment: incomeEdit.comment,
-      standingOrder: incomeEdit.standingOrder,
+    const expenseObj = {
+      id: expenseEdit.id,
+      howMuch: parseFloat(expenseEdit.howMuch),
+      date: new Date(expenseEdit.calendarDate),
+      comment: expenseEdit.comment,
+      attachment: expenseEdit.attachment,
+      standingOrder: expenseEdit.autoSubtractAmount,
+      userId: parseInt(expenseEdit.userId),
+      categorySavingId: parseInt(expenseEdit.categorySavingId),
+      categoryExpenseId: parseInt(expenseEdit.categoryExpenseId),
     };
 
-    console.log(
-      "🚀 ~ file: income.js ~ line 102 ~  EDIT income ~ incomeObj",
-      incomeObj
-    );
-
-    editPutIncome(incomeObj).then((res) => {
-      console.log(
-        "🚀 ~ file: income.js ~ line 109 ~ income ~ createIncome ~ res",
-        res
-      );
+    editPutExpense(expenseObj).then((res) => {
       this.setState({ isEdited: true });
     });
   };
 
-  handleOpenModalRemoveIncome = (incomeRemove) => {
-    this.setState({ showModalRemove: !this.state.showModalRemove });
-    this.setState({ dataRemove: incomeRemove });
+  handleOpenModalAddExpense = (props) => {
+    this.setState({ showModalAdd: !this.state.showModalAdd });
   };
 
-  handleRemoveIncome = (incomeRemove) => {
-    this.setState({ showModalRemove: !this.state.showModalRemove });
-    deleteRowIncome(incomeRemove.id).then((res) => {
-      this.setState({ isRemoved: true });
+  handleCloseModalAdd = (props) => {
+    this.setState({ showModalAdd: !this.state.showModalAdd });
+  };
+
+  handleAddExpense = (props) => {
+
+    this.setState({ showModalAdd: !this.state.showModalAdd });
+
+    const expenseObj = {
+      howMuch: parseFloat(props.howMuch),
+      date: new Date(props.calendarDate),
+      comment: props.comment,
+      attachment: props.attachment,
+      standingOrder: props.autoSubtractAmount,
+      userId: parseInt(props.userId),
+      categorySavingId: parseInt(props.categorySavingId),
+      categoryExpenseId: parseInt(props.categoryExpenseId),
+    };
+
+    createExpense(expenseObj).then((res) => {
+      this.setState({ isCreated: true });
     });
   };
 
@@ -165,9 +155,9 @@ class Income extends Component {
             <div className="fourteen wide column">
               <button
                 className="ui blue button"
-                onClick={() => this.handleOpenModalAddIncome()}
+                onClick={() => this.handleOpenModalAddExpense()}
               >
-                Dodaj przychód
+                Dodaj wydatki
               </button>
             </div>
           </div>
@@ -178,26 +168,27 @@ class Income extends Component {
                   <Table.Row>
                     <Table.HeaderCell>Id</Table.HeaderCell>
                     <Table.HeaderCell>Kwota</Table.HeaderCell>
-                    <Table.HeaderCell>Tytuł przychodu</Table.HeaderCell>
-                    <Table.HeaderCell>Wpłacono na</Table.HeaderCell>
+                    <Table.HeaderCell>Na co</Table.HeaderCell>
+                    <Table.HeaderCell>Czym zapłacono</Table.HeaderCell>
                     <Table.HeaderCell>Kiedy</Table.HeaderCell>
                     <Table.HeaderCell>Kto</Table.HeaderCell>
                     <Table.HeaderCell>Komentarz</Table.HeaderCell>
+                    <Table.HeaderCell>Załącznik?</Table.HeaderCell>
                     <Table.HeaderCell>Usuń</Table.HeaderCell>
                     <Table.HeaderCell>Edytuj</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
-                  {this.state.incomeDataOnPage.map((item, i) => {
+                  {this.state.expenseDataOnPage.map((item, i) => {
                     return (
-                      <Table.Row key={`incomeRow_${i}`}>
+                      <Table.Row key={`expenseRow_${i}`}>
                         <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
                         <Table.Cell key={`howMuch_${i}`}>
                           {item.howMuch}
                         </Table.Cell>
-                        <Table.Cell key={`categoryIncomeDescription_${i}`}>
-                          {item.categoryIncomeDescription}
+                        <Table.Cell key={`categoryExpenseDescription_${i}`}>
+                          {item.categoryExpenseDescription}
                         </Table.Cell>
                         <Table.Cell key={`categorySavingDescription_${i}`}>
                           {item.categorySavingDescription}
@@ -209,13 +200,18 @@ class Income extends Component {
                         <Table.Cell key={`comment_${i}`}>
                           {item.comment}
                         </Table.Cell>
+                        <Table.Cell key={`attachment_${i}`}>
+                          {item.attachment}
+                        </Table.Cell>
                         <Table.Cell
                           key={`remove_${i}`}
                           className="center aligned"
                         >
                           <button
                             className="ui red button"
-                            onClick={() => this.handleOpenModalRemoveIncome(item)}
+                            onClick={() =>
+                              this.handleOpenModalRemoveExpense(item)
+                            }
                           >
                             Usuń
                           </button>
@@ -226,7 +222,9 @@ class Income extends Component {
                         >
                           <button
                             className="ui green button "
-                            onClick={() => this.handleOpenModalEditIncome(item)}
+                            onClick={() =>
+                              this.handleOpenModalEditExpense(item)
+                            }
                           >
                             Edytuj
                           </button>
@@ -272,25 +270,25 @@ class Income extends Component {
           </div>
 
           {this.state.showModalAdd && (
-            <IncomeAdd
+            <Expense2Add
               showModal={this.state.showModalAdd}
-              handleSubmit={this.handleAddIncome}
               handleCloseModal={()=>this.setState({ showModalAdd: !this.state.showModalAdd })}
+              handleSubmit={this.handleAddExpense}
             />
           )}
           {this.state.showModalEdit && (
-            <IncomeEdit
+            <Expense2Edit
               showModal={this.state.showModalEdit}
-              handleSubmit={this.handleEditIncome}
               handleCloseModal={()=>this.setState({ showModalEdit: !this.state.showModalEdit })}
+              handleSubmit={this.handleEditExpense}
               data={this.state.dataEdit}
             />
           )}
           {this.state.showModalRemove && (
-            <IncomeRemove
+            <Expense2Remove
               showModal={this.state.showModalRemove}
-              handleSubmit={this.handleRemoveIncome}
               handleCloseModal={()=>this.setState({ showModalRemove: !this.state.showModalRemove })}
+              handleSubmit={this.handleRemoveExpense}
               data={this.state.dataRemove}
             />
           )}
@@ -299,5 +297,4 @@ class Income extends Component {
     );
   }
 }
-
-export default Income;
+export default expense2;

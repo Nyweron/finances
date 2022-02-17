@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import ExpenseFilter from "../component/expense/expenseFilter";
 import ExpenseEdit from "../component/expense/expenseEdit";
-import ExpenseAdd from "../component/expense/expenseAdd";
+import ExpenseAdd from "../component/expense/expenseAdd.js";
 import TableContainer from "../component/myCustomCRUDTable/TableContainer";
 
 import {

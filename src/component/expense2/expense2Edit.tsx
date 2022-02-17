@@ -8,25 +8,26 @@ import Modal from "react-bootstrap/Modal";
 import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
+import { ExpenseModel, ExpenseModelProps } from "../../constants";
 
-const Expense2Edit = (props) => {
+const Expense2Edit: React.FC<ExpenseModelProps> = (props) => {
   console.log(
     "🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props",
     props
   );
   const [showModal, setShowModal] = useState(props.showModal);
 
-  const [howMuch, setHowMuch] = useState(props.data.howMuch);
-  const [categoryExpenseId, setCategoryExpenseId] = useState(
-    props.data.categoryExpenseId
+  const [howMuch, setHowMuch] = useState<string>(props.howMuch.toString());
+  const [categoryExpenseId, setCategoryExpenseId] = useState<string>(
+    props.categoryExpenseId.toString()
   );
-  const [categorySavingId, setCategorySavingId] = useState(
-    props.data.categorySavingId
+  const [categorySavingId, setCategorySavingId] = useState<string>(
+    props.categorySavingId.toString()
   );
-  const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
-  const [userId, setUserId] = useState(props.data.userId);
-  const [comment, setComment] = useState(props.data.comment);
-  const [attachment, setAttachment] = useState(props.data.attachment);
+  const [calendarDate, setCalendarDate] = useState(new Date(props.date));
+  const [userId, setUserId] = useState<string>(props.userId.toString());
+  const [comment, setComment] = useState(props.comment);
+  const [attachment, setAttachment] = useState(props.attachment);
   const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
 
   const [howMuchError, setHowMuchError] = useState(false);
@@ -59,7 +60,7 @@ const Expense2Edit = (props) => {
     props.handleCloseModal(false);
   };
 
-  const handleSetHowMuch = (value) => {
+  const handleSetHowMuch = (value: string) => {
     if (value.includes(".") || value.includes(",")) {
       const splitedDecimal = value.split("." || ",");
       if (splitedDecimal[1].length > 2) {
@@ -72,7 +73,7 @@ const Expense2Edit = (props) => {
     setHowMuch(value);
   };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = (data: React.FormEvent<HTMLFormElement>) => {
     let error = false;
 
     console.log(
@@ -125,19 +126,22 @@ const Expense2Edit = (props) => {
       return; //error
     }
 
-    const expenseFormData = {
-      id: props.data.id,
-      howMuch,
-      categoryExpenseId,
-      categorySavingId,
-      calendarDate,
-      userId,
+    const expenseFormData: ExpenseModel = {
+      id: props.id,
+      howMuch: parseInt(howMuch),
+      categoryExpenseId: parseInt(categoryExpenseId),
+      categorySavingId: parseInt(categorySavingId),
+      date: calendarDate,
+      userId: parseInt(userId),
       comment,
       attachment,
-      autoSubtractAmount,
+      standingOrder: autoSubtractAmount,
     };
 
-    console.log("🚀 ~ file: expense2Edit.js ~ line 129 ~ handleSubmit ~ expenseFormData", expenseFormData)
+    console.log(
+      "🚀 ~ file: expense2Edit.js ~ line 129 ~ handleSubmit ~ expenseFormData",
+      expenseFormData
+    );
     setFormError(false);
     setShowModal(false);
     props.handleSubmit(expenseFormData);
@@ -190,7 +194,11 @@ const Expense2Edit = (props) => {
                   placeholder="Na co"
                   name="categoryExpenseId"
                   defaultValue={categoryExpenseId.toString()}
-                  onChange={(e, d) => setCategoryExpenseId(d.value)}
+                  onChange={(e, d) =>
+                    setCategoryExpenseId(
+                      (e.target as HTMLTextAreaElement).value
+                    )
+                  }
                   options={categoryExpenseList}
                 />
               </div>
@@ -208,7 +216,9 @@ const Expense2Edit = (props) => {
                   placeholder="Czym zapłacono"
                   name="categorySavingId"
                   defaultValue={categorySavingId.toString()}
-                  onChange={(e, { value }) => setCategorySavingId(value)}
+                  onChange={(e, { value }) =>
+                    setCategorySavingId((e.target as HTMLTextAreaElement).value)
+                  }
                   options={categorySavingList}
                 />
               </div>
@@ -229,7 +239,7 @@ const Expense2Edit = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                  onChange={(e, d) => setCalendarDate(new Date(e.target.value))}
                 />
               </div>
             </div>
@@ -243,7 +253,9 @@ const Expense2Edit = (props) => {
                   fluid
                   placeholder="Kto"
                   name="userId"
-                  onChange={(e, d) => setUserId(d.value)}
+                  onChange={(e, d) =>
+                    setUserId((e.target as HTMLTextAreaElement).value)
+                  }
                   defaultValue={userId.toString()}
                   options={userList}
                 />

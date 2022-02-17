@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
@@ -8,8 +8,9 @@ import Modal from "react-bootstrap/Modal";
 import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
+import { ExpenseModel, ExpenseModelProps } from "../../constants";
 
-const Expense2Add = (props) => {
+const Expense2Add: React.FC<ExpenseModelProps> = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
 
   const [howMuch, setHowMuch] = useState("");
@@ -51,7 +52,7 @@ const Expense2Add = (props) => {
     props.handleCloseModal(false);
   };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = (data: FormEvent<HTMLFormElement>) => {
     let error = false;
 
     console.log(
@@ -104,15 +105,16 @@ const Expense2Add = (props) => {
       return; //error
     }
 
-    const expenseFormData = {
-      howMuch,
-      categoryExpenseId,
-      categorySavingId,
-      calendarDate,
-      userId,
+    const expenseFormData: ExpenseModel = {
+      id: -1,
+      howMuch: parseFloat(howMuch),
+      categoryExpenseId: parseInt(categoryExpenseId),
+      categorySavingId: parseInt(categorySavingId),
+      date: calendarDate,
+      userId: parseInt(userId),
       comment,
       attachment,
-      autoSubtractAmount,
+      standingOrder: autoSubtractAmount,
     };
 
     setFormError(false);
@@ -120,7 +122,7 @@ const Expense2Add = (props) => {
     props.handleSubmit(expenseFormData);
   };
 
-  const handleSetHowMuch = (value) => {
+  const handleSetHowMuch = (value: string) => {
     if (value.includes(".") || value.includes(",")) {
       const splitedDecimal = value.split("." || ",");
       if (splitedDecimal[1].length > 2) {
@@ -179,7 +181,7 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Na co"
                   name="categoryExpenseId"
-                  onChange={(e, d) => setCategoryExpenseId(d.value)}
+                  onChange={(e, d: any) => setCategoryExpenseId(d.value)}
                   options={categoryExpenseList}
                 />
               </div>
@@ -196,7 +198,9 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Czym zapłacono"
                   name="categorySavingId"
-                  onChange={(e, { value }) => setCategorySavingId(value)}
+                  onChange={(e) =>
+                    setCategorySavingId((e.target as HTMLTextAreaElement).value)
+                  }
                   options={categorySavingList}
                 />
               </div>
@@ -217,7 +221,7 @@ const Expense2Add = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                  onChange={(e, d) => setCalendarDate(new Date(e.target.value))}
                 />
               </div>
             </div>
@@ -231,7 +235,9 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Kto"
                   name="userId"
-                  onChange={(e, d) => setUserId(d.value)}
+                  onChange={(e, d) =>
+                    setUserId((e.target as HTMLTextAreaElement).value)
+                  }
                   options={userList}
                 />
               </div>

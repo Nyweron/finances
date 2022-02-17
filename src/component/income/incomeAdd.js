@@ -28,7 +28,6 @@ const IncomeAdd = (props) => {
   const [categorySavingList, setCategorySavingList] = useState([]);
   const [userList, setUserList] = useState([]);
 
-
   useEffect(() => {
     GetCategoryIncomesForSelect().then((rows) => {
       setCategoryIncomeList(rows);
@@ -253,6 +252,7 @@ const IncomeAdd = (props) => {
       </Form>
     </Modal>
   );
+
 };
 
 export default IncomeAdd;

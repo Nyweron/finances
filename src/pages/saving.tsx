@@ -12,18 +12,21 @@ import { CategorySavingList } from "../component/categorySaving";
 
 import { OPEN_MODAL_ADD } from "../redux/actions/actions";
 
-class Saving extends Component {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      allData: [],
-      savingDataOnPage: [],
-      begin: 0,
-      end: 4,
-      isDisplaySavingList: true,
-      isDisplayCategorySavingList: false,
-    };
-  }
+interface IRecipeProps {
+  handleOpenModalAdd: any;
+}
+
+interface IRecipeState {}
+
+class Saving extends Component<IRecipeProps, IRecipeState> {
+  state = {
+    allData: [],
+    savingDataOnPage: [],
+    begin: 0,
+    end: 4,
+    isDisplaySavingList: true,
+    isDisplayCategorySavingList: false,
+  };
 
   handleSavingList = () => {
     console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
@@ -57,7 +60,7 @@ class Saving extends Component {
         <div className="ui centered grid">
           <div className="row"></div>
           <div className="row">
-            <div className="seven wide column" floated="left">
+            <div className="seven wide column" data-floated="left">
               <button
                 className="ui orange button"
                 onClick={() => this.handleSavingList()}
@@ -72,7 +75,7 @@ class Saving extends Component {
                 Dodaj oszczędności
               </button>
             </div>
-            <div className="seven wide column" floated="right">
+            <div className="seven wide column" data-floated="right">
               <button
                 className="ui orange button"
                 onClick={() => this.handleCategorySavingList()}
@@ -97,7 +100,7 @@ class Saving extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
   return {
     handleOpenModalAdd: () => dispatch({ type: OPEN_MODAL_ADD }),
   };

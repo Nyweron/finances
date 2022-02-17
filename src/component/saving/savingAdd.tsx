@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 
 import { Form, Message, Input } from "semantic-ui-react";
 
@@ -11,7 +11,7 @@ import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 
 import { CLOSE_MODAL_ADD } from "../../redux/actions/actions";
 
-const SavingAdd = (props) => {
+const SavingAdd: React.FC<any> = (props) => {
   //console.log("🚀 ~ file: savingAdd.js ~ line 11 ~ SavingAdd ~ props", props)
   const [howMuch, setHowMuch] = useState("");
   const [categorySavingId, setCategorySavingId] = useState("");
@@ -37,7 +37,7 @@ const SavingAdd = (props) => {
     props.handleCloseModalAdd();
   };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = () => {
     let error = false;
 
     if (howMuch === "") {
@@ -64,7 +64,7 @@ const SavingAdd = (props) => {
     props.handleSubmit(savingFormData);
   };
 
-  const handleSetHowMuch = (value) => {
+  const handleSetHowMuch = (value: string) => {
     if (value.includes(".") || value.includes(",")) {
       const splitedDecimal = value.split("." || ",");
       if (splitedDecimal[1].length > 2) {
@@ -85,7 +85,7 @@ const SavingAdd = (props) => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+      <Form onSubmit={(event) => handleSubmit()} error={formError}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading Saving Add</Modal.Title>
         </Modal.Header>
@@ -108,7 +108,9 @@ const SavingAdd = (props) => {
                   fluid
                   placeholder="Rodzaj oszczędności"
                   name="categorySavingId"
-                  onChange={(e, d) => setCategorySavingId(d.value)}
+                  onChange={(e, d) =>
+                    setCategorySavingId((e.target as HTMLTextAreaElement).value)
+                  }
                   options={categorySavingList}
                 />
               </div>
@@ -146,7 +148,7 @@ const SavingAdd = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                  onChange={(e, d) => setCalendarDate(new Date(e.target.value))}
                 />
               </div>
             </div>
@@ -184,16 +186,16 @@ const SavingAdd = (props) => {
   );
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   return {
     showModal: state.modalAdd,
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
   return {
-   handleCloseModalAdd: () => dispatch({type: CLOSE_MODAL_ADD})
+    handleCloseModalAdd: () => dispatch({ type: CLOSE_MODAL_ADD }),
   };
- }
+}
 
-export default connect (mapStateToProps, mapDispatchToProps) (SavingAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(SavingAdd);
