@@ -95,7 +95,7 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
       date: new Date(props.date),
       comment: props.comment,
       attachment: props.attachment,
-      standingOrder: props.autoSubtractAmount,
+      standingOrder: props.standingOrder,
       userId: parseInt(props.userId),
       categorySavingId: parseInt(props.categorySavingId),
       categoryExpenseId: parseInt(props.categoryExpenseId),
@@ -112,6 +112,10 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
   };
 
   handleRemoveExpense = (expenseRemove: any) => {
+    console.log(
+      "🚀 ~ file: expense2List.tsx ~ line 115 ~ Expense2List ~ expenseRemove",
+      expenseRemove
+    );
     remove(expenseRemove.id, "expense").then((res) => {
       this.setState({ isRemoved: true });
     });
@@ -123,13 +127,17 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
   };
 
   handleEditExpense = (expenseEdit: any) => {
+    console.log(
+      "🚀 ~ file: expense2List.tsx ~ line 130 ~ Expense2List ~ expenseEdit",
+      expenseEdit
+    );
     const expenseObj = {
       id: expenseEdit.id,
       howMuch: parseFloat(expenseEdit.howMuch),
-      date: new Date(expenseEdit.calendarDate),
+      date: new Date(expenseEdit.date),
       comment: expenseEdit.comment,
       attachment: expenseEdit.attachment,
-      standingOrder: expenseEdit.autoSubtractAmount,
+      standingOrder: expenseEdit.standingOrder,
       userId: parseInt(expenseEdit.userId),
       categorySavingId: parseInt(expenseEdit.categorySavingId),
       categoryExpenseId: parseInt(expenseEdit.categoryExpenseId),

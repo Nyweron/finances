@@ -13,14 +13,11 @@ const Expense2Remove: React.FC<any> = (props) => {
     props.handleCloseModalRemove();
   };
 
-  const handleSubmit = (data: React.FormEvent<HTMLFormElement>) => {
-    console.log(
-      "🚀 ~ file: expense2Remove.js ~ line 15 ~ handleSubmit ~ data",
-      data
-    );
+  const handleSubmit = () => {
     //let error = false;
 
-    props.handleSubmit(data);
+    props.handleCloseModalRemove();
+    props.handleSubmit(props.data);
   };
 
   return (
@@ -31,7 +28,7 @@ const Expense2Remove: React.FC<any> = (props) => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)}>
+      <Form onSubmit={(event) => handleSubmit()}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading Expense Remove</Modal.Title>
         </Modal.Header>

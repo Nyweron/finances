@@ -102,7 +102,7 @@ const SavingEdit: React.FC<any> = (props) => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit()} error={formError}>
+      <Form onSubmit={() => handleSubmit()} error={formError}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading Saving Add</Modal.Title>
         </Modal.Header>

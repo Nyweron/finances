@@ -15,22 +15,17 @@ import { ExpenseModel } from "../../constants";
 import { CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
 
 const Expense2Edit: React.FC<any> = (props) => {
-  console.log(
-    "🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props",
-    props
+  const [howMuch, setHowMuch] = useState(props.data.howMuch);
+  const [categoryExpenseId, setCategoryExpenseId] = useState(
+    props.data.categoryExpenseId
   );
-
-  const [howMuch, setHowMuch] = useState<string>(props.howMuch.toString());
-  const [categoryExpenseId, setCategoryExpenseId] = useState<string>(
-    props.categoryExpenseId.toString()
+  const [categorySavingId, setCategorySavingId] = useState(
+    props.data.categorySavingId
   );
-  const [categorySavingId, setCategorySavingId] = useState<string>(
-    props.categorySavingId.toString()
-  );
-  const [calendarDate, setCalendarDate] = useState(new Date(props.date));
-  const [userId, setUserId] = useState<string>(props.userId.toString());
-  const [comment, setComment] = useState(props.comment);
-  const [attachment, setAttachment] = useState(props.attachment);
+  const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
+  const [userId, setUserId] = useState(props.data.userId);
+  const [comment, setComment] = useState(props.data.comment);
+  const [attachment, setAttachment] = useState(props.data.attachment);
   const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
 
   const [howMuchError, setHowMuchError] = useState(false);
@@ -59,7 +54,7 @@ const Expense2Edit: React.FC<any> = (props) => {
   }, [setCategoryExpenseList, setCategorySavingList, setUserList]);
 
   const handleCloseModal = () => {
-    props.handleCloseModalEdit(false);
+    props.handleCloseModalEdit();
   };
 
   const handleSetHowMuch = (value: string) => {
@@ -75,7 +70,7 @@ const Expense2Edit: React.FC<any> = (props) => {
     setHowMuch(value);
   };
 
-  const handleSubmit = (data: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = () => {
     let error = false;
 
     console.log(
@@ -129,7 +124,7 @@ const Expense2Edit: React.FC<any> = (props) => {
     }
 
     const expenseFormData: ExpenseModel = {
-      id: props.id,
+      id: props.data.id,
       howMuch: parseInt(howMuch),
       categoryExpenseId: parseInt(categoryExpenseId),
       categorySavingId: parseInt(categorySavingId),
@@ -145,6 +140,7 @@ const Expense2Edit: React.FC<any> = (props) => {
       expenseFormData
     );
     setFormError(false);
+    props.handleCloseModalEdit();
     props.handleSubmit(expenseFormData);
   };
 
@@ -156,7 +152,7 @@ const Expense2Edit: React.FC<any> = (props) => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+      <Form onSubmit={() => handleSubmit()} error={formError}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading Expense Edit</Modal.Title>
         </Modal.Header>
@@ -195,11 +191,7 @@ const Expense2Edit: React.FC<any> = (props) => {
                   placeholder="Na co"
                   name="categoryExpenseId"
                   defaultValue={categoryExpenseId.toString()}
-                  onChange={(e, d) =>
-                    setCategoryExpenseId(
-                      (e.target as HTMLTextAreaElement).value
-                    )
-                  }
+                  onChange={(e, d) => setCategoryExpenseId(d.value)}
                   options={categoryExpenseList}
                 />
               </div>
@@ -217,9 +209,7 @@ const Expense2Edit: React.FC<any> = (props) => {
                   placeholder="Czym zapłacono"
                   name="categorySavingId"
                   defaultValue={categorySavingId.toString()}
-                  onChange={(e, { value }) =>
-                    setCategorySavingId((e.target as HTMLTextAreaElement).value)
-                  }
+                  onChange={(e, { value }) => setCategorySavingId(value)}
                   options={categorySavingList}
                 />
               </div>
@@ -254,9 +244,7 @@ const Expense2Edit: React.FC<any> = (props) => {
                   fluid
                   placeholder="Kto"
                   name="userId"
-                  onChange={(e, d) =>
-                    setUserId((e.target as HTMLTextAreaElement).value)
-                  }
+                  onChange={(e, d) => setUserId(d.value)}
                   defaultValue={userId.toString()}
                   options={userList}
                 />
