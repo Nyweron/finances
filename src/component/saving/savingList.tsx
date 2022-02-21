@@ -48,7 +48,7 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
     });
   }
 
-  componentDidUpdate(previous: any, current: any) {
+  componentDidUpdate() {
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
       getAll("saving")
         .then((rows) => {
@@ -130,32 +130,6 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
 
     edit(savingObj, "saving").then((res) => {
       this.setState({ isEdited: true });
-    });
-  };
-
-  handleSavingList = () => {
-    //console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
-
-    getAll("saving").then((rows) => {
-      this.setState({
-        isDisplaySavingList: true,
-        isDisplayCategorySavingList: false,
-        allData: rows,
-        savingDataOnPage: rows.slice(this.state.begin, this.state.end),
-      });
-    });
-  };
-
-  handleCategorySavingList = () => {
-    // console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
-
-    getAll("saving").then((rows) => {
-      this.setState({
-        isDisplaySavingList: false,
-        isDisplayCategorySavingList: true,
-        allData: rows,
-        savingDataOnPage: rows.slice(this.state.begin, this.state.end),
-      });
     });
   };
 
@@ -250,6 +224,7 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
             </Table>
           </div>
         </div>
+
         {this.props.modalAdd && (
           <SavingAdd handleSubmit={this.handleAddSaving} />
         )}

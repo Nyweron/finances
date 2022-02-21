@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
+
+import { connect } from "react-redux";
 
 import { Form } from "semantic-ui-react";
 
 import Modal from "react-bootstrap/Modal";
-import { ExpenseModelProps } from "../../constants";
 
-const Expense2Remove: React.FC<ExpenseModelProps> = (props) => {
-  const [showModal, setShowModal] = useState(props.showModal);
+import { CLOSE_MODAL_REMOVE } from "../../redux/actions/actions";
 
+const Expense2Remove: React.FC<any> = (props) => {
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalRemove();
   };
 
   const handleSubmit = (data: React.FormEvent<HTMLFormElement>) => {
@@ -20,14 +20,13 @@ const Expense2Remove: React.FC<ExpenseModelProps> = (props) => {
     );
     //let error = false;
 
-    setShowModal(false);
     props.handleSubmit(data);
   };
 
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
@@ -79,4 +78,16 @@ const Expense2Remove: React.FC<ExpenseModelProps> = (props) => {
   );
 };
 
-export default Expense2Remove;
+function mapStateToProps(state: any) {
+  return {
+    showModal: state.modalRemove,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    handleCloseModalRemove: () => dispatch({ type: CLOSE_MODAL_REMOVE }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Expense2Remove);

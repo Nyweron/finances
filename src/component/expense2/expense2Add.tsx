@@ -1,5 +1,7 @@
 import React, { FormEvent, useEffect, useState } from "react";
 
+import { connect } from "react-redux";
+
 import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
@@ -8,11 +10,11 @@ import Modal from "react-bootstrap/Modal";
 import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
-import { ExpenseModel, ExpenseModelProps } from "../../constants";
+import { ExpenseModel } from "../../constants";
 
-const Expense2Add: React.FC<ExpenseModelProps> = (props) => {
-  const [showModal, setShowModal] = useState(props.showModal);
+import { CLOSE_MODAL_ADD } from "../../redux/actions/actions";
 
+const Expense2Add: React.FC<any> = (props) => {
   const [howMuch, setHowMuch] = useState("");
   const [categoryExpenseId, setCategoryExpenseId] = useState("");
   const [categorySavingId, setCategorySavingId] = useState("");
@@ -48,8 +50,7 @@ const Expense2Add: React.FC<ExpenseModelProps> = (props) => {
   }, [setCategoryExpenseList, setCategorySavingList, setUserList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalAdd();
   };
 
   const handleSubmit = (data: FormEvent<HTMLFormElement>) => {
@@ -118,7 +119,7 @@ const Expense2Add: React.FC<ExpenseModelProps> = (props) => {
     };
 
     setFormError(false);
-    setShowModal(false);
+    props.handleCloseModalAdd();
     props.handleSubmit(expenseFormData);
   };
 
@@ -138,7 +139,7 @@ const Expense2Add: React.FC<ExpenseModelProps> = (props) => {
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
@@ -198,9 +199,7 @@ const Expense2Add: React.FC<ExpenseModelProps> = (props) => {
                   fluid
                   placeholder="Czym zapłacono"
                   name="categorySavingId"
-                  onChange={(e) =>
-                    setCategorySavingId((e.target as HTMLTextAreaElement).value)
-                  }
+                  onChange={(e, d) => setCategorySavingId(d.value as string)}
                   options={categorySavingList}
                 />
               </div>
@@ -221,7 +220,7 @@ const Expense2Add: React.FC<ExpenseModelProps> = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e.target.value))}
+                  onChange={(e: any, d) => setCalendarDate(new Date(e))}
                 />
               </div>
             </div>
@@ -235,9 +234,7 @@ const Expense2Add: React.FC<ExpenseModelProps> = (props) => {
                   fluid
                   placeholder="Kto"
                   name="userId"
-                  onChange={(e, d) =>
-                    setUserId((e.target as HTMLTextAreaElement).value)
-                  }
+                  onChange={(e, d) => setUserId(d.value as string)}
                   options={userList}
                 />
               </div>
@@ -304,4 +301,16 @@ const Expense2Add: React.FC<ExpenseModelProps> = (props) => {
   );
 };
 
-export default Expense2Add;
+function mapStateToProps(state: any) {
+  return {
+    showModal: state.modalAdd,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    handleCloseModalAdd: () => dispatch({ type: CLOSE_MODAL_ADD }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Expense2Add);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
-import { CategorySavingModel } from "../../constants";
+//import { CategorySavingModel } from "../../constants";
 
 import { getAll } from "../../lib/genericService";
 

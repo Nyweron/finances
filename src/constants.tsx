@@ -30,11 +30,11 @@ export interface ExpenseModelList {
   /*ZlecenieStale - StandingOrder  */
   standingOrder: boolean;
   userId: number;
+  userDescription: string;
   categorySavingId: number;
+  categorySavingDescription: string;
   categoryExpenseId: number;
   categoryExpenseDescription: string;
-  categorySavingDescription: string;
-  userDescription: string;
 }
 
 export interface ExpenseModelProps {

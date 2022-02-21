@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { connect } from "react-redux";
+
 import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
@@ -8,14 +10,15 @@ import Modal from "react-bootstrap/Modal";
 import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
-import { ExpenseModel, ExpenseModelProps } from "../../constants";
+import { ExpenseModel } from "../../constants";
 
-const Expense2Edit: React.FC<ExpenseModelProps> = (props) => {
+import { CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
+
+const Expense2Edit: React.FC<any> = (props) => {
   console.log(
     "🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props",
     props
   );
-  const [showModal, setShowModal] = useState(props.showModal);
 
   const [howMuch, setHowMuch] = useState<string>(props.howMuch.toString());
   const [categoryExpenseId, setCategoryExpenseId] = useState<string>(
@@ -56,8 +59,7 @@ const Expense2Edit: React.FC<ExpenseModelProps> = (props) => {
   }, [setCategoryExpenseList, setCategorySavingList, setUserList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalEdit(false);
   };
 
   const handleSetHowMuch = (value: string) => {
@@ -143,14 +145,13 @@ const Expense2Edit: React.FC<ExpenseModelProps> = (props) => {
       expenseFormData
     );
     setFormError(false);
-    setShowModal(false);
     props.handleSubmit(expenseFormData);
   };
 
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
@@ -239,7 +240,7 @@ const Expense2Edit: React.FC<ExpenseModelProps> = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e.target.value))}
+                  onChange={(e: any, d) => setCalendarDate(new Date(e))}
                 />
               </div>
             </div>
@@ -325,4 +326,16 @@ const Expense2Edit: React.FC<ExpenseModelProps> = (props) => {
   );
 };
 
-export default Expense2Edit;
+function mapStateToProps(state: any) {
+  return {
+    showModal: state.modalEdit,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    handleCloseModalEdit: () => dispatch({ type: CLOSE_MODAL_EDIT }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Expense2Edit);
