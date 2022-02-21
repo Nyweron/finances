@@ -53,7 +53,7 @@ class Expense2 extends Component<IRecipeProps, IRecipeState> {
                 className="ui orange button"
                 onClick={() => this.handleExpenseList()}
               >
-                Oszczędności
+                Wydatki
               </button>
               <button
                 className="ui blue button"
