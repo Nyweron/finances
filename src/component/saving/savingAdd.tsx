@@ -1,25 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { connect } from "react-redux";
 
-import {  Form, Message, Input } from "semantic-ui-react";
+import { Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";
 
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 
-import { CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
+import { CLOSE_MODAL_ADD } from "../../redux/actions/actions";
 
-const SavingEdit = (props) => {
-  const [howMuch, setHowMuch] = useState(props.data.howMuch);
-  const [categorySavingId, setCategorySavingId] = useState(
-    props.data.categorySavingId
-  );
-  const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
-  const [comment, setComment] = useState(props.data.comment);
+const SavingAdd: React.FC<any> = (props) => {
+  //console.log("🚀 ~ file: savingAdd.js ~ line 11 ~ SavingAdd ~ props", props)
+  const [howMuch, setHowMuch] = useState("");
+  const [categorySavingId, setCategorySavingId] = useState("");
+  const [calendarDate, setCalendarDate] = useState(new Date());
+  const [comment, setComment] = useState("");
 
   const [howMuchError, setHowMuchError] = useState(false);
+  // const [categorySavingError, setCategorySavingError] = useState(false);
+  // const [categorySavingError, setCategorySavingError] = useState(false);
+  // const [userIdError, setUserIdError] = useState(false);
+
   const [formError, setFormError] = useState(false);
 
   const [categorySavingList, setCategorySavingList] = useState([]);
@@ -31,10 +34,37 @@ const SavingEdit = (props) => {
   }, [setCategorySavingList]);
 
   const handleCloseModal = () => {
-    props.handleCloseModalEdit();
+    props.handleCloseModalAdd();
   };
 
-  const handleSetHowMuch = (value) => {
+  const handleSubmit = () => {
+    let error = false;
+
+    if (howMuch === "") {
+      setHowMuchError(true);
+      error = true;
+    } else {
+      setHowMuchError(false);
+    }
+
+    if (error) {
+      setFormError(true);
+      return; //error
+    }
+
+    const savingFormData = {
+      howMuch,
+      categorySavingId,
+      calendarDate,
+      comment,
+    };
+
+    setFormError(false);
+    props.handleCloseModalAdd();
+    props.handleSubmit(savingFormData);
+  };
+
+  const handleSetHowMuch = (value: string) => {
     if (value.includes(".") || value.includes(",")) {
       const splitedDecimal = value.split("." || ",");
       if (splitedDecimal[1].length > 2) {
@@ -47,52 +77,6 @@ const SavingEdit = (props) => {
     setHowMuch(value);
   };
 
-  const handleSubmit = (data) => {
-    let error = false;
-
-    if (howMuch === "") {
-      setHowMuchError(true);
-      error = true;
-    } else {
-      setHowMuchError(false);
-    }
-
-    // if (categoryExpenseId === "") {
-    //   setCategoryExpenseError(true);
-    //   error = true;
-    // } else {
-    //   setCategoryExpenseError(false);
-    // }
-
-    // if (categorySavingId === "") {
-    //   setCategorySavingError(true);
-    //   error = true;
-    // } else {
-    //   setCategorySavingError(false);
-    // }
-
-
-    if (error) {
-      setFormError(true);
-      return; //error
-    }
-
-
-    const savingFormData = {
-      id: props.data.id,
-      howMuch,
-      calendarDate,
-      comment,
-      categorySavingId,
-      savingType: 1,
-    };
-
-    console.log("🚀 ~ file: saving2Edit.js ~ line 129 ~ handleSubmit ~ savingFormData", savingFormData)
-    setFormError(false);
-    this.props.handleCloseModalEdit();
-    props.handleSubmit(savingFormData);
-  };
-
   return (
     <Modal
       size={"lg"}
@@ -101,7 +85,7 @@ const SavingEdit = (props) => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+      <Form onSubmit={(event) => handleSubmit()} error={formError}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading Saving Add</Modal.Title>
         </Modal.Header>
@@ -124,8 +108,9 @@ const SavingEdit = (props) => {
                   fluid
                   placeholder="Rodzaj oszczędności"
                   name="categorySavingId"
-                  defaultValue={categorySavingId.toString()}
-                  onChange={(e, d) => setCategorySavingId(d.value)}
+                  onChange={(e, d) => {
+                    return setCategorySavingId(d.value as string);
+                  }}
                   options={categorySavingList}
                 />
               </div>
@@ -163,7 +148,7 @@ const SavingEdit = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                  onChange={(e: any, d) => setCalendarDate(new Date(e))}
                 />
               </div>
             </div>
@@ -177,7 +162,6 @@ const SavingEdit = (props) => {
                   placeholder="Komentarz"
                   name="comment"
                   onChange={(e) => setComment(e.target.value)}
-                  value={comment}
                 />
               </div>
             </div>
@@ -200,19 +184,18 @@ const SavingEdit = (props) => {
       </Form>
     </Modal>
   );
+};
 
-}
-
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   return {
-    showModal: state.modalEdit,
+    showModal: state.modalAdd,
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
   return {
-   handleCloseModalEdit: () => dispatch({type: CLOSE_MODAL_EDIT})
+    handleCloseModalAdd: () => dispatch({ type: CLOSE_MODAL_ADD }),
   };
- }
+}
 
-export default connect (mapStateToProps, mapDispatchToProps) (SavingEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(SavingAdd);

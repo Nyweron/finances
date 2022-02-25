@@ -4,55 +4,63 @@ import { connect } from "react-redux";
 
 import { Table, Icon, Pagination } from "semantic-ui-react";
 
-import { SavingAdd, SavingEdit, SavingRemove } from "./index";
+import { IncomeAdd, IncomeEdit, IncomeRemove } from "./index";
 
 import { getAll, create, edit, remove } from "../../lib/genericService";
 
-import { OPEN_MODAL_EDIT, OPEN_MODAL_REMOVE } from "../../redux/actions/actions";
+import {
+  OPEN_MODAL_EDIT,
+  OPEN_MODAL_REMOVE,
+} from "../../redux/actions/actions";
 
-class SavingList extends Component {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      allData: [],
-      dataEdit: {},
-      dataRemove: {},
-      savingDataOnPage: [],
-      begin: 0,
-      end: 4,
-      isCreated: false,
-      isEdited: false,
-      isRemoved: false,
-    };
-  }
+import { IncomeModelList } from "../../constants";
+
+interface IRecipeProps {
+  handleOpenModalRemove: any;
+  handleOpenModalEdit: any;
+  incomeDataOnPage: IncomeModelList[];
+  modalAdd: boolean;
+  modalEdit: boolean;
+  modalRemove: boolean;
+}
+
+interface IRecipeState {}
+
+class IncomeList extends Component<IRecipeProps, IRecipeState> {
+  state = {
+    allData: [],
+    dataEdit: {},
+    dataRemove: {},
+    incomeDataOnPage: [],
+    begin: 0,
+    end: 4,
+    isCreated: false,
+    isEdited: false,
+    isRemoved: false,
+  };
 
   componentDidMount() {
-    getAll("saving").then((rows) => {
+    getAll("income").then((rows) => {
       this.setState({
         allData: rows,
-        savingDataOnPage: rows.slice(this.state.begin, this.state.end),
+        incomeDataOnPage: rows.slice(this.state.begin, this.state.end),
       });
     });
   }
 
-  componentDidUpdate(previous, current) {
-
-
+  componentDidUpdate() {
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
-      getAll("saving")
+      getAll("income")
         .then((rows) => {
           this.setState({
             allData: rows,
-            savingDataOnPage: rows.slice(this.state.begin, this.state.end),
+            incomeDataOnPage: rows.slice(this.state.begin, this.state.end),
             isCreated: false,
             isEdited: false,
             isRemoved: false,
           });
         })
         .catch((error) => {
-
-        })
-        .finally(()=>{
           this.setState({
             isCreated: false,
             isEdited: false,
@@ -62,7 +70,7 @@ class SavingList extends Component {
     }
   }
 
-  onChangePage = async (event: React.MouseEvent<HTMLAnchorElement>, data) => {
+  onChangePage = async (event: any, data: any) => {
     await this.setState({
       activePage: data.activePage,
       begin: data.activePage * 4 - 4,
@@ -70,94 +78,78 @@ class SavingList extends Component {
     });
 
     this.setState({
-      savingDataOnPage: this.state.allData.slice(
+      incomeDataOnPage: this.state.allData.slice(
         this.state.begin,
         this.state.end
       ),
     });
   };
 
-
-
-  handleAddSaving = (props) => {
-    // console.log("🚀 ~ file: saving.js ~ line 89 ~ Saving ~ props", props);
-
-
-    const savingObj = {
+  handleAddIncome = (props: any) => {
+    //TODO standingOrder develop logic for add howMuch to savings...
+    const incomeObj = {
       howMuch: parseFloat(props.howMuch),
-      date: new Date(props.calendarDate),
-      comment: props.comment,
+      categoryIncomeId: parseInt(props.categoryIncomeId),
       categorySavingId: parseInt(props.categorySavingId),
-      savingType: 1,
+      date: new Date(props.date),
+      userId: parseInt(props.userId),
+      comment: props.comment,
+      standingOrder: props.standingOrder,
     };
 
-    create(savingObj, "saving").then((res) => {
+    create(incomeObj, "income").then((res) => {
       this.setState({ isCreated: true });
     });
   };
 
-  handleOpenModalRemoveSaving = (savingRemove) => {
+  handleOpenModalRemoveIncome = (incomeRemove: any) => {
     this.props.handleOpenModalRemove();
-    this.setState({ dataRemove: savingRemove });
+    this.setState({ dataRemove: incomeRemove });
   };
 
-  handleRemoveSaving = (savingRemove) => {
-
-    remove(savingRemove.id, "saving").then((res) => {
+  handleRemoveIncome = (incomeRemove: any) => {
+    console.log(
+      "🚀 ~ file: income2List.tsx ~ line 115 ~ Income2List ~ incomeRemove",
+      incomeRemove
+    );
+    remove(incomeRemove.id, "income").then((res) => {
       this.setState({ isRemoved: true });
     });
   };
 
-  handleOpenModalEditSaving = (savingEdit) => {
+  handleOpenModalEditIncome = (incomeEdit: any) => {
     this.props.handleOpenModalEdit();
-    this.setState({ dataEdit: savingEdit });
+    this.setState({ dataEdit: incomeEdit });
   };
 
-  handleEditSaving = (savingEdit) => {
+  handleEditIncome = (incomeEdit: any) => {
+    console.log(
+      "🚀 ~ file: income.js ~ line 61 ~ income handleEditIncome ~ incomeEdit",
+      incomeEdit
+    );
 
-    const savingObj = {
-      id: savingEdit.id,
-      howMuch: parseFloat(savingEdit.howMuch),
-      date: new Date(savingEdit.calendarDate),
-      comment: savingEdit.comment,
-      categorySavingId: parseInt(savingEdit.categorySavingId),
-      savingType: 1,
+    const incomeObj = {
+      id: incomeEdit.id,
+      howMuch: parseFloat(incomeEdit.howMuch),
+      categoryIncomeId: parseInt(incomeEdit.categoryIncomeId),
+      categorySavingId: parseInt(incomeEdit.categorySavingId),
+      date: new Date(incomeEdit.date),
+      userId: parseInt(incomeEdit.userId),
+      comment: incomeEdit.comment,
+      standingOrder: incomeEdit.standingOrder,
     };
 
-    edit(savingObj, "saving").then((res) => {
+    console.log(
+      "🚀 ~ file: income.js ~ line 102 ~  EDIT income ~ incomeObj",
+      incomeObj
+    );
+
+    edit(incomeObj, "income").then((res) => {
       this.setState({ isEdited: true });
     });
   };
 
-  handleSavingList = () => {
-    //console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
-
-    getAll("saving").then((rows) => {
-      this.setState({
-        isDisplaySavingList: true,
-        isDisplayCategorySavingList: false,
-        allData: rows,
-        savingDataOnPage: rows.slice(this.state.begin, this.state.end),
-      });
-    });
-  };
-
-  handleCategorySavingList = () => {
-    // console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
-
-    getAll("saving").then((rows) => {
-      this.setState({
-        isDisplaySavingList: false,
-        isDisplayCategorySavingList: true,
-        allData: rows,
-        savingDataOnPage: rows.slice(this.state.begin, this.state.end),
-      });
-    });
-  };
-
   render() {
-
-
     return (
       <>
         <div className="row">
@@ -166,9 +158,11 @@ class SavingList extends Component {
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Id</Table.HeaderCell>
-                  <Table.HeaderCell>Rodzaj</Table.HeaderCell>
                   <Table.HeaderCell>Kwota</Table.HeaderCell>
-                  <Table.HeaderCell>Stan na dzień</Table.HeaderCell>
+                  <Table.HeaderCell>Tytuł przychodu</Table.HeaderCell>
+                  <Table.HeaderCell>Wpłacono na</Table.HeaderCell>
+                  <Table.HeaderCell>Kiedy</Table.HeaderCell>
+                  <Table.HeaderCell>Kto</Table.HeaderCell>
                   <Table.HeaderCell>Komentarz</Table.HeaderCell>
                   <Table.HeaderCell>Usuń</Table.HeaderCell>
                   <Table.HeaderCell>Edytuj</Table.HeaderCell>
@@ -176,17 +170,23 @@ class SavingList extends Component {
               </Table.Header>
 
               <Table.Body>
-                {this.state.savingDataOnPage.map((item, i) => {
+                {this.state.incomeDataOnPage.map((item: IncomeModelList, i) => {
                   return (
-                    <Table.Row key={`savingRow_${i}`}>
+                    <Table.Row key={`incomeRow_${i}`}>
                       <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
+                      <Table.Cell key={`howMuch_${i}`}>
+                        {item.howMuch}
+                      </Table.Cell>
+                      <Table.Cell key={`categoryIncomeDescription_${i}`}>
+                        {item.categoryIncomeDescription}
+                      </Table.Cell>
                       <Table.Cell key={`categorySavingDescription_${i}`}>
                         {item.categorySavingDescription}
                       </Table.Cell>
-                      <Table.Cell key={`howMuch${i}`}>
-                        {item.howMuch}
-                      </Table.Cell>
                       <Table.Cell key={`date_${i}`}>{item.date}</Table.Cell>
+                      <Table.Cell key={`userDescription_${i}`}>
+                        {item.userDescription}
+                      </Table.Cell>
                       <Table.Cell key={`comment_${i}`}>
                         {item.comment}
                       </Table.Cell>
@@ -196,7 +196,7 @@ class SavingList extends Component {
                       >
                         <button
                           className="ui red button"
-                          onClick={() => this.handleOpenModalRemoveSaving(item)}
+                          onClick={() => this.handleOpenModalRemoveIncome(item)}
                         >
                           Usuń
                         </button>
@@ -204,7 +204,7 @@ class SavingList extends Component {
                       <Table.Cell key={`Edit_${i}`} className="center aligned">
                         <button
                           className="ui green button "
-                          onClick={() => this.handleOpenModalEditSaving(item)}
+                          onClick={() => this.handleOpenModalEditIncome(item)}
                         >
                           Edytuj
                         </button>
@@ -248,20 +248,19 @@ class SavingList extends Component {
             </Table>
           </div>
         </div>
+
         {this.props.modalAdd && (
-          <SavingAdd
-            handleSubmit={this.handleAddSaving}
-          />
+          <IncomeAdd handleSubmit={this.handleAddIncome} />
         )}
         {this.props.modalEdit && (
-          <SavingEdit
-            handleSubmit={this.handleEditSaving}
+          <IncomeEdit
+            handleSubmit={this.handleEditIncome}
             data={this.state.dataEdit}
           />
         )}
         {this.props.modalRemove && (
-          <SavingRemove
-            handleSubmit={this.handleRemoveSaving}
+          <IncomeRemove
+            handleSubmit={this.handleRemoveIncome}
             data={this.state.dataRemove}
           />
         )}
@@ -270,19 +269,19 @@ class SavingList extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   return {
     modalAdd: state.modalAdd,
     modalEdit: state.modalEdit,
-    modalRemove: state.modalRemove
+    modalRemove: state.modalRemove,
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
   return {
     handleOpenModalEdit: () => dispatch({ type: OPEN_MODAL_EDIT }),
     handleOpenModalRemove: () => dispatch({ type: OPEN_MODAL_REMOVE }),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavingList);
+export default connect(mapStateToProps, mapDispatchToProps)(IncomeList);

@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
 
+import { connect } from "react-redux";
+
 import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
 import Modal from "react-bootstrap/Modal";
 
-import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
+import { GetCategoryIncomesForSelect } from "../../lib/categoryIncomeService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
 
-const Expense2Edit = (props) => {
-  console.log(
-    "🚀 ~ file: expense2Edit.js ~ line 9 ~ Expense2Edit ~ props",
-    props
-  );
-  const [showModal, setShowModal] = useState(props.showModal);
+import { CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
+import { IncomeModel } from "../../constants";
 
+const IncomeEdit: React.FC<any> = (props) => {
   const [howMuch, setHowMuch] = useState(props.data.howMuch);
-  const [categoryExpenseId, setCategoryExpenseId] = useState(
-    props.data.categoryExpenseId
+  const [categoryIncomeId, setCategoryIncomeId] = useState(
+    props.data.categoryIncomeId
   );
   const [categorySavingId, setCategorySavingId] = useState(
     props.data.categorySavingId
@@ -26,23 +25,19 @@ const Expense2Edit = (props) => {
   const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
   const [userId, setUserId] = useState(props.data.userId);
   const [comment, setComment] = useState(props.data.comment);
-  const [attachment, setAttachment] = useState(props.data.attachment);
   const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
 
   const [howMuchError, setHowMuchError] = useState(false);
-  // const [categoryExpenseError, setCategoryExpenseError] = useState(false);
-  // const [categorySavingError, setCategorySavingError] = useState(false);
-  // const [userIdError, setUserIdError] = useState(false);
 
   const [formError, setFormError] = useState(false);
 
-  const [categoryExpenseList, setCategoryExpenseList] = useState([]);
+  const [categoryIncomeList, setCategoryIncomeList] = useState([]);
   const [categorySavingList, setCategorySavingList] = useState([]);
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    GetCategoryExpensesForSelect().then((rows) => {
-      setCategoryExpenseList(rows);
+    GetCategoryIncomesForSelect().then((rows) => {
+      setCategoryIncomeList(rows);
     });
 
     GetCategorySavingsForSelect().then((rows) => {
@@ -52,14 +47,13 @@ const Expense2Edit = (props) => {
     GetUsersForSelect().then((rows) => {
       setUserList(rows);
     });
-  }, [setCategoryExpenseList, setCategorySavingList, setUserList]);
+  }, [setCategoryIncomeList, setCategorySavingList, setUserList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalEdit();
   };
 
-  const handleSetHowMuch = (value) => {
+  const handleSetHowMuch = (value: string) => {
     if (value.includes(".") || value.includes(",")) {
       const splitedDecimal = value.split("." || ",");
       if (splitedDecimal[1].length > 2) {
@@ -72,23 +66,23 @@ const Expense2Edit = (props) => {
     setHowMuch(value);
   };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = () => {
     let error = false;
 
     console.log(
-      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ howMuch",
+      "🚀 ~ file: income2Edit.js ~ line 90 ~ handleSubmit ~ howMuch",
       howMuch
     );
     console.log(
-      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categoryExpenseId",
-      categoryExpenseId
+      "🚀 ~ file: income2Edit.js ~ line 90 ~ handleSubmit ~ categoryExpenseId",
+      categoryIncomeId
     );
     console.log(
-      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categorySavingId",
+      "🚀 ~ file: income2Edit.js ~ line 90 ~ handleSubmit ~ categorySavingId",
       categorySavingId
     );
     console.log(
-      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ userId",
+      "🚀 ~ file: income2Edit.js ~ line 90 ~ handleSubmit ~ userId",
       userId
     );
 
@@ -125,35 +119,39 @@ const Expense2Edit = (props) => {
       return; //error
     }
 
-    const expenseFormData = {
+    const incomeFormData: IncomeModel = {
       id: props.data.id,
-      howMuch,
-      categoryExpenseId,
-      categorySavingId,
-      calendarDate,
-      userId,
+      howMuch: parseInt(howMuch),
+      categoryIncomeId: parseInt(categoryIncomeId),
+      categorySavingId: parseInt(categorySavingId),
+      date: calendarDate,
+      userId: parseInt(userId),
       comment,
-      attachment,
-      autoSubtractAmount,
+      attachment: "",
+      standingOrder: autoSubtractAmount,
     };
 
-    console.log("🚀 ~ file: expense2Edit.js ~ line 129 ~ handleSubmit ~ expenseFormData", expenseFormData)
+    console.log(
+      "🚀 ~ file: income2Edit.js ~ line 129 ~ handleSubmit ~ incomeFormData",
+      incomeFormData
+    );
+
     setFormError(false);
-    setShowModal(false);
-    props.handleSubmit(expenseFormData);
+    props.handleCloseModalEdit();
+    props.handleSubmit(incomeFormData);
   };
 
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+      <Form onSubmit={() => handleSubmit()} error={formError}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading Expense Edit</Modal.Title>
+          <Modal.Title>Modal heading Income Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {formError ? (
@@ -183,15 +181,17 @@ const Expense2Edit = (props) => {
 
           <Form.Field inline>
             <div className="form-group row">
-              <label className={"col-sm-3 col-form-label"}>Na co</label>
+              <label className={"col-sm-3 col-form-label"}>
+                Tytuł przychodu
+              </label>
               <div className={"col-sm-9"}>
                 <Form.Select
                   fluid
-                  placeholder="Na co"
-                  name="categoryExpenseId"
-                  defaultValue={categoryExpenseId.toString()}
-                  onChange={(e, d) => setCategoryExpenseId(d.value)}
-                  options={categoryExpenseList}
+                  placeholder="Tytuł przychodu"
+                  name="categoryIncomeId"
+                  defaultValue={categoryIncomeId.toString()}
+                  onChange={(e, d) => setCategoryIncomeId(d.value)}
+                  options={categoryIncomeList}
                 />
               </div>
             </div>
@@ -199,13 +199,11 @@ const Expense2Edit = (props) => {
 
           <Form.Field inline>
             <div className="form-group row">
-              <label className={"col-sm-3 col-form-label"}>
-                Czym zapłacono
-              </label>
+              <label className={"col-sm-3 col-form-label"}>Wpłacono na</label>
               <div className={"col-sm-9"}>
                 <Form.Select
                   fluid
-                  placeholder="Czym zapłacono"
+                  placeholder="Wpłacono na"
                   name="categorySavingId"
                   defaultValue={categorySavingId.toString()}
                   onChange={(e, { value }) => setCategorySavingId(value)}
@@ -215,12 +213,6 @@ const Expense2Edit = (props) => {
             </div>
           </Form.Field>
 
-          <div className="form-group row">
-            <label style={{ fontSize: "small" }} className={"col-sm-12"}>
-              Aktualny stan wybranych oszczędności: "Konto banku X value=1..."
-            </label>
-          </div>
-
           <Form.Field inline>
             <div className="form-group row">
               <label className={"col-sm-3 col-form-label"}>Data</label>
@@ -229,7 +221,7 @@ const Expense2Edit = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                  onChange={(e: any, d) => setCalendarDate(new Date(e))}
                 />
               </div>
             </div>
@@ -267,25 +259,9 @@ const Expense2Edit = (props) => {
 
           <Form.Field inline>
             <div className="form-group row">
-              <label className={"col-sm-3 col-form-label"}>Załącznik</label>
-              <div className={"col-sm-9"}>
-                <Input
-                  fluid
-                  placeholder="Załącznik"
-                  name="attachment"
-                  type="string"
-                  onChange={(e) => setAttachment(e.target.value)}
-                  value={attachment}
-                />
-              </div>
-            </div>
-          </Form.Field>
-
-          <Form.Field inline>
-            <div className="form-group row">
               <div className={"col-sm-12 col-form-label"}>
                 <Checkbox
-                  label="Automatycznie odejmi wpisaną kwotę z wybranego typu oszczędności (pole Czym zapłacono)"
+                  label="Automatycznie dodaj wpisaną kwotę do wybranego typu oszczędności (pole Na co wpłacono)"
                   name="autoSubtractAmount"
                   checked={autoSubtractAmount}
                   onChange={() => setAutoSubtractAmount(!autoSubtractAmount)}
@@ -313,4 +289,16 @@ const Expense2Edit = (props) => {
   );
 };
 
-export default Expense2Edit;
+function mapStateToProps(state: any) {
+  return {
+    showModal: state.modalEdit,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    handleCloseModalEdit: () => dispatch({ type: CLOSE_MODAL_EDIT }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IncomeEdit);

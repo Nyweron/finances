@@ -8,13 +8,12 @@ import Modal from "react-bootstrap/Modal";
 
 import { CLOSE_MODAL_REMOVE } from "../../redux/actions/actions";
 
-const SavingRemove = (props) => {
+const Expense2Remove: React.FC<any> = (props) => {
   const handleCloseModal = () => {
     props.handleCloseModalRemove();
   };
 
-  const handleSubmit = (data) => {
-  console.log("🚀 ~ file: saving2Remove.js ~ line 15 ~ handleSubmit ~ data", data)
+  const handleSubmit = () => {
     //let error = false;
 
     props.handleCloseModalRemove();
@@ -29,9 +28,9 @@ const SavingRemove = (props) => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)}>
+      <Form onSubmit={() => handleSubmit()}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading Saving Remove</Modal.Title>
+          <Modal.Title>Modal heading Expense Remove</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form-group row">
@@ -40,13 +39,22 @@ const SavingRemove = (props) => {
             </label>
             <br />
             <div className={"col-sm-12"}>
-              <code>id: {props.data.id}</code><br/>
-              <code>Kwota: {props.data.howMuch}</code><br/>
-              <code>Czym zapłacono: {props.data.categorySavingDescription}</code><br/>
-              <code>Kiedy: {props.data.date}</code><br/>
-              <code>Kto: {props.data.userDescription}</code><br/>
-              <code>Komentarz: {props.data.comment}</code><br/>
-              <code>Załącznik: {props.data.attachment}</code><br/>
+              <code>id: {props.data.id}</code>
+              <br />
+              <code>Kwota: {props.data.howMuch}</code>
+              <br />
+              <code>
+                Czym zapłacono: {props.data.categorySavingDescription}
+              </code>
+              <br />
+              <code>Kiedy: {props.data.date}</code>
+              <br />
+              <code>Kto: {props.data.userDescription}</code>
+              <br />
+              <code>Komentarz: {props.data.comment}</code>
+              <br />
+              <code>Załącznik: {props.data.attachment}</code>
+              <br />
             </div>
           </div>
         </Modal.Body>
@@ -69,16 +77,16 @@ const SavingRemove = (props) => {
   );
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   return {
     showModal: state.modalRemove,
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
   return {
-   handleCloseModalRemove: () => dispatch({type: CLOSE_MODAL_REMOVE})
+    handleCloseModalRemove: () => dispatch({ type: CLOSE_MODAL_REMOVE }),
   };
- }
+}
 
-export default connect (mapStateToProps, mapDispatchToProps) (SavingRemove);
+export default connect(mapStateToProps, mapDispatchToProps)(Expense2Remove);

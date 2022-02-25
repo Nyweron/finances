@@ -1,5 +1,5 @@
-export const removeRowById = (list, id) => {
-  const index = list.findIndex((x) => x.id === id);
+export const removeRowById = (list: any, id: any) => {
+  const index = list.findIndex((x: any) => x.id === id);
   if (index > -1) {
     list.splice(index, 1);
   }
@@ -7,18 +7,18 @@ export const removeRowById = (list, id) => {
   return list;
 };
 
-export const findById = (list, id) => list.find((x) => x.id === id);
+export const findById = (list: any, id: any) =>
+  list.find((x: any) => x.id === id);
 
-export const updateByObjectId = (list, updated) =>
-  list.map((row) => (row.id === updated.id ? updated : row));
+export const updateByObjectId = (list: any, updated: any) =>
+  list.map((row: any) => (row.id === updated.id ? updated : row));
 
-export const sortIds = (allRows) =>
-  allRows.sort(function (a, b) {
+export const sortIds = (allRows: any) =>
+  allRows.sort(function (a: any, b: any) {
     return a.id - b.id || a.name.localeCompare(b.name);
   });
 
-export const generateNewId = (generateId) => {
-
+export const generateNewId = (generateId: any) => {
   if (
     generateId !== null &&
     generateId !== undefined &&
@@ -30,7 +30,7 @@ export const generateNewId = (generateId) => {
   return generateId[generateId.length - 1].id + 1;
 };
 
-export const filterTable = (keys, rows, route, isSort) => {
+export const filterTable = (keys: any, rows: any, route: any, isSort: any) => {
   if (keys === null || keys === undefined || keys.length === 0) {
     return rows;
   }
@@ -38,7 +38,7 @@ export const filterTable = (keys, rows, route, isSort) => {
   const keysLength = keys.length;
   for (let i = 0; i < keysLength; i++) {
     if (keys[i] === route) {
-      return rows.sort(function (current, next) {
+      return rows.sort(function (current: any, next: any) {
         let x = current[keys[i]];
         let y = next[keys[i]];
 
@@ -60,7 +60,7 @@ export const filterTable = (keys, rows, route, isSort) => {
   return rows;
 };
 
-function sortDescending(x, y) {
+function sortDescending(x: any, y: any) {
   if (x > y || y === undefined) {
     return -1;
   } else if (x < y || x === undefined) {
@@ -70,7 +70,7 @@ function sortDescending(x, y) {
   }
 }
 
-function sortAscending(x, y) {
+function sortAscending(x: any, y: any) {
   if (x < y || x === undefined) {
     return -1;
   } else if (x > y || y === undefined) {
@@ -80,7 +80,7 @@ function sortAscending(x, y) {
   }
 }
 
-export const getKeyFromJson = (rows) => {
+export const getKeyFromJson = (rows: any) => {
   if (rows !== null && rows.length > 0) {
     return Object.keys(rows[0]);
   }

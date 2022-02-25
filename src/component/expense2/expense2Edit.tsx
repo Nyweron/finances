@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { connect } from "react-redux";
 
 import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
@@ -8,17 +10,22 @@ import Modal from "react-bootstrap/Modal";
 import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
+import { ExpenseModel } from "../../constants";
 
-const Expense2Add = (props) => {
-  const [showModal, setShowModal] = useState(props.showModal);
+import { CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
 
-  const [howMuch, setHowMuch] = useState("");
-  const [categoryExpenseId, setCategoryExpenseId] = useState("");
-  const [categorySavingId, setCategorySavingId] = useState("");
-  const [calendarDate, setCalendarDate] = useState(new Date());
-  const [userId, setUserId] = useState("");
-  const [comment, setComment] = useState("");
-  const [attachment, setAttachment] = useState("");
+const Expense2Edit: React.FC<any> = (props) => {
+  const [howMuch, setHowMuch] = useState(props.data.howMuch);
+  const [categoryExpenseId, setCategoryExpenseId] = useState(
+    props.data.categoryExpenseId
+  );
+  const [categorySavingId, setCategorySavingId] = useState(
+    props.data.categorySavingId
+  );
+  const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
+  const [userId, setUserId] = useState(props.data.userId);
+  const [comment, setComment] = useState(props.data.comment);
+  const [attachment, setAttachment] = useState(props.data.attachment);
   const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
 
   const [howMuchError, setHowMuchError] = useState(false);
@@ -47,27 +54,39 @@ const Expense2Add = (props) => {
   }, [setCategoryExpenseList, setCategorySavingList, setUserList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalEdit();
   };
 
-  const handleSubmit = (data) => {
+  const handleSetHowMuch = (value: string) => {
+    if (value.includes(".") || value.includes(",")) {
+      const splitedDecimal = value.split("." || ",");
+      if (splitedDecimal[1].length > 2) {
+        const decimalPartValueAfterDot = splitedDecimal[1].substring(0, 2);
+        value = splitedDecimal[0] + "." + decimalPartValueAfterDot;
+        setHowMuch(value);
+        return;
+      }
+    }
+    setHowMuch(value);
+  };
+
+  const handleSubmit = () => {
     let error = false;
 
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ howMuch",
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ howMuch",
       howMuch
     );
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categoryExpenseId",
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categoryExpenseId",
       categoryExpenseId
     );
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ categorySavingId",
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ categorySavingId",
       categorySavingId
     );
     console.log(
-      "🚀 ~ file: expense2Add.js ~ line 90 ~ handleSubmit ~ userId",
+      "🚀 ~ file: expense2Edit.js ~ line 90 ~ handleSubmit ~ userId",
       userId
     );
 
@@ -104,46 +123,38 @@ const Expense2Add = (props) => {
       return; //error
     }
 
-    const expenseFormData = {
-      howMuch,
-      categoryExpenseId,
-      categorySavingId,
-      calendarDate,
-      userId,
+    const expenseFormData: ExpenseModel = {
+      id: props.data.id,
+      howMuch: parseInt(howMuch),
+      categoryExpenseId: parseInt(categoryExpenseId),
+      categorySavingId: parseInt(categorySavingId),
+      date: calendarDate,
+      userId: parseInt(userId),
       comment,
       attachment,
-      autoSubtractAmount,
+      standingOrder: autoSubtractAmount,
     };
 
+    console.log(
+      "🚀 ~ file: expense2Edit.js ~ line 129 ~ handleSubmit ~ expenseFormData",
+      expenseFormData
+    );
     setFormError(false);
-    setShowModal(false);
+    props.handleCloseModalEdit();
     props.handleSubmit(expenseFormData);
-  };
-
-  const handleSetHowMuch = (value) => {
-    if (value.includes(".") || value.includes(",")) {
-      const splitedDecimal = value.split("." || ",");
-      if (splitedDecimal[1].length > 2) {
-        const decimalPartValueAfterDot = splitedDecimal[1].substring(0, 2);
-        value = splitedDecimal[0] + "." + decimalPartValueAfterDot;
-        setHowMuch(value);
-        return;
-      }
-    }
-    setHowMuch(value);
   };
 
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+      <Form onSubmit={() => handleSubmit()} error={formError}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading Expense Add</Modal.Title>
+          <Modal.Title>Modal heading Expense Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {formError ? (
@@ -179,6 +190,7 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Na co"
                   name="categoryExpenseId"
+                  defaultValue={categoryExpenseId.toString()}
                   onChange={(e, d) => setCategoryExpenseId(d.value)}
                   options={categoryExpenseList}
                 />
@@ -196,6 +208,7 @@ const Expense2Add = (props) => {
                   fluid
                   placeholder="Czym zapłacono"
                   name="categorySavingId"
+                  defaultValue={categorySavingId.toString()}
                   onChange={(e, { value }) => setCategorySavingId(value)}
                   options={categorySavingList}
                 />
@@ -217,7 +230,7 @@ const Expense2Add = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                  onChange={(e: any, d) => setCalendarDate(new Date(e))}
                 />
               </div>
             </div>
@@ -232,6 +245,7 @@ const Expense2Add = (props) => {
                   placeholder="Kto"
                   name="userId"
                   onChange={(e, d) => setUserId(d.value)}
+                  defaultValue={userId.toString()}
                   options={userList}
                 />
               </div>
@@ -246,6 +260,7 @@ const Expense2Add = (props) => {
                   placeholder="Komentarz"
                   name="comment"
                   onChange={(e) => setComment(e.target.value)}
+                  value={comment}
                 />
               </div>
             </div>
@@ -261,6 +276,7 @@ const Expense2Add = (props) => {
                   name="attachment"
                   type="string"
                   onChange={(e) => setAttachment(e.target.value)}
+                  value={attachment}
                 />
               </div>
             </div>
@@ -298,4 +314,16 @@ const Expense2Add = (props) => {
   );
 };
 
-export default Expense2Add;
+function mapStateToProps(state: any) {
+  return {
+    showModal: state.modalEdit,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    handleCloseModalEdit: () => dispatch({ type: CLOSE_MODAL_EDIT }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Expense2Edit);

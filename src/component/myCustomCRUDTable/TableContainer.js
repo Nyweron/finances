@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TableListRows } from "../myCustomCRUDTable/table/TableListRows";
+import { TableListRows } from "./table/TableListRows";
 
 import Pagination from "./pagination/Pagination";
 import { filterTable, removeRowById } from "../../lib/crudHelper";

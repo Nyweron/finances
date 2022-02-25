@@ -11,8 +11,7 @@ import "react-widgets/styles.css";
 import DateFnsLocalizer from "react-widgets-date-fns";
 import pl from "date-fns/locale/pl";
 import App from "./App";
-import store from './redux/reducers/index'
-
+import store from "./redux/reducers/index";
 
 new DateFnsLocalizer({ locales: { pl: pl } });
 
@@ -25,8 +24,3 @@ const app = (
 );
 
 ReactDOM.render(app, document.getElementById("root"));
-
-
-
-
-
