@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { connect } from "react-redux";
 
@@ -53,7 +53,7 @@ const Expense2Add: React.FC<any> = (props) => {
     props.handleCloseModalAdd();
   };
 
-  const handleSubmit = (data: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = () => {
     let error = false;
 
     console.log(
@@ -144,7 +144,7 @@ const Expense2Add: React.FC<any> = (props) => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+      <Form onSubmit={() => handleSubmit()} error={formError}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading Expense Add</Modal.Title>
         </Modal.Header>

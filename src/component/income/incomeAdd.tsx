@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { connect } from "react-redux";
+
 import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
@@ -9,9 +11,10 @@ import { GetCategoryIncomesForSelect } from "../../lib/categoryIncomeService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
 
-const IncomeAdd = (props) => {
-  const [showModal, setShowModal] = useState(props.showModal);
+import { CLOSE_MODAL_ADD } from "../../redux/actions/actions";
+import { IncomeModel } from "../../constants";
 
+const IncomeAdd: React.FC<any> = (props) => {
   const [howMuch, setHowMuch] = useState("");
   const [categoryIncomeId, setCategoryIncomeId] = useState("");
   const [categorySavingId, setCategorySavingId] = useState("");
@@ -43,11 +46,10 @@ const IncomeAdd = (props) => {
   }, [setCategoryIncomeList, setCategorySavingList, setUserList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalAdd();
   };
 
-  const handleSetHowMuch = (value) => {
+  const handleSetHowMuch = (value: string) => {
     if (value.includes(".") || value.includes(",")) {
       const splitedDecimal = value.split("." || ",");
       if (splitedDecimal[1].length > 2) {
@@ -60,7 +62,7 @@ const IncomeAdd = (props) => {
     setHowMuch(value);
   };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = () => {
     let error = false;
 
     if (howMuch === "") {
@@ -96,30 +98,32 @@ const IncomeAdd = (props) => {
       return; //error
     }
 
-    const incomeFormData = {
-      howMuch,
-      categoryIncomeId,
-      categorySavingId,
-      calendarDate,
-      userId,
+    const incomeFormData: IncomeModel = {
+      id: -1,
+      howMuch: parseFloat(howMuch),
+      categoryIncomeId: parseInt(categoryIncomeId),
+      categorySavingId: parseInt(categorySavingId),
+      date: calendarDate,
+      userId: parseInt(userId),
       comment,
-      standingOrder,
+      attachment: "",
+      standingOrder: null,
     };
 
     setFormError(false);
-    setShowModal(false);
+    props.handleCloseModalAdd();
     props.handleSubmit(incomeFormData);
   };
 
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+      <Form onSubmit={() => handleSubmit()} error={formError}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading Income Add</Modal.Title>
         </Modal.Header>
@@ -151,13 +155,15 @@ const IncomeAdd = (props) => {
 
           <Form.Field inline>
             <div className="form-group row">
-              <label className={"col-sm-3 col-form-label"}>Tytuł przychodu</label>
+              <label className={"col-sm-3 col-form-label"}>
+                Tytuł przychodu
+              </label>
               <div className={"col-sm-9"}>
                 <Form.Select
                   fluid
                   placeholder="Tytuł przychodu"
                   name="categoryIncomeId"
-                  onChange={(e, d) => setCategoryIncomeId(d.value)}
+                  onChange={(e, d) => setCategoryIncomeId(d.value as string)}
                   options={categoryIncomeList}
                 />
               </div>
@@ -172,7 +178,9 @@ const IncomeAdd = (props) => {
                   fluid
                   placeholder="Wpłacono na"
                   name="categorySavingId"
-                  onChange={(e, { value }) => setCategorySavingId(value)}
+                  onChange={(e, { value }) =>
+                    setCategorySavingId(value as string)
+                  }
                   options={categorySavingList}
                 />
               </div>
@@ -187,7 +195,7 @@ const IncomeAdd = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                  onChange={(e: any, d) => setCalendarDate(new Date(e))}
                 />
               </div>
             </div>
@@ -201,7 +209,7 @@ const IncomeAdd = (props) => {
                   fluid
                   placeholder="Kto"
                   name="userId"
-                  onChange={(e, d) => setUserId(d.value)}
+                  onChange={(e, d) => setUserId(d.value as string)}
                   defaultValue={userId.toString()}
                   options={userList}
                 />
@@ -252,7 +260,18 @@ const IncomeAdd = (props) => {
       </Form>
     </Modal>
   );
-
 };
 
-export default IncomeAdd;
+function mapStateToProps(state: any) {
+  return {
+    showModal: state.modalAdd,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    handleCloseModalAdd: () => dispatch({ type: CLOSE_MODAL_ADD }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IncomeAdd);

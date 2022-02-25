@@ -64,3 +64,32 @@ export interface SavingModelList {
   date: Date;
   comment: string;
 }
+
+export interface IncomeModelList {
+  id: number;
+  howMuch: number;
+  date: Date;
+  comment: string;
+  attachment: string;
+  /*ZlecenieStale - StandingOrder  */
+  standingOrder: boolean;
+  userId: number;
+  userDescription: string;
+  categorySavingId: number;
+  categorySavingDescription: string;
+  categoryIncomeId: number;
+  categoryIncomeDescription: string;
+}
+
+export interface IncomeModel {
+  id: number;
+  howMuch: number;
+  date: Date;
+  comment: string;
+  attachment: string;
+  /*ZlecenieStale - StandingOrder  */
+  standingOrder: boolean | null;
+  userId: number;
+  categorySavingId: number;
+  categoryIncomeId: number;
+}
