@@ -1,24 +1,17 @@
-import { mockBackendUrl, backendUrl } from "../shared/apiUrl";
+import { backendUrl } from "../shared/apiUrl";
 
-export const getAll = (controller) => {
-  // console.log("process.env_MOCK_JSON_SERVER",process.env_MOCK_JSON_SERVER)
-  if (process.env.MOCK_JSON_SERVER) {
-    //  console.log("tes1");
-    return fetch(mockBackendUrl + "" + controller).then((res) => res.json());
-  } else {
-    //  console.log("tes2");
-    return fetch(backendUrl + "" + controller).then((res) => res.json());
-  }
+export const getAll = (controller: string) => {
+  return fetch(backendUrl + controller).then((res) => res.json());
 };
 
-export const createExpense = async (temp) => {
-  return await fetch(backendUrl + "expense", {
+export const create = async (obj: any, controllerName: string) => {
+  return await fetch(backendUrl + controllerName, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
     method: "POST",
-    body: JSON.stringify(temp),
+    body: JSON.stringify(obj),
   })
     .then((res) => {
       if (!res.ok) throw Error(res.statusText);
@@ -32,17 +25,17 @@ export const createExpense = async (temp) => {
     .catch((error) => console.log(error));
 };
 
-export const editPutExpense = async (temp) => {
-  console.log("temp1", temp);
-  console.log("temp2", temp.id);
+export const edit = async (obj: any, controllerName: string) => {
+  console.log("temp1", obj);
+  console.log("temp2", obj.id);
   //console.log("temp2", JSON.stringify(temp));
-  return await fetch(backendUrl + "expense/" + temp.id, {
+  return await fetch(backendUrl + controllerName + "/" + obj.id, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
     method: "PUT",
-    body: JSON.stringify(temp),
+    body: JSON.stringify(obj),
   })
     .then((res) => {
       if (!res.ok) throw Error(res.statusText);
@@ -56,8 +49,8 @@ export const editPutExpense = async (temp) => {
     .catch((error) => console.log(error));
 };
 
-export const deleteRowExpense = async (id) => {
-  return await fetch(backendUrl + "expense/" + id, {
+export const remove = async (id: number, controllerName: string) => {
+  return await fetch(backendUrl + controllerName + "/" + id, {
     method: "DELETE",
   })
     .then((res) => {
