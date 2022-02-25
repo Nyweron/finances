@@ -21,7 +21,7 @@ const IncomeAdd: React.FC<any> = (props) => {
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [userId, setUserId] = useState("");
   const [comment, setComment] = useState("");
-  const [standingOrder, setStandingOrder] = useState(true);
+  const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
 
   const [howMuchError, setHowMuchError] = useState(false);
 
@@ -107,7 +107,7 @@ const IncomeAdd: React.FC<any> = (props) => {
       userId: parseInt(userId),
       comment,
       attachment: "",
-      standingOrder: null,
+      standingOrder: autoSubtractAmount,
     };
 
     setFormError(false);
@@ -235,9 +235,9 @@ const IncomeAdd: React.FC<any> = (props) => {
               <div className={"col-sm-12 col-form-label"}>
                 <Checkbox
                   label="Automatycznie dodaj wpisaną kwotę do wybranego typu oszczędności (pole Na co wpłacono)"
-                  name="standingOrder"
-                  checked={standingOrder}
-                  onChange={() => setStandingOrder(!standingOrder)}
+                  name="autoSubtractAmount"
+                  checked={autoSubtractAmount}
+                  onChange={() => setAutoSubtractAmount(!autoSubtractAmount)}
                 />
               </div>
             </div>

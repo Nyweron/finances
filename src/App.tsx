@@ -3,8 +3,6 @@ import React, { Component } from "react";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-
-
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
 //import { expenses, incomes, savings } from "./shared/constData";
@@ -19,9 +17,7 @@ import Saving from "./pages/saving";
 import styles from "./App.module.css";
 
 class App extends Component {
-
   render() {
-
     return (
       <>
         <div className={styles.header}>

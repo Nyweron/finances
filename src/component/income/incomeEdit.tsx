@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { connect } from "react-redux";
+
 import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
 import DatePicker from "react-widgets/DatePicker";
@@ -9,10 +11,10 @@ import { GetCategoryIncomesForSelect } from "../../lib/categoryIncomeService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
 
+import { CLOSE_MODAL_EDIT } from "../../redux/actions/actions";
+import { IncomeModel } from "../../constants";
 
-const IncomeEdit = (props) => {
-  const [showModal, setShowModal] = useState(props.showModal);
-
+const IncomeEdit: React.FC<any> = (props) => {
   const [howMuch, setHowMuch] = useState(props.data.howMuch);
   const [categoryIncomeId, setCategoryIncomeId] = useState(
     props.data.categoryIncomeId
@@ -23,7 +25,7 @@ const IncomeEdit = (props) => {
   const [calendarDate, setCalendarDate] = useState(new Date(props.data.date));
   const [userId, setUserId] = useState(props.data.userId);
   const [comment, setComment] = useState(props.data.comment);
-  const [standingOrder, setStandingOrder] = useState(true);
+  const [autoSubtractAmount, setAutoSubtractAmount] = useState(true);
 
   const [howMuchError, setHowMuchError] = useState(false);
 
@@ -48,11 +50,10 @@ const IncomeEdit = (props) => {
   }, [setCategoryIncomeList, setCategorySavingList, setUserList]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    props.handleCloseModal(false);
+    props.handleCloseModalEdit();
   };
 
-  const handleSetHowMuch = (value) => {
+  const handleSetHowMuch = (value: string) => {
     if (value.includes(".") || value.includes(",")) {
       const splitedDecimal = value.split("." || ",");
       if (splitedDecimal[1].length > 2) {
@@ -65,7 +66,7 @@ const IncomeEdit = (props) => {
     setHowMuch(value);
   };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = () => {
     let error = false;
 
     console.log(
@@ -118,32 +119,37 @@ const IncomeEdit = (props) => {
       return; //error
     }
 
-    const incomeFormData = {
+    const incomeFormData: IncomeModel = {
       id: props.data.id,
-      howMuch,
-      categoryIncomeId,
-      categorySavingId,
-      calendarDate,
-      userId,
+      howMuch: parseInt(howMuch),
+      categoryIncomeId: parseInt(categoryIncomeId),
+      categorySavingId: parseInt(categorySavingId),
+      date: calendarDate,
+      userId: parseInt(userId),
       comment,
-      standingOrder,
+      attachment: "",
+      standingOrder: autoSubtractAmount,
     };
 
-    console.log("🚀 ~ file: income2Edit.js ~ line 129 ~ handleSubmit ~ incomeFormData", incomeFormData)
+    console.log(
+      "🚀 ~ file: income2Edit.js ~ line 129 ~ handleSubmit ~ incomeFormData",
+      incomeFormData
+    );
+
     setFormError(false);
-    setShowModal(false);
+    props.handleCloseModalEdit();
     props.handleSubmit(incomeFormData);
   };
 
   return (
     <Modal
       size={"lg"}
-      show={showModal}
+      show={props.showModal}
       onHide={() => {
         handleCloseModal();
       }}
     >
-      <Form onSubmit={(event) => handleSubmit(event)} error={formError}>
+      <Form onSubmit={() => handleSubmit()} error={formError}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading Income Edit</Modal.Title>
         </Modal.Header>
@@ -175,7 +181,9 @@ const IncomeEdit = (props) => {
 
           <Form.Field inline>
             <div className="form-group row">
-              <label className={"col-sm-3 col-form-label"}>Tytuł przychodu</label>
+              <label className={"col-sm-3 col-form-label"}>
+                Tytuł przychodu
+              </label>
               <div className={"col-sm-9"}>
                 <Form.Select
                   fluid
@@ -213,7 +221,7 @@ const IncomeEdit = (props) => {
                   control={DatePicker}
                   value={calendarDate}
                   name="date"
-                  onChange={(e, d) => setCalendarDate(new Date(e))}
+                  onChange={(e: any, d) => setCalendarDate(new Date(e))}
                 />
               </div>
             </div>
@@ -254,9 +262,9 @@ const IncomeEdit = (props) => {
               <div className={"col-sm-12 col-form-label"}>
                 <Checkbox
                   label="Automatycznie dodaj wpisaną kwotę do wybranego typu oszczędności (pole Na co wpłacono)"
-                  name="standingOrder"
-                  checked={standingOrder}
-                  onChange={() => setStandingOrder(!standingOrder)}
+                  name="autoSubtractAmount"
+                  checked={autoSubtractAmount}
+                  onChange={() => setAutoSubtractAmount(!autoSubtractAmount)}
                 />
               </div>
             </div>
@@ -281,4 +289,16 @@ const IncomeEdit = (props) => {
   );
 };
 
-export default IncomeEdit;
+function mapStateToProps(state: any) {
+  return {
+    showModal: state.modalEdit,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    handleCloseModalEdit: () => dispatch({ type: CLOSE_MODAL_EDIT }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IncomeEdit);

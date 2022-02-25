@@ -8,14 +8,12 @@ import Modal from "react-bootstrap/Modal";
 
 import { CLOSE_MODAL_REMOVE } from "../../redux/actions/actions";
 
-const Expense2Remove: React.FC<any> = (props) => {
+const IncomeRemove: React.FC<any> = (props) => {
   const handleCloseModal = () => {
     props.handleCloseModalRemove();
   };
 
   const handleSubmit = () => {
-    //let error = false;
-
     props.handleCloseModalRemove();
     props.handleSubmit(props.data);
   };
@@ -30,7 +28,7 @@ const Expense2Remove: React.FC<any> = (props) => {
     >
       <Form onSubmit={() => handleSubmit()}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading Expense Remove</Modal.Title>
+          <Modal.Title>Modal heading Income Remove</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form-group row">
@@ -44,16 +42,16 @@ const Expense2Remove: React.FC<any> = (props) => {
               <code>Kwota: {props.data.howMuch}</code>
               <br />
               <code>
-                Czym zapłacono: {props.data.categorySavingDescription}
+                Tytuł przychodu: {props.data.categoryIncomeDescription}
               </code>
+              <br />
+              <code>Wpłacono na: {props.data.categorySavingDescription}</code>
               <br />
               <code>Kiedy: {props.data.date}</code>
               <br />
               <code>Kto: {props.data.userDescription}</code>
               <br />
               <code>Komentarz: {props.data.comment}</code>
-              <br />
-              <code>Załącznik: {props.data.attachment}</code>
               <br />
             </div>
           </div>
@@ -89,4 +87,4 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Expense2Remove);
+export default connect(mapStateToProps, mapDispatchToProps)(IncomeRemove);
