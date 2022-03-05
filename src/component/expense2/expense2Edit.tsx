@@ -125,7 +125,7 @@ const Expense2Edit: React.FC<any> = (props) => {
 
     const expenseFormData: ExpenseModel = {
       id: props.data.id,
-      howMuch: parseInt(howMuch),
+      howMuch: parseFloat(howMuch),
       categoryExpenseId: parseInt(categoryExpenseId),
       categorySavingId: parseInt(categorySavingId),
       date: calendarDate,

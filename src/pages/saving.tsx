@@ -22,10 +22,12 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
   state = {
     allData: [],
     savingDataOnPage: [],
+    categorySavingDataOnPage: [],
     begin: 0,
     end: 4,
     isDisplaySavingList: true,
     isDisplayCategorySavingList: false,
+    path: "Oszczędności -> lista",
   };
 
   handleSavingList = () => {
@@ -37,6 +39,7 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
         isDisplayCategorySavingList: false,
         allData: rows,
         savingDataOnPage: rows.slice(this.state.begin, this.state.end),
+        path: "Oszczędności -> lista",
       });
     });
   };
@@ -49,7 +52,8 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
         isDisplaySavingList: false,
         isDisplayCategorySavingList: true,
         allData: rows,
-        savingDataOnPage: rows.slice(this.state.begin, this.state.end),
+        categorySavingDataOnPage: rows.slice(this.state.begin, this.state.end),
+        path: "Oszczędności -> kategorie -> lista",
       });
     });
   };
@@ -86,6 +90,13 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
                 <Icon link name="plus circle" />
                 Dodaj kategorię
               </button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="fourteen wide column">
+              <div>
+                <span>{this.state.path}</span>
+              </div>
             </div>
           </div>
 

@@ -93,3 +93,13 @@ export interface IncomeModel {
   categorySavingId: number;
   categoryIncomeId: number;
 }
+
+export interface CategorySavingModelList {
+  id: number;
+  description: string;
+  isDeleted: boolean;
+  canPay: boolean;
+  debt: boolean;
+  weight: number;
+  categoryGroupId: number;
+}
