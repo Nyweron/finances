@@ -66,6 +66,10 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
     );
     const savingCategoryObj = {
       description: props.description,
+      isDeleted: props.isDeleted,
+      debt: props.debt,
+      canPay: props.canPay,
+      categoryGroupId: -1,
     };
 
     create(savingCategoryObj, "categorySaving").then((res) => {

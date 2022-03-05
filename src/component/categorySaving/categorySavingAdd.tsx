@@ -2,13 +2,16 @@ import React, { useState } from "react";
 
 import { connect } from "react-redux";
 
-import { Form, Message, Input } from "semantic-ui-react";
+import { Checkbox, Form, Message, Input } from "semantic-ui-react";
 
 import Modal from "react-bootstrap/Modal";
 
 import { CLOSE_MODAL_CATEGORY_SAVING_ADD } from "../../redux/actions/actions";
 
 const CategorySavingAdd: React.FC<any> = (props) => {
+  const [debt, setDebt] = useState(false);
+  const [canPay, setCanPay] = useState(true);
+  const [isDeleted, setIsDeleted] = useState(true);
   const [description, setDescription] = useState("");
   const [descriptionError, setDescriptionError] = useState(false);
   // const [categorySavingError, setCategorySavingError] = useState(false);
@@ -35,6 +38,9 @@ const CategorySavingAdd: React.FC<any> = (props) => {
     }
     const categorySavingFormData = {
       description,
+      canPay,
+      debt,
+      isDeleted,
     };
     setFormError(false);
     props.handleCloseModalAdd();
@@ -76,6 +82,45 @@ const CategorySavingAdd: React.FC<any> = (props) => {
                     setDescription(event.target.value as string)
                   }
                   error={descriptionError}
+                />
+              </div>
+            </div>
+          </Form.Field>
+
+          <Form.Field inline>
+            <div className="form-group row">
+              <div className={"col-sm-12 col-form-label"}>
+                <Checkbox
+                  label="Widoczny na liście"
+                  name="isDeleted"
+                  checked={isDeleted}
+                  onChange={() => setIsDeleted(!isDeleted)}
+                />
+              </div>
+            </div>
+          </Form.Field>
+
+          <Form.Field inline>
+            <div className="form-group row">
+              <div className={"col-sm-12 col-form-label"}>
+                <Checkbox
+                  label="Możliwość zapłaty"
+                  name="canPay"
+                  checked={canPay}
+                  onChange={() => setCanPay(!canPay)}
+                />
+              </div>
+            </div>
+          </Form.Field>
+
+          <Form.Field inline>
+            <div className="form-group row">
+              <div className={"col-sm-12 col-form-label"}>
+                <Checkbox
+                  label="Charakter długu"
+                  name="debt"
+                  checked={debt}
+                  onChange={() => setDebt(!debt)}
                 />
               </div>
             </div>
