@@ -10,10 +10,14 @@ import { SavingList } from "../component/saving";
 
 import { CategorySavingList } from "../component/categorySaving";
 
-import { OPEN_MODAL_ADD } from "../redux/actions/actions";
+import {
+  OPEN_MODAL_ADD,
+  OPEN_MODAL_CATEGORY_SAVING_ADD,
+} from "../redux/actions/actions";
 
 interface IRecipeProps {
   handleOpenModalAdd: any;
+  handleOpenCategorySavingModalAdd: any;
 }
 
 interface IRecipeState {}
@@ -31,7 +35,7 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
   };
 
   handleSavingList = () => {
-    console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
+    // console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
 
     getAll("saving").then((rows) => {
       this.setState({
@@ -45,7 +49,7 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
   };
 
   handleCategorySavingList = () => {
-    console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
+    // console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
 
     getAll("saving").then((rows) => {
       this.setState({
@@ -71,13 +75,15 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
               >
                 Oszczędności
               </button>
-              <button
-                className="ui blue button"
-                onClick={() => this.props.handleOpenModalAdd()}
-              >
-                <Icon link name="plus circle" />
-                Dodaj oszczędności
-              </button>
+              {this.state.isDisplaySavingList && (
+                <button
+                  className="ui blue button"
+                  onClick={() => this.props.handleOpenModalAdd()}
+                >
+                  <Icon link name="plus circle" />
+                  Dodaj oszczędności
+                </button>
+              )}
             </div>
             <div className="seven wide column" data-floated="right">
               <button
@@ -86,10 +92,15 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
               >
                 Kategorie
               </button>
-              <button className="ui blue button">
-                <Icon link name="plus circle" />
-                Dodaj kategorię
-              </button>
+              {this.state.isDisplayCategorySavingList && (
+                <button
+                  className="ui blue button"
+                  onClick={() => this.props.handleOpenCategorySavingModalAdd()}
+                >
+                  <Icon link name="plus circle" />
+                  Dodaj kategorię
+                </button>
+              )}
             </div>
           </div>
           <div className="row">
@@ -114,6 +125,8 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
 function mapDispatchToProps(dispatch: any) {
   return {
     handleOpenModalAdd: () => dispatch({ type: OPEN_MODAL_ADD }),
+    handleOpenCategorySavingModalAdd: () =>
+      dispatch({ type: OPEN_MODAL_CATEGORY_SAVING_ADD }),
   };
 }
 

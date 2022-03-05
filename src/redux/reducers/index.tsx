@@ -1,14 +1,16 @@
-import { createStore, combineReducers } from 'redux'
-import modalAdd from './modalAdd'
-import modalEdit from './modalEdit'
-import modalRemove from './modalRemove'
+import { createStore, combineReducers } from "redux";
+import modalAdd from "./modalAdd";
+import modalEdit from "./modalEdit";
+import modalRemove from "./modalRemove";
+import categorySavingModalAdd from "./categorySavingModalAdd";
 
 const reducer = combineReducers({
   modalAdd,
   modalEdit,
-  modalRemove
-})
+  modalRemove,
+  categorySavingModalAdd,
+});
 
-const store = createStore(reducer)
+const store = createStore(reducer);
 
 export default store;

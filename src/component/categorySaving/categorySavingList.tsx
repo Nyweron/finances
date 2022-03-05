@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import { Table, Icon, Pagination } from "semantic-ui-react";
 import { CategorySavingModelList } from "../../constants";
 
-import { getAll } from "../../lib/genericService";
+import { create, getAll } from "../../lib/genericService";
 import {
   OPEN_MODAL_EDIT,
   OPEN_MODAL_REMOVE,
 } from "../../redux/actions/actions";
+import CategorySavingAdd from "./categorySavingAdd";
 
 interface IRecipeProps {
   handleOpenModalRemove: any;
@@ -58,6 +59,20 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
     });
   };
 
+  handleAddCategorySaving = (props: any) => {
+    console.log(
+      "🚀 ~ file: categorySavingList.tsx ~ line 63 ~ CategorySavingList ~ props",
+      props
+    );
+    const savingCategoryObj = {
+      description: props.description,
+    };
+
+    create(savingCategoryObj, "categorySaving").then((res) => {
+      this.setState({ isCreated: true });
+    });
+  };
+
   handleOpenModalRemoveCategorySaving = (categorySavingRemove: any) => {
     this.props.handleOpenModalRemove();
     this.setState({ dataRemove: categorySavingRemove });
@@ -69,14 +84,14 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
   };
 
   render() {
-    console.log(
-      "🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.props",
-      this.props
-    );
-    console.log(
-      "🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.state",
-      this.state
-    );
+    // console.log(
+    //   "🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.props",
+    //   this.props
+    // );
+    // console.log(
+    //   "🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.state",
+    //   this.state
+    // );
 
     return (
       <>
@@ -98,10 +113,6 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
               <Table.Body>
                 {this.state.categorySavingDataOnPage.map(
                   (item: CategorySavingModelList, i) => {
-                    console.log(
-                      "🚀 ~ file: categorySavingList.js ~ line 72 ~ CategorySavingList ~ {this.state.categorySavingDataOnPage.map ~ item",
-                      item
-                    );
                     return (
                       <Table.Row key={`categorySavingRow_${i}`}>
                         <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
@@ -183,6 +194,10 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
             </Table>
           </div>
         </div>
+
+        {this.props.modalAdd && (
+          <CategorySavingAdd handleSubmit={this.handleAddCategorySaving} />
+        )}
       </>
     );
   }
@@ -190,7 +205,7 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
 
 function mapStateToProps(state: any) {
   return {
-    modalAdd: state.modalAdd,
+    modalAdd: state.categorySavingModalAdd,
     modalEdit: state.modalEdit,
     modalRemove: state.modalRemove,
   };

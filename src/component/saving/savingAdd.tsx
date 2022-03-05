@@ -187,6 +187,10 @@ const SavingAdd: React.FC<any> = (props) => {
 };
 
 function mapStateToProps(state: any) {
+  console.log(
+    "🚀 ~ file: savingAdd.tsx ~ line 190 ~ mapStateToProps ~ state",
+    state
+  );
   return {
     showModal: state.modalAdd,
   };

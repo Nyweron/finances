@@ -246,6 +246,10 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
 }
 
 function mapStateToProps(state: any) {
+  console.log(
+    "🚀 ~ file: savingList.tsx ~ line 249 ~ mapStateToProps ~ state",
+    state
+  );
   return {
     modalAdd: state.modalAdd,
     modalEdit: state.modalEdit,
