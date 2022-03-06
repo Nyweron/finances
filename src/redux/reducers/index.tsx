@@ -2,7 +2,7 @@ import { createStore, combineReducers } from "redux";
 import modalAdd from "./modalAdd";
 import modalEdit from "./modalEdit";
 import modalRemove from "./modalRemove";
-import categorySavingModalAdd from "./categorySavingModalAdd";
+import categorySavingModalAdd from "./categorySaving/categorySavingModalAdd";
 
 const reducer = combineReducers({
   modalAdd,

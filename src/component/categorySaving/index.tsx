@@ -1,7 +1,5 @@
+import CategorySavingList from "./categorySavingList";
+import CategorySavingRemove from "./categorySavingRemove";
+import CategorySavingAdd from "./categorySavingAdd";
 
-import CategorySavingList from './categorySavingList'
-
-export {
-
-  CategorySavingList,
-}
+export { CategorySavingAdd, CategorySavingRemove, CategorySavingList };

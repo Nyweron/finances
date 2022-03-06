@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import { Table, Icon, Pagination } from "semantic-ui-react";
 import { CategorySavingModelList } from "../../constants";
 
-import { create, getAll } from "../../lib/genericService";
+import { create, getAll, remove } from "../../lib/genericService";
 import {
   OPEN_MODAL_EDIT,
   OPEN_MODAL_REMOVE,
 } from "../../redux/actions/actions";
-import CategorySavingAdd from "./categorySavingAdd";
+import { CategorySavingAdd, CategorySavingRemove } from "./index";
 
 interface IRecipeProps {
   handleOpenModalRemove: any;
@@ -108,21 +108,18 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
     this.setState({ dataRemove: categorySavingRemove });
   };
 
+  handleRemoveCategorySaving = (categorySavingRemove: any) => {
+    remove(categorySavingRemove.id, "categorySaving").then((res) => {
+      this.setState({ isRemoved: true });
+    });
+  };
+
   handleOpenModalEditCategorySaving = (categorySavingEdit: any) => {
     this.props.handleOpenModalEdit();
     this.setState({ dataEdit: categorySavingEdit });
   };
 
   render() {
-    // console.log(
-    //   "🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.props",
-    //   this.props
-    // );
-    // console.log(
-    //   "🚀 ~ file: categorySavingList.js ~ line 8 ~ categorySavingList ~ this.state",
-    //   this.state
-    // );
-
     return (
       <>
         <div className="row">
@@ -136,7 +133,6 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
                   <Table.HeaderCell>Możliwość zapłaty</Table.HeaderCell>
                   <Table.HeaderCell>Charakter długu</Table.HeaderCell>
                   <Table.HeaderCell>Usuń</Table.HeaderCell>
-                  <Table.HeaderCell>Edytuj</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
 
@@ -169,19 +165,6 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
                             }
                           >
                             Usuń
-                          </button>
-                        </Table.Cell>
-                        <Table.Cell
-                          key={`edit_${i}`}
-                          className="center aligned"
-                        >
-                          <button
-                            className="ui green button "
-                            onClick={() =>
-                              this.handleOpenModalEditCategorySaving(item)
-                            }
-                          >
-                            Edytuj
                           </button>
                         </Table.Cell>
                       </Table.Row>
@@ -228,12 +211,22 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
         {this.props.modalAdd && (
           <CategorySavingAdd handleSubmit={this.handleAddCategorySaving} />
         )}
+        {this.props.modalRemove && (
+          <CategorySavingRemove
+            handleSubmit={this.handleRemoveCategorySaving}
+            data={this.state.dataRemove}
+          />
+        )}
       </>
     );
   }
 }
 
 function mapStateToProps(state: any) {
+  console.log(
+    "🚀 ~ file: categorySavingList.tsx ~ line 234 ~ mapStateToProps ~ state",
+    state
+  );
   return {
     modalAdd: state.categorySavingModalAdd,
     modalEdit: state.modalEdit,
