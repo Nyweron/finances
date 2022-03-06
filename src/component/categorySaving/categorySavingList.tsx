@@ -44,6 +44,32 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
     });
   }
 
+  componentDidUpdate() {
+    if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
+      getAll("categorySaving")
+        .then((rows) => {
+          this.setState({
+            allData: rows,
+            categorySavingDataOnPage: rows.slice(
+              this.state.begin,
+              this.state.end
+            ),
+            isCreated: false,
+            isEdited: false,
+            isRemoved: false,
+          });
+        })
+        .catch((error) => {})
+        .finally(() => {
+          this.setState({
+            isCreated: false,
+            isEdited: false,
+            isRemoved: false,
+          });
+        });
+    }
+  }
+
   onChangePage = async (event: any, data: any) => {
     await this.setState({
       activePage: data.activePage,
@@ -190,7 +216,7 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
                       }}
                       defaultActivePage={1}
                       totalPages={Math.ceil(this.state.allData.length / 4)}
-                      onPageChange={(e) => this.onChangePage}
+                      onPageChange={this.onChangePage}
                     />
                   </Table.HeaderCell>
                 </Table.Row>
