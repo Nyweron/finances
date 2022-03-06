@@ -51,7 +51,7 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
   handleCategorySavingList = () => {
     // console.log("🚀 ~ file: saving.js ~ line 131 ~ Saving ~ handleSavingList");
 
-    getAll("saving").then((rows) => {
+    getAll("categorysaving").then((rows) => {
       this.setState({
         isDisplaySavingList: false,
         isDisplayCategorySavingList: true,
