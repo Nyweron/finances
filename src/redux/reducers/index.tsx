@@ -4,6 +4,7 @@ import modalEdit from "./modalEdit";
 import modalRemove from "./modalRemove";
 import categorySavingModalAdd from "./categorySaving/categorySavingModalAdd";
 import categoryIncomeModalAdd from "./categoryIncome/categoryIncomeModalAdd";
+import categoryExpenseModalAdd from "./categoryExpense/categoryExpenseModalAdd";
 
 const reducer = combineReducers({
   modalAdd,
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   modalRemove,
   categorySavingModalAdd,
   categoryIncomeModalAdd,
+  categoryExpenseModalAdd,
 });
 
 const store = createStore(reducer);

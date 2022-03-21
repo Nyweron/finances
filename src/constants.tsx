@@ -111,3 +111,11 @@ export interface CategoryIncomeModelList {
   weight: number;
   categoryGroupId: number;
 }
+
+export interface CategoryExpenseModelList {
+  id: number;
+  description: string;
+  isDeleted: boolean;
+  weight: number;
+  categoryGroupId: number;
+}
