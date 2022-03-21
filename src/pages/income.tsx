@@ -47,7 +47,7 @@ class Income extends Component<IRecipeProps, IRecipeState> {
   };
 
   handleCategoryIncomeList = () => {
-    getAll("categorysaving").then((rows) => {
+    getAll("categoryIncome").then((rows) => {
       this.setState({
         isDisplayIncomeList: false,
         isDisplayCategoryIncomeList: true,

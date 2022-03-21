@@ -3,7 +3,7 @@ import {
   CLOSE_MODAL_CATEGORY_INCOME_ADD,
 } from "../../actions/actions";
 
-const categorySavingModalAdd = (state = false, action: any) => {
+const categoryIncomeModalAdd = (state = false, action: any) => {
   switch (action.type) {
     case OPEN_MODAL_CATEGORY_INCOME_ADD:
       return true;
@@ -14,4 +14,4 @@ const categorySavingModalAdd = (state = false, action: any) => {
   }
 };
 
-export default categorySavingModalAdd;
+export default categoryIncomeModalAdd;
