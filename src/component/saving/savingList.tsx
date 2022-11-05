@@ -162,7 +162,9 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
                       <Table.Cell key={`howMuch${i}`}>
                         {item.howMuch}
                       </Table.Cell>
-                      <Table.Cell key={`date_${i}`}>{item.date}</Table.Cell>
+                      <Table.Cell key={`date_${i}`}>
+                        {item.date.toString()}
+                      </Table.Cell>
                       <Table.Cell key={`comment_${i}`}>
                         {item.comment}
                       </Table.Cell>

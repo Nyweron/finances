@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, SyntheticEvent } from "react";
 import { connect } from "react-redux";
 
-import { Table, Icon, Pagination } from "semantic-ui-react";
+import { Table, Icon, Pagination, Select } from "semantic-ui-react";
 import { CategoryExpenseModelList } from "../../constants";
 
 import { create, getAll, remove } from "../../lib/genericService";
@@ -10,6 +10,14 @@ import {
   OPEN_MODAL_REMOVE,
 } from "../../redux/actions/actions";
 import { CategoryExpenseAdd, CategoryExpenseRemove } from "./index";
+
+const countryOptions = [
+  { key: "4", value: "4", text: "4" },
+  { key: "10", value: "10", text: "10" },
+  { key: "25", value: "25", text: "25" },
+  { key: "50", value: "50", text: "50" },
+  { key: "100", value: "100", text: "100" },
+];
 
 interface IRecipeProps {
   handleOpenModalRemove: any;
@@ -29,7 +37,8 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
     dataRemove: {},
     categoryExpenseDataOnPage: [],
     begin: 0,
-    end: 4,
+    end: 9,
+    perPage: 9,
     isCreated: false,
     isEdited: false,
     isRemoved: false,
@@ -71,32 +80,39 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
   }
 
   onChangePage = async (event: any, data: any) => {
+    console.log(
+      "🚀 ~ file: categoryExpenseList.tsx ~ line 75 ~ CategoryExpenseList ~ onChangePage= ~ this.state.begin1",
+      this.state.begin
+    );
     await this.setState({
       activePage: data.activePage,
-      begin: data.activePage * 4 - 4,
-      end: data.activePage * 4,
+      begin: data.activePage * this.state.perPage - this.state.perPage,
+      end: data.activePage * this.state.perPage,
     });
-
+    console.log(
+      "🚀 ~ file: categoryExpenseList.tsx ~ line 75 ~ CategoryExpenseList ~ onChangePage= ~ this.state.begin2",
+      this.state.begin
+    );
     this.setState({
       categoryExpenseDataOnPage: this.state.allData.slice(
         this.state.begin,
         this.state.end
       ),
     });
+    console.log(
+      "🚀 ~ file: categoryExpenseList.tsx ~ line 75 ~ CategoryExpenseList ~ onChangePage= ~ this.state.begin3",
+      this.state.begin
+    );
   };
 
   handleAddCategoryExpense = (props: any) => {
-    console.log(
-      "🚀 ~ file: categoryExpenseList.tsx ~ line 63 ~ CategoryExpenseList ~ props",
-      props
-    );
-    const ixpenseCategoryObj = {
+    const expenseCategoryObj = {
       description: props.description,
       isDeleted: props.isDeleted,
       categoryGroupId: -1,
     };
 
-    create(ixpenseCategoryObj, "categoryExpense").then((res) => {
+    create(expenseCategoryObj, "categoryExpense").then((res) => {
       this.setState({ isCreated: true });
     });
   };
@@ -115,6 +131,13 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
   handleOpenModalEditCategoryExpense = (categoryExpenseEdit: any) => {
     this.props.handleOpenModalEdit();
     this.setState({ dataEdit: categoryExpenseEdit });
+  };
+
+  handleDisplayRowsPerPage = (event: SyntheticEvent<HTMLElement, Event>) => {
+    console.log(
+      "🚀 ~ file: categoryExpenseList.tsx ~ line 137 ~ CategoryExpenseList ~ perPage",
+      event
+    );
   };
 
   render() {
@@ -165,32 +188,43 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
 
               <Table.Footer>
                 <Table.Row>
-                  <Table.HeaderCell colSpan={10}>
-                    <Pagination
-                      ellipsisItem={{
-                        content: <Icon name="ellipsis horizontal" />,
-                        icon: true,
-                      }}
-                      firstItem={{
-                        content: <Icon name="angle double left" />,
-                        icon: true,
-                      }}
-                      lastItem={{
-                        content: <Icon name="angle double right" />,
-                        icon: true,
-                      }}
-                      prevItem={{
-                        content: <Icon name="angle left" />,
-                        icon: true,
-                      }}
-                      nextItem={{
-                        content: <Icon name="angle right" />,
-                        icon: true,
-                      }}
-                      defaultActivePage={1}
-                      totalPages={Math.ceil(this.state.allData.length / 4)}
-                      onPageChange={this.onChangePage}
-                    />
+                  <Table.HeaderCell colSpan={5}>
+                    <Table.Cell>
+                      <Pagination
+                        ellipsisItem={{
+                          content: <Icon name="ellipsis horizontal" />,
+                          icon: true,
+                        }}
+                        firstItem={{
+                          content: <Icon name="angle double left" />,
+                          icon: true,
+                        }}
+                        lastItem={{
+                          content: <Icon name="angle double right" />,
+                          icon: true,
+                        }}
+                        prevItem={{
+                          content: <Icon name="angle left" />,
+                          icon: true,
+                        }}
+                        nextItem={{
+                          content: <Icon name="angle right" />,
+                          icon: true,
+                        }}
+                        defaultActivePage={1}
+                        totalPages={Math.ceil(
+                          this.state.allData.length / this.state.perPage
+                        )}
+                        onPageChange={this.onChangePage}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Select
+                        placeholder="Wiersze per strona"
+                        options={countryOptions}
+                        onChange={(e, d: any) => this.handleDisplayRowsPerPage}
+                      />
+                    </Table.Cell>
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Footer>
@@ -213,10 +247,6 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
 }
 
 function mapStateToProps(state: any) {
-  console.log(
-    "🚀 ~ file: categoryExpenseList.tsx ~ line 234 ~ mapStateToProps ~ state",
-    state
-  );
   return {
     modalAdd: state.categoryExpenseModalAdd,
     modalEdit: state.modalEdit,

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //import { FaCaretDown } from "react-icons/fa";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
@@ -23,44 +23,32 @@ class App extends Component {
         <div className={styles.header}>
           <Header />
         </div>
-        <Router>
-          <div>
-            <div className={styles.topnav}>
-              {/* <Link to="/expense">
+        <div>
+          <div className={styles.topnav}>
+            {/* <Link to="/expense">
                 <span>Wydatki</span>
               </Link> */}
-              <Link to="/expense2">
-                <span>Wydatki2</span>
-              </Link>
-              <Link to="/income">
-                <span>Przychody</span>
-              </Link>
-              <Link to="/saving">
-                <span>Oszczędności</span>
-              </Link>
-            </div>
-
-            <div>
-              <Switch>
-                <Route path="/expense">
-                  <Expense />
-                </Route>
-                <Route path="/expense2">
-                  <Expense2 />
-                </Route>
-                <Route path="/income">
-                  <Income />
-                </Route>
-                <Route path="/saving">
-                  <Saving />
-                </Route>
-                <Route path="/">
-                  <Index3 />
-                </Route>
-              </Switch>
-            </div>
+            <Link to="/expense2">
+              <span>Wydatki2</span>
+            </Link>
+            <Link to="/income">
+              <span>Przychody</span>
+            </Link>
+            <Link to="/saving">
+              <span>Oszczędności</span>
+            </Link>
           </div>
-        </Router>
+
+          <div>
+            <Routes>
+              <Route path="/expense" element={<Expense />} />
+              <Route path="/expense2" element={<Expense2 />} />
+              <Route path="/income" element={<Income />} />
+              <Route path="/saving" element={<Saving />} />
+              <Route path="/" element={<Index3 />} />
+            </Routes>
+          </div>
+        </div>
         <div className={styles.footer}>
           <Footer />
         </div>

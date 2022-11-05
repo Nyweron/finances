@@ -183,7 +183,9 @@ class IncomeList extends Component<IRecipeProps, IRecipeState> {
                       <Table.Cell key={`categorySavingDescription_${i}`}>
                         {item.categorySavingDescription}
                       </Table.Cell>
-                      <Table.Cell key={`date_${i}`}>{item.date}</Table.Cell>
+                      <Table.Cell key={`date_${i}`}>
+                        {item.date.toString()}
+                      </Table.Cell>
                       <Table.Cell key={`userDescription_${i}`}>
                         {item.userDescription}
                       </Table.Cell>
