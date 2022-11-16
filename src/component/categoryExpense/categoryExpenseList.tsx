@@ -11,7 +11,7 @@ import {
 } from "../../redux/actions/actions";
 import { CategoryExpenseAdd, CategoryExpenseRemove } from "./index";
 
-const countryOptions = [
+const rowsPerListOptions = [
   { key: "4", value: "4", text: "4" },
   { key: "10", value: "10", text: "10" },
   { key: "25", value: "25", text: "25" },
@@ -39,10 +39,10 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
     begin: 0,
     end: 9,
     perPage: 9,
+    activePage: 1,
     isCreated: false,
     isEdited: false,
     isRemoved: false,
-    activePage: 1,
   };
 
   componentDidMount() {
@@ -81,11 +81,6 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
   }
 
   onChangePage = async (event: any, data: any) => {
-    console.log(
-      "🚀 ~ file: categoryExpenseList.tsx ~ line 83 ~ CategoryExpenseList ~ onChangePage= ~ data",
-      data
-    );
-
     await this.setState({
       activePage: data.activePage,
       begin: data.activePage * this.state.perPage - this.state.perPage,
@@ -229,7 +224,7 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
                     <Table.Cell>
                       <Select
                         placeholder="Wiersze per strona"
-                        options={countryOptions}
+                        options={rowsPerListOptions}
                         onChange={this.handleDisplayRowsPerPage}
                       />
                     </Table.Cell>
