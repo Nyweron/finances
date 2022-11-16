@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, SyntheticEvent } from "react";
 import { connect } from "react-redux";
 
-import { Table, Icon, Pagination } from "semantic-ui-react";
+import { Table, Icon, Pagination, Select } from "semantic-ui-react";
 import { CategorySavingModelList } from "../../constants";
 
 import { create, getAll, remove } from "../../lib/genericService";
@@ -10,6 +10,14 @@ import {
   OPEN_MODAL_REMOVE,
 } from "../../redux/actions/actions";
 import { CategorySavingAdd, CategorySavingRemove } from "./index";
+
+const rowsPerListOptions = [
+  { key: "4", value: "4", text: "4" },
+  { key: "10", value: "10", text: "10" },
+  { key: "25", value: "25", text: "25" },
+  { key: "50", value: "50", text: "50" },
+  { key: "100", value: "100", text: "100" },
+];
 
 interface IRecipeProps {
   handleOpenModalRemove: any;
@@ -29,7 +37,9 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
     dataRemove: {},
     categorySavingDataOnPage: [],
     begin: 0,
-    end: 4,
+    end: 9,
+    perPage: 9,
+    activePage: 1,
     isCreated: false,
     isEdited: false,
     isRemoved: false,
@@ -73,8 +83,8 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
   onChangePage = async (event: any, data: any) => {
     await this.setState({
       activePage: data.activePage,
-      begin: data.activePage * 4 - 4,
-      end: data.activePage * 4,
+      begin: data.activePage * this.state.perPage - this.state.perPage,
+      end: data.activePage * this.state.perPage,
     });
 
     this.setState({
@@ -117,6 +127,26 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
   handleOpenModalEditCategorySaving = (categorySavingEdit: any) => {
     this.props.handleOpenModalEdit();
     this.setState({ dataEdit: categorySavingEdit });
+  };
+
+  handleDisplayRowsPerPage = async (
+    event: SyntheticEvent<HTMLElement, Event>,
+    d: any
+  ) => {
+    await this.setState({ perPage: d.value });
+
+    await this.setState({
+      activePage: this.state.activePage,
+      begin: this.state.activePage * this.state.perPage - this.state.perPage,
+      end: this.state.activePage * this.state.perPage,
+    });
+
+    this.setState({
+      categorySavingDataOnPage: this.state.allData.slice(
+        this.state.begin,
+        this.state.end
+      ),
+    });
   };
 
   render() {
@@ -175,32 +205,43 @@ class CategorySavingList extends Component<IRecipeProps, IRecipeState> {
 
               <Table.Footer>
                 <Table.Row>
-                  <Table.HeaderCell colSpan={10}>
-                    <Pagination
-                      ellipsisItem={{
-                        content: <Icon name="ellipsis horizontal" />,
-                        icon: true,
-                      }}
-                      firstItem={{
-                        content: <Icon name="angle double left" />,
-                        icon: true,
-                      }}
-                      lastItem={{
-                        content: <Icon name="angle double right" />,
-                        icon: true,
-                      }}
-                      prevItem={{
-                        content: <Icon name="angle left" />,
-                        icon: true,
-                      }}
-                      nextItem={{
-                        content: <Icon name="angle right" />,
-                        icon: true,
-                      }}
-                      defaultActivePage={1}
-                      totalPages={Math.ceil(this.state.allData.length / 4)}
-                      onPageChange={this.onChangePage}
-                    />
+                  <Table.HeaderCell colSpan={5}>
+                    <Table.Cell>
+                      <Pagination
+                        ellipsisItem={{
+                          content: <Icon name="ellipsis horizontal" />,
+                          icon: true,
+                        }}
+                        firstItem={{
+                          content: <Icon name="angle double left" />,
+                          icon: true,
+                        }}
+                        lastItem={{
+                          content: <Icon name="angle double right" />,
+                          icon: true,
+                        }}
+                        prevItem={{
+                          content: <Icon name="angle left" />,
+                          icon: true,
+                        }}
+                        nextItem={{
+                          content: <Icon name="angle right" />,
+                          icon: true,
+                        }}
+                        defaultActivePage={1}
+                        totalPages={Math.ceil(
+                          this.state.allData.length / this.state.perPage
+                        )}
+                        onPageChange={this.onChangePage}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Select
+                        placeholder="Wiersze per strona"
+                        options={rowsPerListOptions}
+                        onChange={this.handleDisplayRowsPerPage}
+                      />
+                    </Table.Cell>
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Footer>
