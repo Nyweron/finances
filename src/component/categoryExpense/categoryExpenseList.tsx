@@ -42,6 +42,7 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
     isCreated: false,
     isEdited: false,
     isRemoved: false,
+    activePage: 1,
   };
 
   componentDidMount() {
@@ -81,28 +82,22 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
 
   onChangePage = async (event: any, data: any) => {
     console.log(
-      "🚀 ~ file: categoryExpenseList.tsx ~ line 75 ~ CategoryExpenseList ~ onChangePage= ~ this.state.begin1",
-      this.state.begin
+      "🚀 ~ file: categoryExpenseList.tsx ~ line 83 ~ CategoryExpenseList ~ onChangePage= ~ data",
+      data
     );
+
     await this.setState({
       activePage: data.activePage,
       begin: data.activePage * this.state.perPage - this.state.perPage,
       end: data.activePage * this.state.perPage,
     });
-    console.log(
-      "🚀 ~ file: categoryExpenseList.tsx ~ line 75 ~ CategoryExpenseList ~ onChangePage= ~ this.state.begin2",
-      this.state.begin
-    );
+
     this.setState({
       categoryExpenseDataOnPage: this.state.allData.slice(
         this.state.begin,
         this.state.end
       ),
     });
-    console.log(
-      "🚀 ~ file: categoryExpenseList.tsx ~ line 75 ~ CategoryExpenseList ~ onChangePage= ~ this.state.begin3",
-      this.state.begin
-    );
   };
 
   handleAddCategoryExpense = (props: any) => {
@@ -133,11 +128,24 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
     this.setState({ dataEdit: categoryExpenseEdit });
   };
 
-  handleDisplayRowsPerPage = (event: SyntheticEvent<HTMLElement, Event>) => {
-    console.log(
-      "🚀 ~ file: categoryExpenseList.tsx ~ line 137 ~ CategoryExpenseList ~ perPage",
-      event
-    );
+  handleDisplayRowsPerPage = async (
+    event: SyntheticEvent<HTMLElement, Event>,
+    d: any
+  ) => {
+    await this.setState({ perPage: d.value });
+
+    await this.setState({
+      activePage: this.state.activePage,
+      begin: this.state.activePage * this.state.perPage - this.state.perPage,
+      end: this.state.activePage * this.state.perPage,
+    });
+
+    this.setState({
+      categoryExpenseDataOnPage: this.state.allData.slice(
+        this.state.begin,
+        this.state.end
+      ),
+    });
   };
 
   render() {
@@ -222,7 +230,7 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
                       <Select
                         placeholder="Wiersze per strona"
                         options={countryOptions}
-                        onChange={(e, d: any) => this.handleDisplayRowsPerPage}
+                        onChange={this.handleDisplayRowsPerPage}
                       />
                     </Table.Cell>
                   </Table.HeaderCell>
