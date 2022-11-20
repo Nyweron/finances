@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, SyntheticEvent } from "react";
 
 import { connect } from "react-redux";
 
-import { Table, Icon, Pagination } from "semantic-ui-react";
+import { Table, Icon, Pagination, Select } from "semantic-ui-react";
 
 import { SavingAdd, SavingEdit, SavingRemove } from "./index";
 
@@ -15,10 +15,18 @@ import {
 
 import { SavingModelList } from "../../constants";
 
+const rowsPerListOptions = [
+  { key: "4", value: "4", text: "4" },
+  { key: "10", value: "10", text: "10" },
+  { key: "25", value: "25", text: "25" },
+  { key: "50", value: "50", text: "50" },
+  { key: "100", value: "100", text: "100" },
+];
+
 interface IRecipeProps {
   handleOpenModalRemove: any;
   handleOpenModalEdit: any;
-  savingDataOnPage: SavingModelList[];
+  savingListDataOnPage: SavingModelList[];
   modalAdd: boolean;
   modalEdit: boolean;
   modalRemove: boolean;
@@ -31,9 +39,11 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
     allData: [],
     dataEdit: {},
     dataRemove: {},
-    savingDataOnPage: [],
+    savingListDataOnPage: [],
     begin: 0,
     end: 4,
+    perPage: 4,
+    activePage: 1,
     isCreated: false,
     isEdited: false,
     isRemoved: false,
@@ -43,7 +53,7 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
     getAll("saving").then((rows) => {
       this.setState({
         allData: rows,
-        savingDataOnPage: rows.slice(this.state.begin, this.state.end),
+        savingListDataOnPage: rows.slice(this.state.begin, this.state.end),
       });
     });
   }
@@ -54,7 +64,7 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
         .then((rows) => {
           this.setState({
             allData: rows,
-            savingDataOnPage: rows.slice(this.state.begin, this.state.end),
+            savingListDataOnPage: rows.slice(this.state.begin, this.state.end),
             isCreated: false,
             isEdited: false,
             isRemoved: false,
@@ -74,12 +84,12 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
   onChangePage = async (event: any, data: any) => {
     await this.setState({
       activePage: data.activePage,
-      begin: data.activePage * 4 - 4,
-      end: data.activePage * 4,
+      begin: data.activePage * this.state.perPage - this.state.perPage,
+      end: data.activePage * this.state.perPage,
     });
 
     this.setState({
-      savingDataOnPage: this.state.allData.slice(
+      savingListDataOnPage: this.state.allData.slice(
         this.state.begin,
         this.state.end
       ),
@@ -133,6 +143,26 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
     });
   };
 
+  handleDisplayRowsPerPage = async (
+    event: SyntheticEvent<HTMLElement, Event>,
+    d: any
+  ) => {
+    await this.setState({ perPage: d.value });
+
+    await this.setState({
+      activePage: this.state.activePage,
+      begin: this.state.activePage * this.state.perPage - this.state.perPage,
+      end: this.state.activePage * this.state.perPage,
+    });
+
+    this.setState({
+      savingListDataOnPage: this.state.allData.slice(
+        this.state.begin,
+        this.state.end
+      ),
+    });
+  };
+
   render() {
     return (
       <>
@@ -152,74 +182,92 @@ class SavingList extends Component<IRecipeProps, IRecipeState> {
               </Table.Header>
 
               <Table.Body>
-                {this.state.savingDataOnPage.map((item: SavingModelList, i) => {
-                  return (
-                    <Table.Row key={`savingRow_${i}`}>
-                      <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
-                      <Table.Cell key={`categorySavingDescription_${i}`}>
-                        {item.categorySavingDescription}
-                      </Table.Cell>
-                      <Table.Cell key={`howMuch${i}`}>
-                        {item.howMuch}
-                      </Table.Cell>
-                      <Table.Cell key={`date_${i}`}>
-                        {item.date.toString()}
-                      </Table.Cell>
-                      <Table.Cell key={`comment_${i}`}>
-                        {item.comment}
-                      </Table.Cell>
-                      <Table.Cell
-                        key={`remove_${i}`}
-                        className="center aligned"
-                      >
-                        <button
-                          className="ui red button"
-                          onClick={() => this.handleOpenModalRemoveSaving(item)}
+                {this.state.savingListDataOnPage.map(
+                  (item: SavingModelList, i) => {
+                    return (
+                      <Table.Row key={`savingRow_${i}`}>
+                        <Table.Cell key={`id${i}`}>{item.id}</Table.Cell>
+                        <Table.Cell key={`categorySavingDescription_${i}`}>
+                          {item.categorySavingDescription}
+                        </Table.Cell>
+                        <Table.Cell key={`howMuch${i}`}>
+                          {item.howMuch}
+                        </Table.Cell>
+                        <Table.Cell key={`date_${i}`}>
+                          {item.date.toString()}
+                        </Table.Cell>
+                        <Table.Cell key={`comment_${i}`}>
+                          {item.comment}
+                        </Table.Cell>
+                        <Table.Cell
+                          key={`remove_${i}`}
+                          className="center aligned"
                         >
-                          Usuń
-                        </button>
-                      </Table.Cell>
-                      <Table.Cell key={`Edit_${i}`} className="center aligned">
-                        <button
-                          className="ui green button "
-                          onClick={() => this.handleOpenModalEditSaving(item)}
+                          <button
+                            className="ui red button"
+                            onClick={() =>
+                              this.handleOpenModalRemoveSaving(item)
+                            }
+                          >
+                            Usuń
+                          </button>
+                        </Table.Cell>
+                        <Table.Cell
+                          key={`Edit_${i}`}
+                          className="center aligned"
                         >
-                          Edytuj
-                        </button>
-                      </Table.Cell>
-                    </Table.Row>
-                  );
-                })}
+                          <button
+                            className="ui green button "
+                            onClick={() => this.handleOpenModalEditSaving(item)}
+                          >
+                            Edytuj
+                          </button>
+                        </Table.Cell>
+                      </Table.Row>
+                    );
+                  }
+                )}
               </Table.Body>
 
               <Table.Footer>
                 <Table.Row>
-                  <Table.HeaderCell colSpan={10}>
-                    <Pagination
-                      ellipsisItem={{
-                        content: <Icon name="ellipsis horizontal" />,
-                        icon: true,
-                      }}
-                      firstItem={{
-                        content: <Icon name="angle double left" />,
-                        icon: true,
-                      }}
-                      lastItem={{
-                        content: <Icon name="angle double right" />,
-                        icon: true,
-                      }}
-                      prevItem={{
-                        content: <Icon name="angle left" />,
-                        icon: true,
-                      }}
-                      nextItem={{
-                        content: <Icon name="angle right" />,
-                        icon: true,
-                      }}
-                      defaultActivePage={1}
-                      totalPages={Math.ceil(this.state.allData.length / 4)}
-                      onPageChange={this.onChangePage}
-                    />
+                  <Table.HeaderCell colSpan={5}>
+                    <Table.Cell>
+                      <Pagination
+                        ellipsisItem={{
+                          content: <Icon name="ellipsis horizontal" />,
+                          icon: true,
+                        }}
+                        firstItem={{
+                          content: <Icon name="angle double left" />,
+                          icon: true,
+                        }}
+                        lastItem={{
+                          content: <Icon name="angle double right" />,
+                          icon: true,
+                        }}
+                        prevItem={{
+                          content: <Icon name="angle left" />,
+                          icon: true,
+                        }}
+                        nextItem={{
+                          content: <Icon name="angle right" />,
+                          icon: true,
+                        }}
+                        defaultActivePage={1}
+                        totalPages={Math.ceil(
+                          this.state.allData.length / this.state.perPage
+                        )}
+                        onPageChange={this.onChangePage}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Select
+                        placeholder="Wiersze per strona"
+                        options={rowsPerListOptions}
+                        onChange={this.handleDisplayRowsPerPage}
+                      />
+                    </Table.Cell>
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Footer>

@@ -24,11 +24,8 @@ interface IRecipeState {}
 
 class Income extends Component<IRecipeProps, IRecipeState> {
   state = {
-    allData: [],
-    incomeDataOnPage: [],
+    incomeListDataOnPage: [],
     categoryIncomeDataOnPage: [],
-    begin: 0,
-    end: 4,
     isDisplayIncomeList: true,
     isDisplayCategoryIncomeList: false,
     path: "Przychody -> lista",
@@ -39,8 +36,7 @@ class Income extends Component<IRecipeProps, IRecipeState> {
       this.setState({
         isDisplayIncomeList: true,
         isDisplayCategoryIncomeList: false,
-        allData: rows,
-        incomeDataOnPage: rows.slice(this.state.begin, this.state.end),
+        incomeListDataOnPage: rows,
         path: "Przychody -> lista",
       });
     });
@@ -52,7 +48,7 @@ class Income extends Component<IRecipeProps, IRecipeState> {
         isDisplayIncomeList: false,
         isDisplayCategoryIncomeList: true,
         allData: rows,
-        categoryIncomeDataOnPage: rows.slice(this.state.begin, this.state.end),
+        categoryIncomeDataOnPage: rows,
         path: "Przychody -> kategorie -> lista",
       });
     });

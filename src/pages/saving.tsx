@@ -24,11 +24,8 @@ interface IRecipeState {}
 
 class Saving extends Component<IRecipeProps, IRecipeState> {
   state = {
-    allData: [],
-    savingDataOnPage: [],
+    savingListDataOnPage: [],
     categorySavingDataOnPage: [],
-    begin: 0,
-    end: 4,
     isDisplaySavingList: true,
     isDisplayCategorySavingList: false,
     path: "Oszczędności -> lista",
@@ -41,8 +38,7 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
       this.setState({
         isDisplaySavingList: true,
         isDisplayCategorySavingList: false,
-        allData: rows,
-        savingDataOnPage: rows.slice(this.state.begin, this.state.end),
+        savingListDataOnPage: rows,
         path: "Oszczędności -> lista",
       });
     });
@@ -55,8 +51,7 @@ class Saving extends Component<IRecipeProps, IRecipeState> {
       this.setState({
         isDisplaySavingList: false,
         isDisplayCategorySavingList: true,
-        allData: rows,
-        categorySavingDataOnPage: rows.slice(this.state.begin, this.state.end),
+        categorySavingDataOnPage: rows,
         path: "Oszczędności -> kategorie -> lista",
       });
     });
