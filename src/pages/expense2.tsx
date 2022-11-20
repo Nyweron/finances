@@ -23,11 +23,8 @@ interface IRecipeState {}
 
 class Expense2 extends Component<IRecipeProps, IRecipeState> {
   state = {
-    allData: [],
-    expenseDataOnPage: [],
+    expenseListDataOnPage: [],
     categoryExpenseDataOnPage: [],
-    begin: 0,
-    end: 4,
     isDisplayExpenseList: true,
     isDisplayCategoryExpenseList: false,
     path: "Wydatki -> lista",
@@ -38,8 +35,7 @@ class Expense2 extends Component<IRecipeProps, IRecipeState> {
       this.setState({
         isDisplayExpenseList: true,
         isDisplayCategoryExpenseList: false,
-        allData: rows,
-        expenseDataOnPage: rows.slice(this.state.begin, this.state.end),
+        expenseListDataOnPage: rows,
         path: "Wydatki -> lista",
       });
     });
@@ -50,8 +46,7 @@ class Expense2 extends Component<IRecipeProps, IRecipeState> {
       this.setState({
         isDisplayExpenseList: false,
         isDisplayCategoryExpenseList: true,
-        allData: rows,
-        categoryExpenseDataOnPage: rows.slice(this.state.begin, this.state.end),
+        categoryExpenseDataOnPage: rows,
         path: "Wydatki -> kategorie -> lista",
       });
     });

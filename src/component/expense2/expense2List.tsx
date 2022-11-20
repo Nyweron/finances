@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, SyntheticEvent } from "react";
 
 import { connect } from "react-redux";
 
-import { Table, Icon, Pagination } from "semantic-ui-react";
+import { Table, Icon, Pagination, Select } from "semantic-ui-react";
 
 import { Expense2Add, Expense2Edit, Expense2Remove } from "./index";
 
@@ -15,10 +15,18 @@ import {
 
 import { ExpenseModelList } from "../../constants";
 
+const rowsPerListOptions = [
+  { key: "4", value: "4", text: "4" },
+  { key: "10", value: "10", text: "10" },
+  { key: "25", value: "25", text: "25" },
+  { key: "50", value: "50", text: "50" },
+  { key: "100", value: "100", text: "100" },
+];
+
 interface IRecipeProps {
   handleOpenModalRemove: any;
   handleOpenModalEdit: any;
-  expenseDataOnPage: ExpenseModelList[];
+  expenseListDataOnPage: ExpenseModelList[];
   modalAdd: boolean;
   modalEdit: boolean;
   modalRemove: boolean;
@@ -31,9 +39,11 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
     allData: [],
     dataEdit: {},
     dataRemove: {},
-    expenseDataOnPage: [],
+    expenseListDataOnPage: [],
     begin: 0,
     end: 4,
+    perPage: 4,
+    activePage: 1,
     isCreated: false,
     isEdited: false,
     isRemoved: false,
@@ -43,7 +53,7 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
     getAll("expense").then((rows) => {
       this.setState({
         allData: rows,
-        expenseDataOnPage: rows.slice(this.state.begin, this.state.end),
+        expenseListDataOnPage: rows.slice(this.state.begin, this.state.end),
       });
     });
   }
@@ -54,7 +64,7 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
         .then((rows) => {
           this.setState({
             allData: rows,
-            expenseDataOnPage: rows.slice(this.state.begin, this.state.end),
+            expenseListDataOnPage: rows.slice(this.state.begin, this.state.end),
             isCreated: false,
             isEdited: false,
             isRemoved: false,
@@ -73,12 +83,12 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
   onChangePage = async (event: any, data: any) => {
     await this.setState({
       activePage: data.activePage,
-      begin: data.activePage * 4 - 4,
-      end: data.activePage * 4,
+      begin: data.activePage * this.state.perPage - this.state.perPage,
+      end: data.activePage * this.state.perPage,
     });
 
     this.setState({
-      expenseDataOnPage: this.state.allData.slice(
+      expenseListDataOnPage: this.state.allData.slice(
         this.state.begin,
         this.state.end
       ),
@@ -148,6 +158,26 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
     });
   };
 
+  handleDisplayRowsPerPage = async (
+    event: SyntheticEvent<HTMLElement, Event>,
+    d: any
+  ) => {
+    await this.setState({ perPage: d.value });
+
+    await this.setState({
+      activePage: this.state.activePage,
+      begin: this.state.activePage * this.state.perPage - this.state.perPage,
+      end: this.state.activePage * this.state.perPage,
+    });
+
+    this.setState({
+      expenseListDataOnPage: this.state.allData.slice(
+        this.state.begin,
+        this.state.end
+      ),
+    });
+  };
+
   render() {
     return (
       <>
@@ -170,7 +200,7 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
               </Table.Header>
 
               <Table.Body>
-                {this.state.expenseDataOnPage.map(
+                {this.state.expenseListDataOnPage.map(
                   (item: ExpenseModelList, i) => {
                     return (
                       <Table.Row key={`expenseRow_${i}`}>
@@ -230,32 +260,43 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
 
               <Table.Footer>
                 <Table.Row>
-                  <Table.HeaderCell colSpan={10}>
-                    <Pagination
-                      ellipsisItem={{
-                        content: <Icon name="ellipsis horizontal" />,
-                        icon: true,
-                      }}
-                      firstItem={{
-                        content: <Icon name="angle double left" />,
-                        icon: true,
-                      }}
-                      lastItem={{
-                        content: <Icon name="angle double right" />,
-                        icon: true,
-                      }}
-                      prevItem={{
-                        content: <Icon name="angle left" />,
-                        icon: true,
-                      }}
-                      nextItem={{
-                        content: <Icon name="angle right" />,
-                        icon: true,
-                      }}
-                      defaultActivePage={1}
-                      totalPages={Math.ceil(this.state.allData.length / 4)}
-                      onPageChange={this.onChangePage}
-                    />
+                  <Table.HeaderCell colSpan={5}>
+                    <Table.Cell>
+                      <Pagination
+                        ellipsisItem={{
+                          content: <Icon name="ellipsis horizontal" />,
+                          icon: true,
+                        }}
+                        firstItem={{
+                          content: <Icon name="angle double left" />,
+                          icon: true,
+                        }}
+                        lastItem={{
+                          content: <Icon name="angle double right" />,
+                          icon: true,
+                        }}
+                        prevItem={{
+                          content: <Icon name="angle left" />,
+                          icon: true,
+                        }}
+                        nextItem={{
+                          content: <Icon name="angle right" />,
+                          icon: true,
+                        }}
+                        defaultActivePage={1}
+                        totalPages={Math.ceil(
+                          this.state.allData.length / this.state.perPage
+                        )}
+                        onPageChange={this.onChangePage}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Select
+                        placeholder="Wiersze per strona"
+                        options={rowsPerListOptions}
+                        onChange={this.handleDisplayRowsPerPage}
+                      />
+                    </Table.Cell>
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Footer>
