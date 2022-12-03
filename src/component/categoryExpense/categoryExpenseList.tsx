@@ -18,6 +18,7 @@ const rowsPerListOptions = [
   { key: "50", value: "50", text: "50" },
   { key: "100", value: "100", text: "100" },
 ];
+//npm install --save react-toastify todo
 
 interface IRecipeProps {
   handleOpenModalRemove: any;

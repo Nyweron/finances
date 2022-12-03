@@ -1,6 +1,6 @@
 import React, { Component, SyntheticEvent } from "react";
-
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 
 import { Table, Icon, Pagination, Select } from "semantic-ui-react";
 
@@ -97,8 +97,8 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
 
   handleAddExpense = (props: any) => {
     console.log(
-      "🚀 ~ file: expense2List.tsx ~ line 92 ~ Expense2List ~ props.calendarDate",
-      props.calendarDate
+      "🚀 ~ file: expense2List.tsx ~ line 92 ~ Expense2List ~ props.date",
+      props.date
     );
     const expenseObj = {
       howMuch: parseFloat(props.howMuch),
@@ -111,9 +111,22 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
       categoryExpenseId: parseInt(props.categoryExpenseId),
     };
 
-    create(expenseObj, "expense").then((res) => {
-      this.setState({ isCreated: true });
-    });
+    create(expenseObj, "expense")
+      .then((res) => {
+        console.log(
+          "🚀 ~ file: expense2List.tsx:116 ~ Expense2List ~ .then ~ res",
+          res
+        );
+        this.setState({ isCreated: true });
+        toast.success("Expense was added!");
+      })
+      .catch((err) => {
+        console.log(
+          "🚀 ~ file: expense2List.tsx:121 ~ Expense2List ~ err",
+          err
+        );
+        toast.error("Expense was not added!");
+      });
   };
 
   handleOpenModalRemoveExpense = (expenseRemove: any) => {

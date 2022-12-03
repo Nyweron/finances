@@ -3,9 +3,13 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "semantic-ui-css/semantic.min.css";
 import "react-widgets/styles.css";
+
 import DateFnsLocalizer from "react-widgets-date-fns";
 import pl from "date-fns/locale/pl";
 import App from "./App";
@@ -17,6 +21,7 @@ const app = (
   <Provider store={store}>
     <BrowserRouter>
       <App />
+      <ToastContainer />
     </BrowserRouter>
   </Provider>
 );
