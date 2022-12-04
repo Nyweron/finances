@@ -50,12 +50,23 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
   };
 
   componentDidMount() {
-    getAll("expense").then((rows) => {
-      this.setState({
-        allData: rows,
-        expenseListDataOnPage: rows.slice(this.state.begin, this.state.end),
+    getAll("expense")
+      .then((rows) => {
+        console.log(
+          "🚀 ~ file: expense2List.tsx:55 ~ Expense2List ~ .then ~ rows",
+          rows
+        );
+        this.setState({
+          allData: rows,
+          expenseListDataOnPage: rows.slice(this.state.begin, this.state.end),
+        });
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: expense2List.tsx:62 ~ Expense2List ~ componentDidMount ~ error",
+          error
+        );
       });
-    });
   }
 
   componentDidUpdate() {
@@ -117,8 +128,14 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
           "🚀 ~ file: expense2List.tsx:116 ~ Expense2List ~ .then ~ res",
           res
         );
-        this.setState({ isCreated: true });
-        toast.success("Expense was added!");
+        if (res >= 200 && res <= 299) {
+          this.setState({ isCreated: true });
+          toast.success("Expense was added!");
+          return;
+        }
+
+        this.setState({ isCreated: false });
+        toast.error("Expense was not added!");
       })
       .catch((err) => {
         console.log(

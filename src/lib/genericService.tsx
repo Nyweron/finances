@@ -1,3 +1,4 @@
+import { ErrorResponse } from "@remix-run/router";
 import { backendUrl } from "../shared/apiUrl";
 
 export const getAll = (controller: string) => {
@@ -14,15 +15,29 @@ export const create = async (obj: any, controllerName: string) => {
     body: JSON.stringify(obj),
   })
     .then((res) => {
-      if (!res.ok) throw Error(res.statusText);
+      if (!res.ok) {
+        res.text().then((dataFromBackendError) => {
+          console.log(
+            "🚀 ~ file: genericService.tsx:21 ~ .then ~ x",
+            dataFromBackendError
+          );
+          throw new Error(dataFromBackendError);
+        });
+
+        //throw Error(res.statusText);
+      }
       //console.log(res.status);
       return res.status;
     })
+
     .then((data) => {
+      console.log("🚀 ~ file: genericService.tsx:34 ~ .then ~ data", data);
       //console.log(data);
       return data;
     })
-    .catch((error) => console.log(error));
+    .catch((error) =>
+      console.log("🚀 ~ file: genericService.tsx:39 ~ create ~ error", error)
+    );
 };
 
 export const edit = async (obj: any, controllerName: string) => {
