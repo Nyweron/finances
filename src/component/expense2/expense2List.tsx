@@ -135,14 +135,14 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
         }
 
         this.setState({ isCreated: false });
-        toast.error("Expense was not added!");
+        toast.error("Expense was not added! (1)");
       })
       .catch((err) => {
         console.log(
           "🚀 ~ file: expense2List.tsx:121 ~ Expense2List ~ err",
           err
         );
-        toast.error("Expense was not added!");
+        toast.error("Expense was not added! (2)");
       });
   };
 
@@ -290,43 +290,41 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
 
               <Table.Footer>
                 <Table.Row>
-                  <Table.HeaderCell colSpan={5}>
-                    <Table.Cell>
-                      <Pagination
-                        ellipsisItem={{
-                          content: <Icon name="ellipsis horizontal" />,
-                          icon: true,
-                        }}
-                        firstItem={{
-                          content: <Icon name="angle double left" />,
-                          icon: true,
-                        }}
-                        lastItem={{
-                          content: <Icon name="angle double right" />,
-                          icon: true,
-                        }}
-                        prevItem={{
-                          content: <Icon name="angle left" />,
-                          icon: true,
-                        }}
-                        nextItem={{
-                          content: <Icon name="angle right" />,
-                          icon: true,
-                        }}
-                        defaultActivePage={1}
-                        totalPages={Math.ceil(
-                          this.state.allData.length / this.state.perPage
-                        )}
-                        onPageChange={this.onChangePage}
-                      />
-                    </Table.Cell>
-                    <Table.Cell>
+                  <Table.HeaderCell colSpan="12">
+                    <Pagination
+                      ellipsisItem={{
+                        content: <Icon name="ellipsis horizontal" />,
+                        icon: true,
+                      }}
+                      firstItem={{
+                        content: <Icon name="angle double left" />,
+                        icon: true,
+                      }}
+                      lastItem={{
+                        content: <Icon name="angle double right" />,
+                        icon: true,
+                      }}
+                      prevItem={{
+                        content: <Icon name="angle left" />,
+                        icon: true,
+                      }}
+                      nextItem={{
+                        content: <Icon name="angle right" />,
+                        icon: true,
+                      }}
+                      defaultActivePage={1}
+                      totalPages={Math.ceil(
+                        this.state.allData.length / this.state.perPage
+                      )}
+                      onPageChange={this.onChangePage}
+                    />
+                    <span style={{ marginLeft: "1%" }}>
                       <Select
                         placeholder="Wiersze per strona"
                         options={rowsPerListOptions}
                         onChange={this.handleDisplayRowsPerPage}
                       />
-                    </Table.Cell>
+                    </span>
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Footer>
