@@ -13,7 +13,7 @@ import {
   OPEN_MODAL_REMOVE,
 } from "../../redux/actions/actions";
 
-import { ExpenseModelList } from "../../constants";
+import { ExpenseModel, ExpenseModelList } from "../../constants";
 
 const rowsPerListOptions = [
   { key: "4", value: "4", text: "4" },
@@ -22,6 +22,8 @@ const rowsPerListOptions = [
   { key: "50", value: "50", text: "50" },
   { key: "100", value: "100", text: "100" },
 ];
+
+const expense = "expense";
 
 interface IRecipeProps {
   handleOpenModalRemove: any;
@@ -50,7 +52,7 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
   };
 
   componentDidMount() {
-    getAll("expense")
+    getAll(expense)
       .then((rows) => {
         console.log(
           "🚀 ~ file: expense2List.tsx:55 ~ Expense2List ~ .then ~ rows",
@@ -71,7 +73,7 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
 
   componentDidUpdate() {
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
-      getAll("expense")
+      getAll(expense)
         .then((rows) => {
           this.setState({
             allData: rows,
@@ -106,23 +108,23 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
     });
   };
 
-  handleAddExpense = (props: any) => {
+  handleAddExpense = (props: ExpenseModel) => {
     console.log(
-      "🚀 ~ file: expense2List.tsx ~ line 92 ~ Expense2List ~ props.date",
-      props.date
+      "🚀 ~ file: expense2List.tsx ~ line 92 ~ Expense2List ~ props",
+      props
     );
-    const expenseObj = {
-      howMuch: parseFloat(props.howMuch),
+    const expenseObj: ExpenseModel = {
+      howMuch: props.howMuch,
       date: new Date(props.date),
       comment: props.comment,
       attachment: props.attachment,
       standingOrder: props.standingOrder,
-      userId: parseInt(props.userId),
-      categorySavingId: parseInt(props.categorySavingId),
-      categoryExpenseId: parseInt(props.categoryExpenseId),
+      userId: props.userId,
+      categorySavingId: props.categorySavingId,
+      categoryExpenseId: props.categoryExpenseId,
     };
 
-    create(expenseObj, "expense")
+    create(expenseObj, expense)
       .then((res) => {
         console.log(
           "🚀 ~ file: expense2List.tsx:116 ~ Expense2List ~ .then ~ res",
@@ -151,14 +153,30 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
     this.setState({ dataRemove: expenseRemove });
   };
 
-  handleRemoveExpense = (expenseRemove: any) => {
+  handleRemoveExpense = (expenseRemove: ExpenseModel) => {
     console.log(
-      "🚀 ~ file: expense2List.tsx ~ line 115 ~ Expense2List ~ expenseRemove",
+      "🚀 ~ file: expense2List.tsx:158 ~ Expense2List ~ expenseRemove",
       expenseRemove
     );
-    remove(expenseRemove.id, "expense").then((res) => {
-      this.setState({ isRemoved: true });
-    });
+
+    remove(expenseRemove.id!, expense)
+      .then((res) => {
+        if (res >= 200 && res <= 299) {
+          this.setState({ isRemoved: true });
+          toast.success("Expense was removed!");
+          return;
+        }
+
+        this.setState({ isRemoved: false });
+        toast.error("Expense was not removed! (1)");
+      })
+      .catch((err) => {
+        console.log(
+          "🚀 ~ file: expense2List.tsx:171 ~ Expense2List ~ remove ~ err",
+          err
+        );
+        toast.error("Expense was not removed! (2)");
+      });
   };
 
   handleOpenModalEditExpense = (expenseEdit: any) => {
@@ -166,26 +184,45 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
     this.setState({ dataEdit: expenseEdit });
   };
 
-  handleEditExpense = (expenseEdit: any) => {
+  handleEditExpense = (expenseEdit: ExpenseModel) => {
     console.log(
       "🚀 ~ file: expense2List.tsx ~ line 130 ~ Expense2List ~ expenseEdit",
       expenseEdit
     );
-    const expenseObj = {
+    const expenseObj: ExpenseModel = {
       id: expenseEdit.id,
-      howMuch: parseFloat(expenseEdit.howMuch),
+      howMuch: expenseEdit.howMuch,
       date: new Date(expenseEdit.date),
       comment: expenseEdit.comment,
       attachment: expenseEdit.attachment,
       standingOrder: expenseEdit.standingOrder,
-      userId: parseInt(expenseEdit.userId),
-      categorySavingId: parseInt(expenseEdit.categorySavingId),
-      categoryExpenseId: parseInt(expenseEdit.categoryExpenseId),
+      userId: expenseEdit.userId,
+      categorySavingId: expenseEdit.categorySavingId,
+      categoryExpenseId: expenseEdit.categoryExpenseId,
     };
 
-    edit(expenseObj, "expense").then((res) => {
-      this.setState({ isEdited: true });
-    });
+    edit(expenseObj, expense)
+      .then((res) => {
+        console.log(
+          "🚀 ~ file: expense2List.tsx:205 ~ Expense2List ~ edit ~ res",
+          res
+        );
+
+        if (res >= 200 && res <= 299) {
+          this.setState({ isEdited: true });
+          toast.success("Expense was edited!");
+          return;
+        }
+        this.setState({ isCreated: false });
+        toast.error("Expense was not edited! (1)");
+      })
+      .catch((err) => {
+        console.log(
+          "🚀 ~ file: expense2List.tsx:220 ~ Expense2List ~ err",
+          err
+        );
+        toast.error("Expense was not edited! (2)");
+      });
   };
 
   handleDisplayRowsPerPage = async (

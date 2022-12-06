@@ -9,7 +9,7 @@ export interface CategorySavingModel {
 }
 
 export interface ExpenseModel {
-  id: number;
+  id?: number;
   howMuch: number;
   date: Date;
   comment: string;
