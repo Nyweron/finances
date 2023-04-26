@@ -119,3 +119,8 @@ export interface CategoryExpenseModelList {
   weight: number;
   categoryGroupId: number;
 }
+
+export interface AccountModel {
+  email: string;
+  password: string;
+}

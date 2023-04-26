@@ -5,7 +5,6 @@ import { Routes, Route, Link } from "react-router-dom";
 
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
-//import { expenses, incomes, savings } from "./shared/constData";
 
 import Index3 from "./pages/index3";
 
@@ -13,6 +12,7 @@ import Expense from "./pages/expense";
 import Expense2 from "./pages/expense2";
 import Income from "./pages/income";
 import Saving from "./pages/saving";
+import Login from "./pages/login";
 
 import styles from "./App.module.css";
 
@@ -25,9 +25,6 @@ class App extends Component {
         </div>
         <div>
           <div className={styles.topnav}>
-            {/* <Link to="/expense">
-                <span>Wydatki</span>
-              </Link> */}
             <Link to="/expense2">
               <span>Wydatki2</span>
             </Link>
@@ -37,6 +34,9 @@ class App extends Component {
             <Link to="/saving">
               <span>Oszczędności</span>
             </Link>
+            <Link to="/login">
+              <span>Zaloguj</span>
+            </Link>
           </div>
 
           <div>
@@ -45,6 +45,7 @@ class App extends Component {
               <Route path="/expense2" element={<Expense2 />} />
               <Route path="/income" element={<Income />} />
               <Route path="/saving" element={<Saving />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/" element={<Index3 />} />
             </Routes>
           </div>
