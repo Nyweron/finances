@@ -10,12 +10,19 @@ import {
 } from "semantic-ui-react";
 
 import { loginUser } from "../lib/accountService";
-import { AccountModel } from "../constants";
+import {
+  AccountContextModel,
+  AccountContextType,
+  AccountModel,
+} from "../constants";
+import { AccountContext } from "../context/accountContext";
 
 const Login: React.FC<any> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState(false);
+
+  const { saveToken } = React.useContext(AccountContext) as AccountContextType;
 
   const handleSetEmail = (email: string) => {
     //console.log("🚀 ~ file: loginForm.tsx:104 ~ email:", email);
@@ -37,8 +44,23 @@ const Login: React.FC<any> = () => {
     };
 
     loginUser(accountUser)
-      .then((res) => {
-        console.log("🚀 ~ file: loginForm.tsx:43 ~ .then ~ res:", res);
+      .then((bearerJwtToken) => {
+        console.log(
+          "🚀 ~ file: loginForm.tsx:43 ~ .then ~ res:",
+          bearerJwtToken
+        );
+
+        localStorage.setItem("Authorization", `Bearer ${bearerJwtToken}`);
+
+        const accountContextType: AccountContextModel = {
+          email: " loginUser email",
+          someNumber: 10,
+          token: bearerJwtToken,
+          userName: "user name",
+        };
+
+        saveToken(accountContextType);
+        //TODO in this section add react context, keep token jwt. And use it in other services, to take data from DB expense controller
       })
       .catch((err) => {
         console.log("🚀 ~ file: loginForm.tsx:48 ~ handleSubmit ~ err:", err);

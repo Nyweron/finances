@@ -14,13 +14,16 @@ import DateFnsLocalizer from "react-widgets-date-fns";
 import pl from "date-fns/locale/pl";
 import App from "./App";
 import store from "./redux/reducers/index";
+import AccountProvider from "./context/accountContext";
 
 new DateFnsLocalizer({ locales: { pl: pl } });
 
 const app = (
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <AccountProvider>
+        <App />
+      </AccountProvider>
       <ToastContainer />
     </BrowserRouter>
   </Provider>

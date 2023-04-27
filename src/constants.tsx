@@ -124,3 +124,15 @@ export interface AccountModel {
   email: string;
   password: string;
 }
+
+export interface AccountContextModel {
+  email: string;
+  token: string;
+  userName: string;
+  someNumber: number;
+}
+
+export type AccountContextType = {
+  account: AccountContextModel;
+  saveToken: (account: AccountContextModel) => void;
+};

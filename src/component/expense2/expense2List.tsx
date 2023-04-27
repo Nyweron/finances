@@ -13,7 +13,12 @@ import {
   OPEN_MODAL_REMOVE,
 } from "../../redux/actions/actions";
 
-import { ExpenseModel, ExpenseModelList } from "../../constants";
+import {
+  AccountContextType,
+  ExpenseModel,
+  ExpenseModelList,
+} from "../../constants";
+import { AccountContext } from "../../context/accountContext";
 
 const rowsPerListOptions = [
   { key: "4", value: "4", text: "4" },
@@ -51,8 +56,21 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
     isRemoved: false,
   };
 
+  static contextType = AccountContext;
+
   componentDidMount() {
-    getAll(expense)
+    let token = "";
+
+    if (this.context) {
+      console.log(
+        "🚀 ~ file: expense2List.tsx:65 ~ Expense2List ~ componentDidMount ~ this.context:",
+        this.context
+      );
+      const state = this.context as AccountContextType;
+      token = state.account.token;
+    }
+
+    getAll(expense, token)
       .then((rows) => {
         console.log(
           "🚀 ~ file: expense2List.tsx:55 ~ Expense2List ~ .then ~ rows",
@@ -246,6 +264,11 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
   };
 
   render() {
+    console.log(
+      "🚀 ~ file: expense2List.tsx:258 ~ Expense2List ~ render ~ this.context:",
+      this.context
+    );
+
     return (
       <>
         <div className="row">
@@ -253,6 +276,7 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
             <Table celled selectable>
               <Table.Header>
                 <Table.Row>
+                  {/* https://react.semantic-ui.com/collections/table/#variations-sortable> */}
                   <Table.HeaderCell>Id</Table.HeaderCell>
                   <Table.HeaderCell>Kwota</Table.HeaderCell>
                   <Table.HeaderCell>Na co</Table.HeaderCell>

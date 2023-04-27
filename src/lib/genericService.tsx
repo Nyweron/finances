@@ -1,8 +1,13 @@
-import { ErrorResponse } from "@remix-run/router";
 import { backendUrl } from "../shared/apiUrl";
 
-export const getAll = (controller: string) => {
-  return fetch(backendUrl + controller).then((res) => res.json());
+export const getAll = (controller: string, token?: string) => {
+  console.log("🚀 ~ file: genericService.tsx:4 ~ getAll ~ token:", token);
+
+  return fetch(backendUrl + controller, {
+    headers: {
+      Authorization: `Bearer ${token!}`,
+    },
+  }).then((res) => res.json());
 };
 
 export const create = async (obj: any, controllerName: string) => {
