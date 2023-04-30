@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   Form,
@@ -18,6 +19,7 @@ import {
 import { AccountContext } from "../context/accountContext";
 
 const Login: React.FC<any> = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState(false);
@@ -57,9 +59,11 @@ const Login: React.FC<any> = () => {
           someNumber: 10,
           token: bearerJwtToken,
           userName: "user name",
+          isLogin: true,
         };
 
         saveToken(accountContextType);
+        navigate("/");
         //TODO in this section add react context, keep token jwt. And use it in other services, to take data from DB expense controller
       })
       .catch((err) => {
@@ -71,7 +75,7 @@ const Login: React.FC<any> = () => {
     <>
       <Grid
         textAlign="center"
-        style={{ height: "50vh" }}
+        style={{ height: "70vh" }}
         verticalAlign="middle"
       >
         <Grid.Column style={{ maxWidth: 450 }}>
@@ -107,7 +111,10 @@ const Login: React.FC<any> = () => {
             </Segment>
           </Form>
           <Message>
-            New to us? <a href="#">Sign Up</a>
+            Nie masz konta?{" "}
+            <Link to={"/registration"}>
+              <Button primary>Zarejestruj się</Button>
+            </Link>
           </Message>
         </Grid.Column>
       </Grid>

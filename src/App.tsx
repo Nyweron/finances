@@ -6,6 +6,8 @@ import { Routes, Route, Link } from "react-router-dom";
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
 
+import { AccountContextType } from "./constants";
+
 import Index3 from "./pages/index3";
 
 import Expense from "./pages/expense";
@@ -13,11 +15,20 @@ import Expense2 from "./pages/expense2";
 import Income from "./pages/income";
 import Saving from "./pages/saving";
 import Login from "./pages/login";
+import Logoff from "./pages/logoff";
+import RegisterNewUser from "./pages/registerNewUser";
+
+import { AccountContext } from "./context/accountContext";
 
 import styles from "./App.module.css";
 
 class App extends Component {
+  static contextType = AccountContext;
+
   render() {
+    const { account } = this.context as AccountContextType;
+    console.log("🚀 ~ file: App.tsx:29 ~ App ~ render ~ state:", account);
+
     return (
       <>
         <div className={styles.header}>
@@ -34,9 +45,15 @@ class App extends Component {
             <Link to="/saving">
               <span>Oszczędności</span>
             </Link>
-            <Link to="/login">
-              <span>Zaloguj</span>
-            </Link>
+            {account.isLogin ? (
+              <Link to="/logoff">
+                <span>Wyloguj</span>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <span>Zaloguj</span>
+              </Link>
+            )}
           </div>
 
           <div>
@@ -46,6 +63,8 @@ class App extends Component {
               <Route path="/income" element={<Income />} />
               <Route path="/saving" element={<Saving />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/logoff" element={<Logoff />} />
+              <Route path="/registration" element={<RegisterNewUser />} />
               <Route path="/" element={<Index3 />} />
             </Routes>
           </div>

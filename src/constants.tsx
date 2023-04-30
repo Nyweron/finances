@@ -130,9 +130,11 @@ export interface AccountContextModel {
   token: string;
   userName: string;
   someNumber: number;
+  isLogin: boolean;
 }
 
 export type AccountContextType = {
   account: AccountContextModel;
   saveToken: (account: AccountContextModel) => void;
+  logOff: () => void;
 };
