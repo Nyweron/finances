@@ -5,6 +5,16 @@ export const AccountContext = React.createContext<AccountContextType | null>(
   null
 );
 
+export function useAccountContext() {
+  const account = React.useContext(AccountContext);
+
+  if (account === null) {
+    throw new Error("You are not authenticated.");
+  }
+
+  return account;
+}
+
 interface Props {
   children: React.ReactNode;
 }
@@ -41,6 +51,8 @@ const AccountProvider: React.FC<Props> = ({ children }) => {
     setAccount(clearAccount);
     localStorage.removeItem("Authorization");
   };
+
+  //console.log("🚀 ~ file: accountContext.tsx:50 ~ account:", account);
 
   return (
     <AccountContext.Provider value={{ account, saveToken, logOff }}>

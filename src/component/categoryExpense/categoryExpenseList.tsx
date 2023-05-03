@@ -2,7 +2,7 @@ import React, { Component, SyntheticEvent } from "react";
 import { connect } from "react-redux";
 
 import { Table, Icon, Pagination, Select } from "semantic-ui-react";
-import { CategoryExpenseModelList } from "../../constants";
+import { AccountContextType, CategoryExpenseModelList } from "../../constants";
 
 import { create, getAll, remove } from "../../lib/genericService";
 import {
@@ -10,6 +10,7 @@ import {
   OPEN_MODAL_REMOVE,
 } from "../../redux/actions/actions";
 import { CategoryExpenseAdd, CategoryExpenseRemove } from "./index";
+import { AccountContext } from "../../context/accountContext";
 
 const rowsPerListOptions = [
   { key: "4", value: "4", text: "4" },
@@ -46,7 +47,12 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
     isRemoved: false,
   };
 
+  static contextType = AccountContext;
+
   componentDidMount() {
+    const { account } = this.context as AccountContextType;
+    const token = account.token;
+
     getAll("categoryExpense").then((rows) => {
       this.setState({
         allData: rows,
@@ -57,6 +63,9 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
 
   componentDidUpdate() {
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
+      const { account } = this.context as AccountContextType;
+      const token = account.token;
+
       getAll("categoryExpense")
         .then((rows) => {
           this.setState({

@@ -1,20 +1,53 @@
 import { backendUrl } from "../shared/apiUrl";
 
-export const getAll = (controller: string, token?: string) => {
-  console.log("🚀 ~ file: genericService.tsx:4 ~ getAll ~ token:", token);
+export const getAll = (controller: string) => {
+  //console.log("🚀 ~ file: genericService.tsx:4 ~ getAll ~ token:", token);
+
+  const token = localStorage.getItem("Authorization"); //Cookies instead localStorage
+  console.log("🚀 ~ file: genericService.tsx:7 ~ getAll ~ token:", token);
 
   return fetch(backendUrl + controller, {
     headers: {
-      Authorization: `Bearer ${token!}`,
+      Authorization: `${token}`,
     },
-  }).then((res) => res.json());
+  })
+    .then((res) => {
+      if (res.ok) {
+        console.log("🚀 ~ file: genericService.tsx:13 ~ .then ~ res:", res);
+        return res.json();
+      }
+
+      console.log("🚀 ~ file: genericService.tsx:20 ~ .then ~ res:", res);
+
+      console.log(
+        "🚀 ~ file: genericService.tsx:24 ~ .then ~ res.status:",
+        res.status
+      );
+    })
+    .catch((error) => {
+      //console.log("🚀 ~ file: genericService.tsx:16 ~ getAll ~ error:", error);
+      var temp = new Error(error);
+
+      // console.log(
+      //   "🚀 ~ file: genericService.tsx:19 ~ getAll ~ error.text():",
+      //   temp.text()
+      // );
+      // console.log("🚀 ~ file: genericService.tsx:22 ~ getAll ~ temp:", temp);
+      console.log("🚀 ~ file: genericService.tsx:23 ~ getAll ~ error:", error);
+      throw error;
+    });
 };
 
-export const create = async (obj: any, controllerName: string) => {
+export const create = async (
+  obj: any,
+  controllerName: string,
+  token?: string
+) => {
   return await fetch(backendUrl + controllerName, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token!}`,
     },
     method: "POST",
     body: JSON.stringify(obj),

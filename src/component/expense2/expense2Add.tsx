@@ -10,9 +10,13 @@ import Modal from "react-bootstrap/Modal";
 import { GetCategoryExpensesForSelect } from "../../lib/categoryExpenseService";
 import { GetCategorySavingsForSelect } from "../../lib/categorySavingService";
 import { GetUsersForSelect } from "../../lib/userService";
-import { ExpenseModel } from "../../constants";
+import { AccountContextType, ExpenseModel } from "../../constants";
 
 import { CLOSE_MODAL_ADD } from "../../redux/actions/actions";
+import {
+  AccountContext,
+  useAccountContext,
+} from "../../context/accountContext";
 
 const Expense2Add: React.FC<any> = (props) => {
   const [howMuch, setHowMuch] = useState("");
@@ -34,6 +38,9 @@ const Expense2Add: React.FC<any> = (props) => {
   const [categoryExpenseList, setCategoryExpenseList] = useState([]);
   const [categorySavingList, setCategorySavingList] = useState([]);
   const [userList, setUserList] = useState([]);
+
+  const { account } = useAccountContext();
+  const token = account.token;
 
   useEffect(() => {
     GetCategoryExpensesForSelect().then((rows) => {
@@ -120,7 +127,7 @@ const Expense2Add: React.FC<any> = (props) => {
 
     setFormError(false);
     props.handleCloseModalAdd();
-    props.handleSubmit(expenseFormData);
+    props.handleSubmit(expenseFormData, token);
   };
 
   const handleSetHowMuch = (value: string) => {

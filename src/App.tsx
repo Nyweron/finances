@@ -21,16 +21,18 @@ import RegisterNewUser from "./pages/registerNewUser";
 import { AccountContext } from "./context/accountContext";
 
 import styles from "./App.module.css";
+import SessionTimer from "./pages/sessionTimer";
 
 class App extends Component {
   static contextType = AccountContext;
 
   render() {
     const { account } = this.context as AccountContextType;
-    console.log("🚀 ~ file: App.tsx:29 ~ App ~ render ~ state:", account);
+    // console.log("🚀 ~ file: App.tsx:29 ~ App ~ render ~ state:", account);
 
     return (
       <>
+        <SessionTimer />
         <div className={styles.header}>
           <Header />
         </div>

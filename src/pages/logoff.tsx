@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Grid, Message, Segment } from "semantic-ui-react";
-import { AccountContext } from "../context/accountContext";
-import { AccountContextType } from "../constants";
+import { useAccountContext } from "../context/accountContext";
 
 const Logoff: React.FC<any> = () => {
   const navigate = useNavigate();
 
-  const { logOff } = React.useContext(AccountContext) as AccountContextType;
+  const { logOff } = useAccountContext();
 
   useEffect(() => {
     console.log("🚀 ~ file: logoff.tsx:18 ~ useEffect ~ logOff():");

@@ -62,15 +62,20 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
     let token = "";
 
     if (this.context) {
-      console.log(
-        "🚀 ~ file: expense2List.tsx:65 ~ Expense2List ~ componentDidMount ~ this.context:",
-        this.context
-      );
       const state = this.context as AccountContextType;
       token = state.account.token;
     }
+    console.log(
+      "🚀 ~ file: expense2List.tsx:55 ~ Expense2List ~ .then ~ componentDidMount",
+      this.state
+    );
 
-    getAll(expense, token)
+    console.log(
+      "🚀 ~ file: expense2List.tsx:56 ~ Expense2List ~ .then ~ componentDidMount",
+      this.context
+    );
+
+    getAll(expense)
       .then((rows) => {
         console.log(
           "🚀 ~ file: expense2List.tsx:55 ~ Expense2List ~ .then ~ rows",
@@ -90,7 +95,26 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
   }
 
   componentDidUpdate() {
+    console.log(
+      "🚀 ~ file: expense2List.tsx:96 ~ Expense2List ~ componentDidUpdate ~ componentDidUpdate: this.state",
+      this.state
+    );
+    console.log(
+      "🚀 ~ file: expense2List.tsx:97 ~ Expense2List ~ componentDidUpdate ~ this.context:",
+      this.context
+    );
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
+      let token = "";
+
+      if (this.context) {
+        const state = this.context as AccountContextType;
+        token = state.account.token;
+      }
+
+      console.log(
+        "🚀 ~ file: expense2List.tsx:124 ~ Expense2List ~ componentDidUpdate ~ token:",
+        token
+      );
       getAll(expense)
         .then((rows) => {
           this.setState({
@@ -126,7 +150,7 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
     });
   };
 
-  handleAddExpense = (props: ExpenseModel) => {
+  handleAddExpense = (props: ExpenseModel, token: string) => {
     console.log(
       "🚀 ~ file: expense2List.tsx ~ line 92 ~ Expense2List ~ props",
       props
@@ -142,7 +166,7 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
       categoryExpenseId: props.categoryExpenseId,
     };
 
-    create(expenseObj, expense)
+    create(expenseObj, expense, token)
       .then((res) => {
         console.log(
           "🚀 ~ file: expense2List.tsx:116 ~ Expense2List ~ .then ~ res",
@@ -264,10 +288,15 @@ class Expense2List extends Component<IRecipeProps, IRecipeState> {
   };
 
   render() {
-    console.log(
-      "🚀 ~ file: expense2List.tsx:258 ~ Expense2List ~ render ~ this.context:",
-      this.context
-    );
+    // console.log(
+    //   "🚀 ~ file: expense2List.tsx:286 ~ Expense2List ~ render ~ this.context:",
+    //   this.context
+    // );
+
+    // console.log(
+    //   "🚀 ~ file: expense2List.tsx:291 ~ Expense2List ~ render ~ this.state.expenseListDataOnPage:",
+    //   this.state.expenseListDataOnPage
+    // );
 
     return (
       <>

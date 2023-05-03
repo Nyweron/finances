@@ -13,6 +13,9 @@ import {
   OPEN_MODAL_CATEGORY_EXPENSE_ADD,
 } from "../redux/actions/actions";
 import { CategoryExpenseList } from "../component/categoryExpense";
+import { toast } from "react-toastify";
+import { AccountContext } from "../context/accountContext";
+import { AccountContextType } from "../constants";
 
 interface IRecipeProps {
   handleOpenModalAdd: any;
@@ -30,15 +33,55 @@ class Expense2 extends Component<IRecipeProps, IRecipeState> {
     path: "Wydatki -> lista",
   };
 
+  static contextType = AccountContext;
+
   handleExpenseList = () => {
-    getAll("expense").then((rows) => {
-      this.setState({
-        isDisplayExpenseList: true,
-        isDisplayCategoryExpenseList: false,
-        expenseListDataOnPage: rows,
-        path: "Wydatki -> lista",
+    let token = "";
+    if (this.context) {
+      const { account } = this.context as AccountContextType;
+      //console.log("🚀 ~ file: expense2.tsx:42 ~ Expense2 ~ account:", account);
+      token = account.token;
+    }
+
+    //console.log("🚀 ~ file: expense2.tsx:43 ~ Expense2 ~ getAll ~ expense:");
+    //getAll("expense")
+    getAll("expense")
+      .then((rows) => {
+        console.log(
+          "🚀 ~ file: expense2.tsx:49 ~ Expense2 ~ .then ~ rows:",
+          rows
+        );
+        this.setState({
+          isDisplayExpenseList: true,
+          isDisplayCategoryExpenseList: false,
+          expenseListDataOnPage: rows,
+          path: "Wydatki -> lista",
+        });
+      })
+      .catch((error) => {
+        console.log(
+          "🚀 ~ file: expense2.tsx:63 ~ Expense2 ~ getAll ~ error:",
+          error
+        );
+        // console.log(
+        //   "🚀 ~ file: expense2.tsx:64 ~ Expense2 ~ getAll ~ error:",
+        //   new Error(error)
+        // );
+
+        this.setState({
+          isDisplayExpenseList: true,
+          expenseListDataOnPage: [],
+          isDisplayCategoryExpenseList: false,
+          path: "Wydatki -> lista",
+        });
+
+        if (token.length === 0) {
+          toast.error(`You are not authenticated. Token: ${token}`);
+        }
+
+        throw error;
       });
-    });
+    //console.log("🚀 ~ file: expense2.tsx:44 ~ Expense2 ~ getAll ~ expense:");
   };
 
   handleCategoryExpenseList = () => {
@@ -53,6 +96,11 @@ class Expense2 extends Component<IRecipeProps, IRecipeState> {
   };
 
   render() {
+    console.log(
+      "🚀 ~ file: expense2.tsx:89 ~ Expense2 ~ expenseListDataOnPage:",
+      this.state
+    );
+
     return (
       <>
         <div className="ui centered grid">
