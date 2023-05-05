@@ -5,6 +5,7 @@ import { Routes, Route, Link } from "react-router-dom";
 
 import Header from "./component/header/header";
 import Footer from "./component/footer/footer";
+import SessionTimer from "./component/sessionTimer/sessionTimer";
 
 import { AccountContextType } from "./constants";
 
@@ -21,7 +22,6 @@ import RegisterNewUser from "./pages/registerNewUser";
 import { AccountContext } from "./context/accountContext";
 
 import styles from "./App.module.css";
-import SessionTimer from "./pages/sessionTimer";
 
 class App extends Component {
   static contextType = AccountContext;
