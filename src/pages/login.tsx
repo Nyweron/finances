@@ -11,12 +11,8 @@ import {
 } from "semantic-ui-react";
 
 import { loginUser } from "../lib/accountService";
-import {
-  AccountContextModel,
-  AccountContextType,
-  AccountModel,
-} from "../constants";
-import { AccountContext, useAccountContext } from "../context/accountContext";
+import { AccountContextModel, AccountModel } from "../constants";
+import { useAccountContext } from "../context/accountContext";
 
 function parseJwt(token: string) {
   var base64Url = token.split(".")[1];
@@ -82,72 +78,6 @@ const Login: React.FC<any> = () => {
         const formattedDateTime = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 
         console.log(formattedDateTime); // Output: "02/01/2023 02:46:17 AM"
-
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getDate():",
-          date.getDate()
-        );
-
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getFullYear():",
-          date.getFullYear()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getMonth():",
-          date.getMonth()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getDay():",
-          date.getDay()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getHours():",
-          date.getHours()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getMinutes():",
-          date.getMinutes()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getSeconds():",
-          date.getSeconds()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getMilliseconds():",
-          date.getMilliseconds()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getUTCDate():",
-          date.getUTCDate()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.getUTCDay():",
-          date.getUTCDay()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.toDateString():",
-          date.toDateString()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.toISOString():",
-          date.toISOString()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.toLocaleDateString():",
-          date.toLocaleDateString()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.toLocaleString():",
-          date.toLocaleString()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.toLocaleTimeString():",
-          date.toLocaleTimeString()
-        );
-        console.log(
-          "🚀 ~ file: login.tsx:86 ~ .then ~ date.toUTCString():",
-          date.toUTCString()
-        );
 
         localStorage.setItem("Authorization", `Bearer ${bearerJwtToken}`);
 
