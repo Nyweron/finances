@@ -4,7 +4,7 @@ export const getAll = (controller: string) => {
   //console.log("🚀 ~ file: genericService.tsx:4 ~ getAll ~ token:", token);
 
   const token = localStorage.getItem("Authorization"); //Cookies instead localStorage
-  console.log("🚀 ~ file: genericService.tsx:7 ~ getAll ~ token:", token);
+  // console.log("🚀 ~ file: genericService.tsx:7 ~ getAll ~ token:", token);
 
   return fetch(backendUrl + controller, {
     headers: {
@@ -23,6 +23,7 @@ export const getAll = (controller: string) => {
         "🚀 ~ file: genericService.tsx:24 ~ .then ~ res.status:",
         res.status
       );
+      throw res;
     })
     .catch((error) => {
       //console.log("🚀 ~ file: genericService.tsx:16 ~ getAll ~ error:", error);

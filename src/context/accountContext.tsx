@@ -24,6 +24,7 @@ const AccountProvider: React.FC<Props> = ({ children }) => {
     email: "",
     userName: "",
     token: "",
+    refreshToken: "",
     someNumber: -1,
     isLogin: false,
   });
@@ -33,6 +34,7 @@ const AccountProvider: React.FC<Props> = ({ children }) => {
       email: account.email,
       someNumber: account.someNumber,
       token: account.token,
+      refreshToken: account.refreshToken,
       userName: account.userName,
       isLogin: account.isLogin,
     };
@@ -44,6 +46,7 @@ const AccountProvider: React.FC<Props> = ({ children }) => {
       email: "",
       someNumber: -1,
       token: "",
+      refreshToken: "",
       userName: "",
       isLogin: false,
     };
@@ -51,8 +54,6 @@ const AccountProvider: React.FC<Props> = ({ children }) => {
     setAccount(clearAccount);
     localStorage.removeItem("Authorization");
   };
-
-  //console.log("🚀 ~ file: accountContext.tsx:50 ~ account:", account);
 
   return (
     <AccountContext.Provider value={{ account, saveToken, logOff }}>

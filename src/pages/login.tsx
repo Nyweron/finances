@@ -39,16 +39,11 @@ const Login: React.FC<any> = () => {
   const { saveToken } = useAccountContext();
 
   const handleSetEmail = (email: string) => {
-    //console.log("🚀 ~ file: loginForm.tsx:104 ~ email:", email);
     setFormError(false);
     setEmail(email);
   };
 
   const handleSetPassword = (password: string) => {
-    // console.log(
-    //   "🚀 ~ file: loginForm.tsx:28 ~ handleSetPassword ~ password:",
-    //   password
-    // );
     setPassword(password);
   };
 
@@ -59,13 +54,10 @@ const Login: React.FC<any> = () => {
     };
 
     loginUser(accountUser)
-      .then((bearerJwtToken) => {
-        console.log(
-          "🚀 ~ file: loginForm.tsx:43 ~ .then ~ res:",
-          bearerJwtToken
-        );
+      .then((token) => {
+        console.log("🚀 ~ file: loginForm.tsx:43 ~ .then ~ res:", token);
 
-        const temp = parseJwt(bearerJwtToken);
+        const temp = parseJwt(token.token);
         console.log("🚀 ~ file: login.tsx:71 ~ .then ~ temp:", temp);
         const sessionExpirationTime = temp.exp;
         console.log(
@@ -79,15 +71,19 @@ const Login: React.FC<any> = () => {
 
         console.log(formattedDateTime); // Output: "02/01/2023 02:46:17 AM"
 
-        localStorage.setItem("Authorization", `Bearer ${bearerJwtToken}`);
-
         const accountContextType: AccountContextModel = {
           email: " loginUser email",
           someNumber: 10,
-          token: bearerJwtToken,
+          token: token.token,
+          refreshToken: token.refreshToken,
           userName: "user name",
           isLogin: true,
         };
+
+        localStorage.setItem(
+          "Authorization",
+          `Bearer ${accountContextType.token}`
+        );
 
         saveToken(accountContextType);
         navigate("/");

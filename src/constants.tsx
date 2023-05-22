@@ -125,9 +125,15 @@ export interface AccountModel {
   password: string;
 }
 
+export interface AccountRefreshTokenModel {
+  token: string;
+  refreshToken: string;
+}
+
 export interface AccountContextModel {
   email: string;
   token: string;
+  refreshToken: string;
   userName: string;
   someNumber: number;
   isLogin: boolean;

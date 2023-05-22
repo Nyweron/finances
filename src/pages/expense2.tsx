@@ -36,19 +36,16 @@ class Expense2 extends Component<IRecipeProps, IRecipeState> {
   static contextType = AccountContext;
 
   handleExpenseList = () => {
-    let token = "";
+    let isLogin = false;
     if (this.context) {
       const { account } = this.context as AccountContextType;
-      //console.log("🚀 ~ file: expense2.tsx:42 ~ Expense2 ~ account:", account);
-      token = account.token;
+      isLogin = account.isLogin;
     }
 
-    //console.log("🚀 ~ file: expense2.tsx:43 ~ Expense2 ~ getAll ~ expense:");
-    //getAll("expense")
     getAll("expense")
       .then((rows) => {
         console.log(
-          "🚀 ~ file: expense2.tsx:49 ~ Expense2 ~ .then ~ rows:",
+          "🚀 ~ file: expense2.tsx:52 ~ Expense2 ~ .then ~ rows:",
           rows
         );
         this.setState({
@@ -57,6 +54,11 @@ class Expense2 extends Component<IRecipeProps, IRecipeState> {
           expenseListDataOnPage: rows,
           path: "Wydatki -> lista",
         });
+
+        console.log(
+          "🚀 ~ file: expense2.tsx:64 ~ Expense2 ~ .then ~ rows:",
+          rows
+        );
       })
       .catch((error) => {
         console.log(
@@ -75,8 +77,8 @@ class Expense2 extends Component<IRecipeProps, IRecipeState> {
           path: "Wydatki -> lista",
         });
 
-        if (token.length === 0) {
-          toast.error(`You are not authenticated. Token: ${token}`);
+        if (!isLogin) {
+          toast.error(`You are not authenticated. Token `);
         }
 
         throw error;
@@ -96,10 +98,10 @@ class Expense2 extends Component<IRecipeProps, IRecipeState> {
   };
 
   render() {
-    console.log(
-      "🚀 ~ file: expense2.tsx:89 ~ Expense2 ~ expenseListDataOnPage:",
-      this.state
-    );
+    // console.log(
+    //   "🚀 ~ file: expense2.tsx:89 ~ Expense2 ~ expenseListDataOnPage:",
+    //   this.state
+    // );
 
     return (
       <>
