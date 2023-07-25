@@ -3,8 +3,8 @@ import { backendUrl } from "../shared/apiUrl";
 export const getAll = (controller: string) => {
   //console.log("🚀 ~ file: genericService.tsx:4 ~ getAll ~ token:", token);
 
-  const token = localStorage.getItem("Authorization"); //Cookies instead localStorage
-  // console.log("🚀 ~ file: genericService.tsx:7 ~ getAll ~ token:", token);
+  const token = sessionStorage.getItem("Authorization"); //Cookies instead localStorage
+  console.log("🚀 ~ file: genericService.tsx:7 ~ getAll ~ token:", token);
 
   return fetch(backendUrl + controller, {
     headers: {

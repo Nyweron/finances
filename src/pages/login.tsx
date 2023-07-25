@@ -80,7 +80,7 @@ const Login: React.FC<any> = () => {
           isLogin: true,
         };
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           "Authorization",
           `Bearer ${accountContextType.token}`
         );

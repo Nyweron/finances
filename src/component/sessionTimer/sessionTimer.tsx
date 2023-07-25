@@ -37,17 +37,13 @@ const SessionTimer: FC<any> = () => {
   console.log("🚀 ~ file: sessionTimer.tsx:37 ~ account:", account);
 
   let token = account.token;
+  console.log("🚀 ~ file: sessionTimer.tsx:40 ~ token:", token);
   const refreshToken = account.refreshToken;
-  const [timeToLogOff, setTimeToLogOff] = useState(true); // This is necessary?
+  //const [timeToLogOff, setTimeToLogOff] = useState(true); // This is necessary?
   const navigate = useNavigate();
   const location = useLocation();
-  //console.log("🚀 ~ file: sessionTimer.tsx:42 ~ location:", location);
 
   useEffect(() => {
-    console.log(
-      "🚀 ~ file: sessionTimer.tsx:45 ~ useEffect ~ useEffect: token",
-      token
-    );
     if (token) {
       console.log("🚀 ~ file: sessionTimer.tsx:52 ~ account:", account);
       const parsedJwt = parseJwt(token);
@@ -66,7 +62,7 @@ const SessionTimer: FC<any> = () => {
         if (compareJwtTokenExpirationTime(sessionExpirationTime)) {
           clearInterval(intervalId);
           console.log("Interval stopped!");
-          setTimeToLogOff(true);
+          //setTimeToLogOff(true);
           logOff();
         }
       }, 1000);
@@ -74,24 +70,19 @@ const SessionTimer: FC<any> = () => {
       return () => {
         window.clearInterval(intervalId);
       };
+    } else {
+      sessionStorage.clear();
     }
-  }, [token, timeToLogOff, setTimeToLogOff]);
+  }, [token]);
 
   function CustomToastWithLink() {
     const loginAgain = () => {
-      console.log(
-        "🚀 ~ file: sessionTimer.tsx:66 ~ loginAgain ~ account:",
-        account
-      );
-
       refreshJWTToken({ token, refreshToken })
         .then((res) => {
           console.log(
             "🚀 ~ file: sessionTimer.tsx:65 ~ refreshJWTToken ~ res:",
             res
           );
-          token = res.token;
-          setTimeToLogOff(true);
           saveToken({
             token: res.token,
             email: account.email,
@@ -127,7 +118,7 @@ const SessionTimer: FC<any> = () => {
         pauseOnHover: false,
       });
 
-      setTimeToLogOff(false);
+      //setTimeToLogOff(false);
     }
   }
 

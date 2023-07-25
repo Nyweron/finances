@@ -52,7 +52,7 @@ const AccountProvider: React.FC<Props> = ({ children }) => {
     };
 
     setAccount(clearAccount);
-    localStorage.removeItem("Authorization");
+    sessionStorage.removeItem("Authorization");
   };
 
   return (
