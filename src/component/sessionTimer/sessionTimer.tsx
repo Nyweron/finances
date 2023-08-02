@@ -89,7 +89,7 @@ const SessionTimer: FC<any> = () => {
         "🚀 ~ file: sessionTimer.tsx:81 ~ loginAgain ~ canRefreshJWTToken:",
         canRefreshJWTToken
       );
-      if (canRefreshJWTToken == false) {
+      if (canRefreshJWTToken === false) {
         return;
       }
 
