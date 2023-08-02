@@ -38,8 +38,8 @@ const SessionTimer: FC<any> = () => {
 
   let token = account.token;
   console.log("🚀 ~ file: sessionTimer.tsx:40 ~ token:", token);
-  const refreshToken = account.refreshToken;
-  //const [timeToLogOff, setTimeToLogOff] = useState(true); // This is necessary?
+  let refreshToken = account.refreshToken;
+  let canRefreshJWTToken = true; // This is necessary?
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,12 +57,11 @@ const SessionTimer: FC<any> = () => {
         "🚀 ~ file: sessionTimer.tsx:57 ~ useEffect ~ formattedDateTime:",
         formattedDateTime
       );
-
+      canRefreshJWTToken = true;
       const intervalId = window.setInterval(() => {
         if (compareJwtTokenExpirationTime(sessionExpirationTime)) {
           clearInterval(intervalId);
           console.log("Interval stopped!");
-          //setTimeToLogOff(true);
           logOff();
         }
       }, 1000);
@@ -71,12 +70,17 @@ const SessionTimer: FC<any> = () => {
         window.clearInterval(intervalId);
       };
     } else {
+      canRefreshJWTToken = false;
       sessionStorage.clear();
     }
   }, [token]);
 
   function CustomToastWithLink() {
     const loginAgain = () => {
+      if (canRefreshJWTToken == false) {
+        return;
+      }
+
       refreshJWTToken({ token, refreshToken })
         .then((res) => {
           console.log(
@@ -100,7 +104,6 @@ const SessionTimer: FC<any> = () => {
           return;
         });
       //navigate("/login");
-      //setTimeToLogOff(true);
       //TODO method to refreshToken
     };
 
@@ -117,8 +120,6 @@ const SessionTimer: FC<any> = () => {
         autoClose: 10000,
         pauseOnHover: false,
       });
-
-      //setTimeToLogOff(false);
     }
   }
 
@@ -137,6 +138,8 @@ const SessionTimer: FC<any> = () => {
     } else {
       console.log("Token 1 and token 2 expire at the same time");
     }
+
+    canRefreshJWTToken = true;
 
     const secondsUntilExpiration =
       calculateDifferenceBetweenCurrentAndExpirationTime(expirationTime);

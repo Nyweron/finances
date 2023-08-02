@@ -12,7 +12,6 @@ import { AccountContextType } from "./constants";
 import Index3 from "./pages/index3";
 
 import Expense from "./pages/expense";
-import Expense2 from "./pages/expense2";
 import Income from "./pages/income";
 import Saving from "./pages/saving";
 import Login from "./pages/login";
@@ -38,8 +37,8 @@ class App extends Component {
         </div>
         <div>
           <div className={styles.topnav}>
-            <Link to="/expense2">
-              <span>Wydatki2</span>
+            <Link to="/expense">
+              <span>Wydatki</span>
             </Link>
             <Link to="/income">
               <span>Przychody</span>
@@ -61,7 +60,6 @@ class App extends Component {
           <div>
             <Routes>
               <Route path="/expense" element={<Expense />} />
-              <Route path="/expense2" element={<Expense2 />} />
               <Route path="/income" element={<Income />} />
               <Route path="/saving" element={<Saving />} />
               <Route path="/login" element={<Login />} />

@@ -50,6 +50,10 @@ const AccountProvider: React.FC<Props> = ({ children }) => {
       userName: "",
       isLogin: false,
     };
+    console.log(
+      "🚀 ~ file: accountContext.tsx:53 ~ logOff ~ clearAccount:",
+      clearAccount
+    );
 
     setAccount(clearAccount);
     sessionStorage.removeItem("Authorization");

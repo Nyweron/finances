@@ -24,7 +24,7 @@ interface IRecipeProps {
 
 interface IRecipeState {}
 
-class Expense2 extends Component<IRecipeProps, IRecipeState> {
+class Expense extends Component<IRecipeProps, IRecipeState> {
   state = {
     expenseListDataOnPage: [],
     categoryExpenseDataOnPage: [],
@@ -170,4 +170,4 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(Expense2);
+export default connect(null, mapDispatchToProps)(Expense);
