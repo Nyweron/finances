@@ -154,6 +154,15 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
   };
 
   render() {
+    let isLogin = false;
+    if (this.context) {
+      const state = this.context as AccountContextType;
+      isLogin = state.account.isLogin;
+    }
+
+    if (!isLogin) {
+      return null;
+    }
     return (
       <>
         <div className="row">

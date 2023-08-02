@@ -87,14 +87,30 @@ class Expense extends Component<IRecipeProps, IRecipeState> {
   };
 
   handleCategoryExpenseList = () => {
-    getAll("categoryExpense").then((rows) => {
-      this.setState({
-        isDisplayExpenseList: false,
-        isDisplayCategoryExpenseList: true,
-        categoryExpenseDataOnPage: rows,
-        path: "Wydatki -> kategorie -> lista",
+    let isLogin = false;
+    if (this.context) {
+      const { account } = this.context as AccountContextType;
+      isLogin = account.isLogin;
+    }
+
+    getAll("categoryExpense")
+      .then((rows) => {
+        this.setState({
+          isDisplayExpenseList: false,
+          isDisplayCategoryExpenseList: true,
+          categoryExpenseDataOnPage: rows,
+          path: "Wydatki -> kategorie -> lista",
+        });
+      })
+      .catch((error) => {
+        console.log("🚀 ~ file: expense.tsx:106 ~ Expense ~ error:", error);
+
+        if (!isLogin) {
+          toast.error(`You are not authenticated. Token `);
+        }
+
+        throw error;
       });
-    });
   };
 
   render() {

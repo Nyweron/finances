@@ -58,6 +58,10 @@ const SessionTimer: FC<any> = () => {
         formattedDateTime
       );
       canRefreshJWTToken = true;
+      console.log(
+        "🚀 ~ file: sessionTimer.tsx:61 ~ useEffect ~ canRefreshJWTToken:",
+        canRefreshJWTToken
+      );
       const intervalId = window.setInterval(() => {
         if (compareJwtTokenExpirationTime(sessionExpirationTime)) {
           clearInterval(intervalId);
@@ -71,12 +75,20 @@ const SessionTimer: FC<any> = () => {
       };
     } else {
       canRefreshJWTToken = false;
+      console.log(
+        "🚀 ~ file: sessionTimer.tsx:74 ~ useEffect ~ canRefreshJWTToken:",
+        canRefreshJWTToken
+      );
       sessionStorage.clear();
     }
   }, [token]);
 
   function CustomToastWithLink() {
     const loginAgain = () => {
+      console.log(
+        "🚀 ~ file: sessionTimer.tsx:81 ~ loginAgain ~ canRefreshJWTToken:",
+        canRefreshJWTToken
+      );
       if (canRefreshJWTToken == false) {
         return;
       }
@@ -132,14 +144,14 @@ const SessionTimer: FC<any> = () => {
 
     if (expirationTime > dateTimeNow) {
       console.log("Jesteś zalogowany");
+      canRefreshJWTToken = true;
     } else if (expirationTime < dateTimeNow) {
       console.log("Zostałeś wylogowany!");
+      canRefreshJWTToken = false;
       return true;
     } else {
       console.log("Token 1 and token 2 expire at the same time");
     }
-
-    canRefreshJWTToken = true;
 
     const secondsUntilExpiration =
       calculateDifferenceBetweenCurrentAndExpirationTime(expirationTime);

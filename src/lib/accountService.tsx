@@ -97,7 +97,7 @@ export const refreshJWTToken = async (obj: AccountRefreshTokenModel) => {
       }
     })
     .catch((error) => {
-      //console.log("🚀 ~ file: accountService.tsx:39 ~ create ~ error", error)
+      //console.log("🚀 ~ file: accountService.tsx:39 ~ create ~ error", error);
       throw error;
     });
 };
