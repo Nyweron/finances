@@ -50,8 +50,8 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
   static contextType = AccountContext;
 
   componentDidMount() {
-    const { account } = this.context as AccountContextType;
-    const token = account.token;
+    //const { account } = this.context as AccountContextType;
+    // const token = account.token;
 
     getAll("categoryExpense").then((rows) => {
       this.setState({
@@ -63,8 +63,8 @@ class CategoryExpenseList extends Component<IRecipeProps, IRecipeState> {
 
   componentDidUpdate() {
     if (this.state.isCreated || this.state.isEdited || this.state.isRemoved) {
-      const { account } = this.context as AccountContextType;
-      const token = account.token;
+      //const { account } = this.context as AccountContextType;
+      //const token = account.token;
 
       getAll("categoryExpense")
         .then((rows) => {

@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { useAccountContext } from "../../context/accountContext";
 import { toast } from "react-toastify";
-import { useNavigate, useLocation } from "react-router-dom";
+//import { useNavigate, useLocation } from "react-router-dom";
 import { refreshJWTToken } from "../../lib/accountService";
 
 interface JwtPayload {
@@ -40,8 +40,8 @@ const SessionTimer: FC<any> = () => {
   console.log("🚀 ~ file: sessionTimer.tsx:40 ~ token:", token);
   let refreshToken = account.refreshToken;
   let canRefreshJWTToken = true; // This is necessary?
-  const navigate = useNavigate();
-  const location = useLocation();
+  //const navigate = useNavigate();
+  //const location = useLocation();
 
   useEffect(() => {
     if (token) {
