@@ -1,4 +1,3 @@
-import { throws } from "assert";
 import { AccountModel, AccountRefreshTokenModel } from "../constants";
 import { backendUrl } from "../shared/apiUrl";
 

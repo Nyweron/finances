@@ -117,6 +117,7 @@ const SessionTimer: FC<any> = () => {
         });
       //navigate("/login");
       //TODO method to refreshToken
+      //It works?
     };
 
     return (
@@ -145,9 +146,11 @@ const SessionTimer: FC<any> = () => {
     if (expirationTime > dateTimeNow) {
       console.log("Jesteś zalogowany");
       canRefreshJWTToken = true;
+      // console.log("🚀 ~ file: sessionTimer.tsx:150 ~ canRefreshJWTToken:", canRefreshJWTToken)
     } else if (expirationTime < dateTimeNow) {
       console.log("Zostałeś wylogowany!");
       canRefreshJWTToken = false;
+      // console.log("🚀 ~ file: sessionTimer.tsx:154 ~ canRefreshJWTToken:", canRefreshJWTToken)
       return true;
     } else {
       console.log("Token 1 and token 2 expire at the same time");

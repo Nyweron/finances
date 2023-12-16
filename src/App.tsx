@@ -37,19 +37,22 @@ class App extends Component {
         </div>
         <div>
           <div className={styles.topnav}>
-            <Link to="/expense">
-              <span>Wydatki</span>
-            </Link>
-            <Link to="/income">
-              <span>Przychody</span>
-            </Link>
-            <Link to="/saving">
-              <span>Oszczędności</span>
-            </Link>
             {account.isLogin ? (
-              <Link to="/logoff">
-                <span>Wyloguj</span>
-              </Link>
+              <>
+                <Link to="/expense">
+                  <span>Wydatki</span>
+                </Link>
+                <Link to="/income">
+                  <span>Przychody</span>
+                </Link>
+                <Link to="/saving">
+                  <span>Oszczędności</span>
+                </Link>
+
+                <Link to="/logoff">
+                  <span>Wyloguj</span>
+                </Link>
+              </>
             ) : (
               <Link to="/login">
                 <span>Zaloguj</span>
@@ -59,12 +62,17 @@ class App extends Component {
 
           <div>
             <Routes>
-              <Route path="/expense" element={<Expense />} />
-              <Route path="/income" element={<Income />} />
-              <Route path="/saving" element={<Saving />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/logoff" element={<Logoff />} />
-              <Route path="/registration" element={<RegisterNewUser />} />
+              {account.isLogin ? (
+                <>
+                  <Route path="/expense" element={<Expense />} />
+                  <Route path="/income" element={<Income />} />
+                  <Route path="/saving" element={<Saving />} />
+                  <Route path="/logoff" element={<Logoff />} />
+                  <Route path="/registration" element={<RegisterNewUser />} />
+                </>
+              ) : (
+                <Route path="/login" element={<Login />} />
+              )}
               <Route path="/" element={<Index3 />} />
             </Routes>
           </div>

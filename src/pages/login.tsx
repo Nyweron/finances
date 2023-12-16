@@ -9,6 +9,7 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
+import { toast } from "react-toastify";
 
 import { loginUser } from "../lib/accountService";
 import { AccountContextModel, AccountModel } from "../constants";
@@ -91,6 +92,7 @@ const Login: React.FC<any> = () => {
       })
       .catch((err) => {
         console.log("🚀 ~ file: loginForm.tsx:48 ~ handleSubmit ~ err:", err);
+        toast.error(`Error: ${err.message}`);
       });
   };
 
